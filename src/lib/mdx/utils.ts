@@ -8,10 +8,11 @@ const POSTS_PATH = path.join(process.cwd(), 'src/content/blog');
 export interface PostFrontMatter {
   title: string;
   date: string;
+  readingTime: ReadTimeResults;
   description?: string;
   tags?: string[];
   category?: string;
-  readingTime: ReadTimeResults;
+  ogImage?: string;
 }
 
 export interface Post {
