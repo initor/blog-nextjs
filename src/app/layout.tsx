@@ -30,7 +30,27 @@ const atkinson = localFont({
 
 export const metadata = {
   title: 'Wayne Wen',
-  description: 'Personal blog and portfolio',
+  description: 'Personal blog',
+  icons: {
+    icon: [
+      {
+        url: '/favicon.ico',
+        sizes: 'any',
+      },
+      {
+        url: '/favicon.svg',
+        type: 'image/svg+xml',
+      },
+    ],
+    apple: [
+      {
+        url: '/apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+    ],
+  },
+  manifest: '/site.webmanifest',
 }
 
 export default function RootLayout({
