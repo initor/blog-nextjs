@@ -1,6 +1,5 @@
-import Link from 'next/link'
-import { GithubOutlined, TwitterOutlined, LinkedinOutlined } from '@ant-design/icons'
 import { siteConfig } from '@/config/site'
+import { GithubOutlined, TwitterOutlined, LinkedinOutlined } from '@ant-design/icons'
 
 export default function HomePage() {
   const { home } = siteConfig
