@@ -69,6 +69,7 @@ export async function getPostBySlug(slug: string): Promise<Post | undefined> {
       content,
     };
   } catch (error) {
+    console.error(error);
     return undefined;
   }
 }
