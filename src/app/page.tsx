@@ -20,7 +20,7 @@ export default function HomePage() {
 
   // Filter and sort visible social links
   const visibleSocialLinks = Object.entries(home.socialLinks)
-    .filter(([_, config]) => config.show)
+    .filter(([, config]) => config.show)
     .sort((a, b) => a[1].priority - b[1].priority)
 
   return (
