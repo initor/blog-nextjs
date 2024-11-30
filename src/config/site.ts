@@ -8,13 +8,13 @@ export const siteConfig = {
   home: {
     title: "Wayne Wen",
     subtitle: "Software Engineer",
-    introduction: "I'm a software engineer passionate about distributed systems infrastructure and sharing what I learn along the way.",
+    introduction: "Building distributed systems and sharing my learnings.",
 
     // Social links with display preferences
     socialLinks: {
       github: {
         url: `https://github.com/${blogConfig.author.github}`,
-        show: true,
+        show: false,
         priority: 1,
       },
       twitter: {
@@ -22,16 +22,16 @@ export const siteConfig = {
         show: true,
         priority: 2,
       },
-      linkedin: {
-        url: `https://linkedin.com/in/${blogConfig.author.linkedin}`,
-        show: true,
-        priority: 3,
-      },
       bluesky: {
         url: `https://bsky.app/profile/${blogConfig.author.bluesky}`,
         show: true,
+        priority: 3,
+      },
+      linkedin: {
+        url: `https://linkedin.com/in/${blogConfig.author.linkedin}`,
+        show: true,
         priority: 4,
-      }
+      },
     },
 
     // Featured sections
