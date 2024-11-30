@@ -14,8 +14,73 @@
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  body {
+    color: var(--foreground);
+    background: var(--background);
+    font-family: var(--font-atkinson), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-atkinson), system-ui, sans-serif;
+  }
+
+  /* Typography Scale */
+  h1 {
+    @apply text-4xl font-bold mb-6 tracking-tight;
+  }
+
+  h2 {
+    @apply text-3xl font-bold mb-4 tracking-tight;
+  }
+
+  h3 {
+    @apply text-2xl font-bold mb-3 tracking-tight;
+  }
+
+  h4 {
+    @apply text-xl font-bold mb-2 tracking-tight;
+  }
+
+  p {
+    @apply mb-4 leading-relaxed text-base md:text-lg;
+  }
+
+  /* Article/Blog Post Styles */
+  article {
+    @apply max-w-none;
+  }
+
+  article p {
+    @apply text-base md:text-lg leading-relaxed;
+  }
+
+  article h2 {
+    @apply mt-8;
+  }
+
+  article h3 {
+    @apply mt-6;
+  }
+
+  /* Links */
+  a {
+    @apply transition-colors duration-200;
+  }
+
+  /* Code blocks */
+  pre {
+    @apply p-4 rounded-lg bg-zinc-100 dark:bg-zinc-800 overflow-x-auto my-4;
+  }
+
+  code {
+    @apply font-mono text-sm;
+  }
+
+  /* Inline code */
+  :not(pre) > code {
+    @apply px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200;
+  }
 }
