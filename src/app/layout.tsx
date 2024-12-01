@@ -72,7 +72,7 @@ export default function RootLayout({
               </Link>
               <div className="space-x-6 font-sans">
                 <Link
-                  href="/"
+                  href="/about"
                   className="hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
                 >
                   about

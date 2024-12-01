@@ -32,6 +32,11 @@ export const siteConfig = {
         show: true,
         priority: 4,
       },
+      discord: {
+        url: `https://discord.gg/TCNdj3ahPz`,
+        show: true,
+        priority: 5,
+      },
     },
 
     // Featured sections
