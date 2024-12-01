@@ -30,7 +30,7 @@ export default function HomePage() {
               {platform.toLowerCase()}
             </a>
             {index < visibleSocialLinks.length - 1 && (
-              <span className="ml-4 text-zinc-400 dark:text-zinc-600">/</span>
+              <span className="ml-4 text-zinc-300 dark:text-zinc-600">/</span>
             )}
           </div>
         ))}
