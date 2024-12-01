@@ -8,7 +8,7 @@ const AboutPage = () => {
 
       <section className="mb-12">
         <p className="text-lg mb-6">
-          I'm a Staff Software Engineer working on compute infrastructure at LinkedIn. I'm passionate about building distributed systems and designing scalable architectures.
+          I&apos;m a Staff Software Engineer working on compute infrastructure at LinkedIn. I&apos;m passionate about building distributed systems and designing scalable architectures.
         </p>
         <p className="text-lg mb-6">
           Outside of work, I enjoy photography, racing simulators, and pushing myself with cross-training workouts. Most importantly, I cuddle with my beloved golden retriever, Wall-E.
