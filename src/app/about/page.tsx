@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import { Space } from 'lucide-react';
 
 const AboutPage = () => {
   return (
