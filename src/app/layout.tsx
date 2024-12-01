@@ -1,5 +1,6 @@
 import localFont from 'next/font/local'
 import Link from 'next/link'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import './globals.css'
 
 const atkinson = localFont({
@@ -95,6 +96,7 @@ export default function RootLayout({
             © {new Date().getFullYear()} Wayne Wen
           </div>
         </footer>
+        <GoogleAnalytics gaId="G-P9BJ1DCTPB" />
       </body>
     </html>
   )
