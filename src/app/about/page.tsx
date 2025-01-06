@@ -16,7 +16,7 @@ const AboutPage = () => {
       </section>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">My Shots</h2>
+        <h2 className="text-2xl font-semibold mb-6">Shots</h2>
 
         <figure className="relative">
           <Image
