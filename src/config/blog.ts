@@ -1,5 +1,5 @@
 export const blogConfig = {
-  title: "Wayne Wen",
+  title: "initial",
   description: "Weezy thoughts",
   author: {
     name: "Wayne Wen",
@@ -18,7 +18,7 @@ export const blogConfig = {
   openGraph: {
     type: 'website', // default type, will be overridden with 'article' for blog posts
     locale: 'en_US',
-    siteName: "Wayne Wen",
+    siteName: "initial",
   }
 } as const;
 
