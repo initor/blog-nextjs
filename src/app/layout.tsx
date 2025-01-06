@@ -1,5 +1,6 @@
 import localFont from 'next/font/local'
 import Link from 'next/link'
+import Image from 'next/image'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import './globals.css'
 
@@ -66,10 +67,17 @@ export default function RootLayout({
           <nav className="container mx-auto px-4">
             <div className="flex justify-between items-center">
               <Link
-                href="/"
-                className="text-xl font-serif font-bold hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
+                  href="/"
+                  className="hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
               >
-                Wayne Wen
+                <Image
+                  src="/wawen_logo.png"
+                  alt="Wayne Wen Logo"
+                  width={40}
+                  height={40}
+                  className="w-auto h-8"
+                  priority
+                />
               </Link>
               <div className="space-x-6 font-sans">
                 <Link
