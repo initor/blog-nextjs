@@ -1,6 +1,7 @@
 import localFont from 'next/font/local'
 import Link from 'next/link'
 import Image from 'next/image'
+import { Analytics } from "@vercel/analytics/next"
 import { GoogleAnalytics } from '@next/third-parties/google'
 import './globals.css'
 
@@ -105,6 +106,7 @@ export default function RootLayout({
           </div>
         </footer>
         <GoogleAnalytics gaId="G-P9BJ1DCTPB" />
+        <Analytics />
       </body>
     </html>
   )
