@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ImageProps } from 'next/image';
+import Mermaid from './Mermaid';
 
 const MDXComponents = {
   // Custom link component
@@ -49,6 +50,26 @@ const MDXComponents = {
         </a>
       </h2>
     );
+  },
+
+  // Custom pre component to handle mermaid code blocks
+  pre: ({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
+    // Check if this is a mermaid code block
+    const childElement = children as React.ReactElement<{
+      className?: string;
+      children?: string;
+    }>;
+    
+    if (
+      childElement?.props?.className?.includes('language-mermaid') ||
+      childElement?.props?.className?.includes('mermaid')
+    ) {
+      const chart = childElement?.props?.children || '';
+      return <Mermaid chart={String(chart).trim()} />;
+    }
+
+    // Default pre rendering
+    return <pre {...props}>{children}</pre>;
   },
 };
 
