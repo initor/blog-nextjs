@@ -1,19 +1,19 @@
 import { getAllPosts } from '@/lib/mdx/utils';
 import Link from 'next/link';
 
-export default async function PreviewIndexPage() {
-  const posts = await getAllPosts('preview');
+export default async function ArchiveIndexPage() {
+  const posts = await getAllPosts('archive');
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="flex items-start gap-3 mb-8">
-        <h1 className="text-4xl font-bold">Preview</h1>
+        <h1 className="text-4xl font-bold">Archive</h1>
       </div>
       <div className="space-y-8">
         {posts.map((post) => (
           <article key={post.slug} className="border-b border-gray-200 pb-8">
             <Link
-              href={`/preview/${post.slug}`}
+              href={`/archive/${post.slug}`}
               className="group block"
             >
               <h2 className="text-2xl font-bold mb-2 group-hover:text-blue-600">
