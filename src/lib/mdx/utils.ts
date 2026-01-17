@@ -3,7 +3,13 @@ import path from 'path';
 import matter from 'gray-matter';
 import readingTime, { ReadTimeResults } from 'reading-time';
 
-const POSTS_PATH = path.join(process.cwd(), 'src/content/blog');
+// Content type definitions
+export type ContentType = 'blog' | 'preview';
+
+const CONTENT_PATHS: Record<ContentType, string> = {
+  blog: path.join(process.cwd(), 'src/content/blog'),
+  preview: path.join(process.cwd(), 'src/content/preview'),
+};
 
 export interface PostFrontMatter {
   title: string;
@@ -21,17 +27,23 @@ export interface Post {
   content: string;
 }
 
-export async function getAllPosts(): Promise<Post[]> {
+/**
+ * Get all posts for a given content type
+ * @param contentType - 'blog' or 'preview' (defaults to 'blog')
+ */
+export async function getAllPosts(contentType: ContentType = 'blog'): Promise<Post[]> {
+  const postsPath = CONTENT_PATHS[contentType];
+  
   // Get all files in the posts directory
-  const files = await fs.readdir(POSTS_PATH);
+  const files = await fs.readdir(postsPath);
 
   // Get the posts with async map
   const posts = await Promise.all(
     files
-      .filter((path) => /\.mdx?$/.test(path))
+      .filter((filePath) => /\.mdx?$/.test(filePath))
       .map(async (fileName): Promise<Post> => {
         const source = await fs.readFile(
-          path.join(POSTS_PATH, fileName),
+          path.join(postsPath, fileName),
           'utf8'
         );
         const { data, content } = matter(source);
@@ -55,9 +67,16 @@ export async function getAllPosts(): Promise<Post[]> {
   });
 }
 
-export async function getPostBySlug(slug: string): Promise<Post | undefined> {
+/**
+ * Get a single post by slug for a given content type
+ * @param slug - The post slug (filename without extension)
+ * @param contentType - 'blog' or 'preview' (defaults to 'blog')
+ */
+export async function getPostBySlug(slug: string, contentType: ContentType = 'blog'): Promise<Post | undefined> {
+  const postsPath = CONTENT_PATHS[contentType];
+  
   try {
-    const fullPath = path.join(POSTS_PATH, `${slug}.mdx`);
+    const fullPath = path.join(postsPath, `${slug}.mdx`);
     const source = await fs.readFile(fullPath, 'utf8');
     const { data, content } = matter(source);
 
