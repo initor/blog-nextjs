@@ -1,0 +1,75 @@
+# Cursor Rules for Personal Blog
+
+## Project Overview
+
+This is a personal blog built with Next.js 15 and MDX. The site is deployed at www.waynewen.com via Vercel with GitHub integration.
+
+## Tech Stack
+
+- Next.js 15 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS
+- MDX for blog content
+- Vercel for deployment
+
+## Package Manager
+
+Use **npm** exclusively. Do not use yarn, pnpm, or bun.
+
+```bash
+npm install      # Install dependencies
+npm run dev      # Development server
+npm run build    # Production build
+npm run start    # Production server
+npm run lint     # Linting
+```
+
+## Project Structure
+
+```
+src/
+├── app/           # Next.js App Router pages
+├── components/    # React components
+│   └── mdx/       # MDX-specific components
+├── config/        # Site and blog configuration
+├── content/       # MDX blog posts
+│   └── blog/      # Blog post files
+├── fonts/         # Custom fonts (Atkinson Hyperlegible)
+└── lib/           # Utility functions
+    └── mdx/       # MDX processing utilities
+```
+
+## Coding Conventions
+
+Follow Next.js best practices:
+
+- Use functional components with hooks
+- Use named exports for components
+- Use PascalCase for component files and names
+- Use camelCase for utility functions and variables
+- Prefer TypeScript interfaces over types for object shapes
+- Use Tailwind CSS for styling (no CSS modules or styled-components)
+
+## Content
+
+Blog posts are MDX files in `src/content/blog/` with frontmatter:
+
+```mdx
+---
+title: "Post Title"
+date: "YYYY-MM-DD"
+description: "Brief description"
+---
+```
+
+## Scope
+
+This repository is exclusively for the personal blog. Do not add features unrelated to blogging functionality.
+
+## Key Files
+
+- `src/config/site.ts` - Site-wide configuration
+- `src/config/blog.ts` - Blog-specific configuration
+- `src/lib/mdx/utils.ts` - MDX processing utilities
+- `src/components/mdx/` - Custom MDX components
