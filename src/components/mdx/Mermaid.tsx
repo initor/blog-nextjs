@@ -24,16 +24,20 @@ export default function Mermaid({ chart }: MermaidProps) {
         const mermaid = (await import('mermaid')).default;
 
         // Read Catppuccin Frappé colors from CSS variables
+        // Fill colors should match their borders but with lower saturation
         const themeVariables = {
-          primaryColor: getCSSVar('--mermaid-node-bg'),
+          // Primary: blue tones - fill matches border
+          primaryColor: getCSSVar('--mermaid-primary-fill'),
           primaryTextColor: getCSSVar('--mermaid-primary-text'),
-          primaryBorderColor: getCSSVar('--mermaid-node-border'),
-          secondaryColor: getCSSVar('--mermaid-secondary'),
+          primaryBorderColor: getCSSVar('--mermaid-primary'),
+          // Secondary: purple tones - fill matches border
+          secondaryColor: getCSSVar('--mermaid-secondary-fill'),
           secondaryTextColor: getCSSVar('--mermaid-secondary-text'),
-          secondaryBorderColor: getCSSVar('--mermaid-node-border'),
-          tertiaryColor: getCSSVar('--mermaid-tertiary'),
+          secondaryBorderColor: getCSSVar('--mermaid-secondary'),
+          // Tertiary: pink tones - fill matches border
+          tertiaryColor: getCSSVar('--mermaid-tertiary-fill'),
           tertiaryTextColor: getCSSVar('--mermaid-primary-text'),
-          tertiaryBorderColor: getCSSVar('--mermaid-node-border'),
+          tertiaryBorderColor: getCSSVar('--mermaid-tertiary'),
           lineColor: getCSSVar('--mermaid-line'),
           textColor: getCSSVar('--mermaid-primary-text'),
           mainBkg: getCSSVar('--mermaid-node-bg'),
@@ -57,9 +61,12 @@ export default function Mermaid({ chart }: MermaidProps) {
           noteBkgColor: getCSSVar('--mermaid-note-bg'),
           noteBorderColor: getCSSVar('--mermaid-note-border'),
           noteTextColor: getCSSVar('--mermaid-primary-text'),
-          activationBkgColor: getCSSVar('--mermaid-primary'),
-          activationBorderColor: getCSSVar('--mermaid-node-border'),
+          activationBkgColor: getCSSVar('--mermaid-primary-fill'),
+          activationBorderColor: getCSSVar('--mermaid-primary'),
           sequenceNumberColor: getCSSVar('--mermaid-bg'),
+          // Error/critical styling (for :::error class)
+          errorBkgColor: getCSSVar('--mermaid-error-fill'),
+          errorTextColor: getCSSVar('--mermaid-primary-text'),
         };
 
         mermaid.initialize({

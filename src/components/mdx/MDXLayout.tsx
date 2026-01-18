@@ -9,10 +9,12 @@ interface MDXLayoutProps {
 const MDXLayout = ({ children, frontMatter }: MDXLayoutProps) => {
   return (
     <article className="max-w-4xl mx-auto px-4 py-8">
-      <header className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">{frontMatter.title}</h1>
+      <header className="mb-6">
+        <div className="mb-1.5">
+          <h1 className="text-4xl font-bold">{frontMatter.title}</h1>
+        </div>
 
-        <div className="flex items-center gap-4 text-gray-600 dark:text-gray-400 mb-4">
+        <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-1.5">
           <time dateTime={frontMatter.date}>
             {new Date(frontMatter.date).toLocaleDateString('en-US', {
               year: 'numeric',
@@ -25,17 +27,17 @@ const MDXLayout = ({ children, frontMatter }: MDXLayoutProps) => {
         </div>
 
         {frontMatter.description && (
-          <p className="text-lg text-gray-600 dark:text-gray-400 mb-4 leading-[1.55]">
+          <p className="text-base text-gray-600 dark:text-gray-400 mb-1.5 leading-[1.55]">
             {frontMatter.description}
           </p>
         )}
 
         {frontMatter.tags && (
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1.5">
             {frontMatter.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm"
+                className="px-2.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded-full text-xs"
               >
                 {tag}
               </span>
