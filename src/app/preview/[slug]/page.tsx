@@ -77,13 +77,13 @@ export default async function PreviewPostPage({
 
   return (
     <article className="max-w-4xl mx-auto px-4 py-8">
-      <header className="mb-8">
-        <div className="flex items-start gap-3 mb-2">
+      <header className="mb-6">
+        <div className="flex items-start gap-3 mb-1.5">
           <h1 className="text-4xl font-bold">{post.frontMatter.title}</h1>
-          <span className="preview-badge">Preview</span>
+          <span className="preview-badge mt-2">Preview</span>
         </div>
 
-        <div className="flex items-center gap-4 text-gray-600 dark:text-gray-400">
+        <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-1.5">
           <time dateTime={post.frontMatter.date}>
             {new Date(post.frontMatter.date).toLocaleDateString('en-US', {
               year: 'numeric',
@@ -96,17 +96,17 @@ export default async function PreviewPostPage({
         </div>
 
         {post.frontMatter.description && (
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-400 leading-[1.55]">
+          <p className="text-base text-gray-600 dark:text-gray-400 mb-1.5 leading-[1.55]">
             {post.frontMatter.description}
           </p>
         )}
 
         {post.frontMatter.tags && (
-          <div className="flex flex-wrap gap-2 mt-4">
+          <div className="flex flex-wrap gap-1.5">
             {post.frontMatter.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm"
+                className="px-2.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded-full text-xs"
               >
                 {tag}
               </span>

@@ -35,21 +35,32 @@
   --code-built-in: #c44d50;
   --code-literal: #d97328;
   --code-attr: #414559;
+  --code-inline: #ea76cb; /* Catppuccin Frappé pink for inline code */
 
   /* Mermaid diagram - Catppuccin Frappé Light */
   --mermaid-bg: #f2f4f8;
   --mermaid-primary: #4b78c9;
+  --mermaid-primary-fill: #dce5f5;
   --mermaid-secondary: #9c5ec7;
+  --mermaid-secondary-fill: #ecddf5;
   --mermaid-tertiary: #d47eb3;
+  --mermaid-tertiary-fill: #f5dcea;
   --mermaid-primary-text: #414559;
   --mermaid-secondary-text: #414559;
   --mermaid-line: #737994;
   --mermaid-node-bg: #e6e9f0;
   --mermaid-node-border: #949cbb;
-  --mermaid-note-bg: #e6e9f0;
+  --mermaid-note-bg: #f5f0dc;
   --mermaid-note-border: #c49a1a;
-  --mermaid-actor-bg: #dce0e8;
+  --mermaid-actor-bg: #dce0f5;
   --mermaid-actor-border: #7c85c4;
+  /* Additional styled node colors - error/warning/success */
+  --mermaid-error: #d20f39;
+  --mermaid-error-fill: #f5dce0;
+  --mermaid-warning: #df8e1d;
+  --mermaid-warning-fill: #f5ebdc;
+  --mermaid-success: #40a02b;
+  --mermaid-success-fill: #e0f0dc;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -85,7 +96,8 @@
     font-family: var(--font-heading), system-ui, sans-serif;
   }
 
-  h1 {
+  /* Only page title h1 (outside prose) uses serif title font */
+  article > header h1 {
     font-family: var(--font-title), system-ui, sans-serif;
   }
 
@@ -149,6 +161,28 @@
     margin-top: 0.25em;
     margin-bottom: 0.25em;
     line-height: 1.58;
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-weight: 700;
+  }
+
+  /* Ensure anchor links inside headings inherit heading font */
+  .prose h1 a,
+  .prose h2 a,
+  .prose h3 a,
+  .prose h4 a,
+  .prose h5 a,
+  .prose h6 a {
+    font-family: inherit;
+    font-weight: inherit;
+    color: inherit;
   }
 
   .prose h2 {
@@ -222,14 +256,128 @@
     word-break: break-word;
   }
 
-  /* Inline code */
-  :not(pre) > code {
-    @apply px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200;
+  /* Inline code - Catppuccin Frappé pink highlight with mono font */
+  :not(pre) > code,
+  .prose :not(pre) > code {
+    @apply px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800;
+    font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.8em;
+    font-weight: 500;
+    color: var(--code-inline) !important;
+  }
+
+  /* Footnotes - highlighted with brackets in blue, smaller with leading space */
+  .prose sup {
+    @apply text-[0.65rem] leading-none;
+    margin-left: 0.1em;
+  }
+
+  .prose a[href^="#fn"],
+  .prose a[href^="#user-content-fn"] {
+    @apply font-medium;
+    font-size: inherit;
+    color: var(--code-title); /* Catppuccin Frappé blue */
+  }
+
+  .prose a[href^="#fn"]::before,
+  .prose a[href^="#user-content-fn"]::before {
+    content: '[';
+  }
+
+  .prose a[href^="#fn"]::after,
+  .prose a[href^="#user-content-fn"]::after {
+    content: ']';
+  }
+
+  /* Footnotes section styling */
+  .prose .footnotes {
+    @apply mt-8 pt-4 border-t border-gray-200 dark:border-gray-700 text-sm;
+  }
+
+  .prose .footnotes ol {
+    @apply pl-4;
+  }
+
+  .prose .footnotes li {
+    @apply mb-2;
   }
 
   /* Diagrams */
   .mermaid-diagram {
     font-family: var(--font-diagram), system-ui, sans-serif;
+  }
+
+  /* Mermaid custom node styles - fill matches border with lower saturation */
+  .mermaid-diagram .node.error rect,
+  .mermaid-diagram .node.error polygon {
+    fill: var(--mermaid-error-fill) !important;
+    stroke: var(--mermaid-error) !important;
+  }
+
+  .mermaid-diagram .node.warning rect,
+  .mermaid-diagram .node.warning polygon {
+    fill: var(--mermaid-warning-fill) !important;
+    stroke: var(--mermaid-warning) !important;
+  }
+
+  .mermaid-diagram .node.success rect,
+  .mermaid-diagram .node.success polygon {
+    fill: var(--mermaid-success-fill) !important;
+    stroke: var(--mermaid-success) !important;
+  }
+
+  .mermaid-diagram .node.primary rect,
+  .mermaid-diagram .node.primary polygon {
+    fill: var(--mermaid-primary-fill) !important;
+    stroke: var(--mermaid-primary) !important;
+  }
+
+  .mermaid-diagram .node.secondary rect,
+  .mermaid-diagram .node.secondary polygon {
+    fill: var(--mermaid-secondary-fill) !important;
+    stroke: var(--mermaid-secondary) !important;
+  }
+
+  .mermaid-diagram .node.tertiary rect,
+  .mermaid-diagram .node.tertiary polygon {
+    fill: var(--mermaid-tertiary-fill) !important;
+    stroke: var(--mermaid-tertiary) !important;
+  }
+
+  /* Sequence diagram - actor boxes fill matches border */
+  .mermaid-diagram .actor {
+    fill: var(--mermaid-actor-bg) !important;
+    stroke: var(--mermaid-actor-border) !important;
+  }
+
+  /* Sequence diagram - note boxes fill matches border */
+  .mermaid-diagram .note {
+    fill: var(--mermaid-note-bg) !important;
+    stroke: var(--mermaid-note-border) !important;
+  }
+
+  /* Sequence diagram - activation boxes */
+  .mermaid-diagram .activation0,
+  .mermaid-diagram .activation1,
+  .mermaid-diagram .activation2 {
+    fill: var(--mermaid-primary-fill) !important;
+    stroke: var(--mermaid-primary) !important;
+  }
+
+  /* Sequence diagram - loop/alt boxes */
+  .mermaid-diagram .loopLine {
+    stroke: var(--mermaid-line) !important;
+  }
+
+  .mermaid-diagram .loopText,
+  .mermaid-diagram .loopText > tspan {
+    fill: var(--mermaid-primary-text) !important;
+  }
+
+  /* Sequence diagram - label boxes */
+  .mermaid-diagram .labelBox {
+    fill: var(--mermaid-node-bg) !important;
+    stroke: var(--mermaid-node-border) !important;
   }
 }
 
