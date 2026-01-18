@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import MDXComponents from '@/components/mdx/MDXComponents';
 import type { Metadata } from 'next';
 import { blogConfig } from '@/config/blog';
+import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
 
 interface BlogPostPageProps {
  params: Promise<{
@@ -91,7 +93,7 @@ export default async function BlogPostPage({
        </div>
 
        {post.frontMatter.description && (
-         <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">
+        <p className="mt-4 text-lg text-gray-600 dark:text-gray-400 leading-[1.55]">
            {post.frontMatter.description}
          </p>
        )}
@@ -110,10 +112,16 @@ export default async function BlogPostPage({
        )}
      </header>
 
-     <div className="prose dark:prose-invert prose-lg max-w-none">
+    <div className="prose dark:prose-invert max-w-none">
        <MDXRemote
          source={post.content}
          components={MDXComponents}
+         options={{
+           mdxOptions: {
+            remarkPlugins: [remarkGfm],
+            rehypePlugins: [rehypeHighlight],
+           },
+         }}
        />
      </div>
    </article>

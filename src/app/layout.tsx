@@ -1,4 +1,9 @@
 import localFont from 'next/font/local'
+import {
+  IBM_Plex_Sans,
+  IBM_Plex_Serif,
+  IBM_Plex_Mono,
+} from 'next/font/google'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Analytics } from "@vercel/analytics/next"
@@ -29,6 +34,27 @@ const atkinson = localFont({
     },
   ],
   variable: '--font-atkinson',
+})
+
+const ibmPlexSans = IBM_Plex_Sans({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'],
+  variable: '--font-ibm-plex-sans',
+  display: 'swap',
+})
+
+const ibmPlexSerif = IBM_Plex_Serif({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'],
+  variable: '--font-ibm-plex-serif',
+  display: 'swap',
+})
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-ibm-plex-mono',
+  display: 'swap',
 })
 
 export const metadata = {
@@ -62,7 +88,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${atkinson.variable}`}>
+    <html
+      lang="en"
+      className={`${atkinson.variable} ${ibmPlexSans.variable} ${ibmPlexSerif.variable} ${ibmPlexMono.variable}`}
+    >
       <body>
         <header className="border-b border-zinc-800/10 dark:border-zinc-100/10 py-4">
           <nav className="container mx-auto px-4">
@@ -80,7 +109,7 @@ export default function RootLayout({
                   priority
                 />
               </Link>
-              <div className="space-x-6 font-sans">
+              <div className="flex items-center gap-6 font-sans">
                 <Link
                   href="/about"
                   className="hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"

@@ -9,11 +9,11 @@ export default function HomePage() {
 
   return (
     <div className="max-w-2xl mx-auto text-center">
-      <h1 className="text-4xl font-bold mb-4 font-serif">
+      <h1 className="text-4xl font-bold mb-4">
         {home.title}
       </h1>
 
-      <p className="text-xl text-zinc-600 dark:text-zinc-400 mb-8 font-sans">
+      <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-8 font-sans leading-[1.55]">
         {home.introduction}
       </p>
 
