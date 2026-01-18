@@ -21,7 +21,7 @@ const MDXComponents = {
     alt,
     ...props
   }: React.ImgHTMLAttributes<HTMLImageElement>) => {
-    if (!src) return null;
+    if (!src || typeof src !== 'string') return null;
 
     return (
       <div className="relative w-full h-96 my-8">
