@@ -151,4 +151,12 @@
     @apply dark:bg-violet-900/30 dark:text-violet-300;
     @apply border border-violet-200 dark:border-violet-700/50;
   }
+
+  /* Archive Badge - Used to indicate archived content */
+  .archive-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium;
+    @apply bg-amber-100 text-amber-700;
+    @apply dark:bg-amber-900/30 dark:text-amber-300;
+    @apply border border-amber-200 dark:border-amber-700/50;
+  }
 }

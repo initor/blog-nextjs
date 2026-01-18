@@ -4,11 +4,12 @@ import matter from 'gray-matter';
 import readingTime, { ReadTimeResults } from 'reading-time';
 
 // Content type definitions
-export type ContentType = 'blog' | 'preview';
+export type ContentType = 'blog' | 'preview' | 'archive';
 
 const CONTENT_PATHS: Record<ContentType, string> = {
   blog: path.join(process.cwd(), 'src/content/blog'),
   preview: path.join(process.cwd(), 'src/content/preview'),
+  archive: path.join(process.cwd(), 'src/content/archive'),
 };
 
 export interface PostFrontMatter {
@@ -29,7 +30,7 @@ export interface Post {
 
 /**
  * Get all posts for a given content type
- * @param contentType - 'blog' or 'preview' (defaults to 'blog')
+ * @param contentType - 'blog', 'preview', or 'archive' (defaults to 'blog')
  */
 export async function getAllPosts(contentType: ContentType = 'blog'): Promise<Post[]> {
   const postsPath = CONTENT_PATHS[contentType];
@@ -70,7 +71,7 @@ export async function getAllPosts(contentType: ContentType = 'blog'): Promise<Po
 /**
  * Get a single post by slug for a given content type
  * @param slug - The post slug (filename without extension)
- * @param contentType - 'blog' or 'preview' (defaults to 'blog')
+ * @param contentType - 'blog', 'preview', or 'archive' (defaults to 'blog')
  */
 export async function getPostBySlug(slug: string, contentType: ContentType = 'blog'): Promise<Post | undefined> {
   const postsPath = CONTENT_PATHS[contentType];

@@ -48,24 +48,49 @@ src/
 ├── app/           # Next.js App Router pages
 ├── components/    # React components
 ├── config/        # Site configuration
-├── content/       # MDX blog posts
+├── content/       # MDX content
+│   ├── blog/      # Published blog posts
+│   ├── preview/   # Draft posts (for previewing before publish)
+│   └── archive/   # Archived posts (hidden from /blog, accessible via URL)
 ├── fonts/         # Custom fonts
 └── lib/           # Utility functions
 ```
 
-## Adding Blog Posts
+## Content Management
 
-Create a new `.mdx` file in `src/content/blog/`:
+### Blog Posts (`/blog`)
+
+Published posts visible on the main blog. Create a new `.mdx` file in `src/content/blog/`:
 
 ```mdx
 ---
 title: "Your Post Title"
 date: "2026-01-17"
 description: "A brief description"
+tags: ["tag1", "tag2"]
 ---
 
 Your content here...
 ```
+
+### Preview Posts (`/preview`)
+
+Draft posts for previewing before publishing. Not linked from the main site but accessible via direct URL.
+
+- Create posts in `src/content/preview/`
+- Access at `/preview` or `/preview/[slug]`
+
+### Archive Posts (`/archive`)
+
+Posts you want to hide from the blog list but keep accessible via direct URL. Useful for:
+- Outdated content you don't want to delete
+- Posts you want to share privately
+- Content you may want to republish later
+
+**To archive a post:**
+1. Move the `.mdx` file from `src/content/blog/` to `src/content/archive/`
+2. The post disappears from `/blog` but remains accessible at `/archive/[slug]`
+3. View all archived posts at `/archive`
 
 ## Deployment
 
