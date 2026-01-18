@@ -25,7 +25,7 @@ const MDXLayout = ({ children, frontMatter }: MDXLayoutProps) => {
         </div>
 
         {frontMatter.description && (
-          <p className="text-xl text-gray-600 dark:text-gray-400 mb-4">
+          <p className="text-lg text-gray-600 dark:text-gray-400 mb-4 leading-[1.55]">
             {frontMatter.description}
           </p>
         )}

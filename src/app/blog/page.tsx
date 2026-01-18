@@ -14,7 +14,7 @@ export default async function BlogIndexPage() {
               href={`/blog/${post.slug}`}
               className="group block"
             >
-              <h2 className="text-2xl font-bold mb-2 group-hover:text-blue-600">
+              <h2 className="font-title text-2xl font-bold mb-2 group-hover:text-blue-600">
                 {post.frontMatter.title}
               </h2>
               <div className="flex items-center gap-4 text-gray-600 mb-2">

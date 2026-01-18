@@ -9,7 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-atkinson)', 'sans-serif'],
+        sans: ['var(--font-body)', 'sans-serif'],
+        serif: ['var(--font-title)', 'serif'],
+        mono: ['var(--font-mono)', 'monospace'],
       },
       typography: {
         DEFAULT: {
@@ -17,16 +19,21 @@ const config: Config = {
             '--tw-prose-body': 'var(--foreground)',
             '--tw-prose-headings': 'var(--foreground)',
             '--tw-prose-links': 'var(--foreground)',
-            fontFamily: 'var(--font-atkinson), sans-serif',
-            'h1, h2, h3, h4, h5, h6': {
-              fontFamily: 'var(--font-atkinson), sans-serif',
+            fontFamily: 'var(--font-body), sans-serif',
+            h1: {
+              fontFamily: 'var(--font-title), sans-serif',
+              fontWeight: '700',
+              color: 'var(--foreground)',
+            },
+            'h2, h3, h4, h5, h6': {
+              fontFamily: 'var(--font-heading), sans-serif',
               fontWeight: '700',
               color: 'var(--foreground)',
             },
             p: {
               color: 'var(--foreground)',
-              lineHeight: '1.65',
-              fontSize: '1.125rem',
+              lineHeight: '1.58',
+              fontSize: '1rem',
             },
             a: {
               color: 'var(--foreground)',
@@ -37,11 +44,12 @@ const config: Config = {
               },
             },
             code: {
-              color: 'var(--foreground)',
-              backgroundColor: 'rgb(244 244 245)',
-              padding: '0.25rem 0.375rem',
-              borderRadius: '0.25rem',
-              fontWeight: '500',
+              color: 'inherit',
+              fontFamily: 'var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+              backgroundColor: 'transparent',
+              padding: '0',
+              borderRadius: '0',
+              fontWeight: 'inherit',
             },
             'code::before': {
               content: '""',
@@ -50,7 +58,7 @@ const config: Config = {
               content: '""',
             },
             pre: {
-              backgroundColor: 'rgb(244 244 245)',
+              backgroundColor: 'transparent',
               code: {
                 backgroundColor: 'transparent',
                 padding: '0',

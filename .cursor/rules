@@ -73,3 +73,76 @@ This repository is exclusively for the personal blog. Do not add features unrela
 - `src/config/blog.ts` - Blog-specific configuration
 - `src/lib/mdx/utils.ts` - MDX processing utilities
 - `src/components/mdx/` - Custom MDX components
+
+## Git Commit Messages
+
+Follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification:
+
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+### Types
+
+- `feat:` - New feature (correlates with MINOR in SemVer)
+- `fix:` - Bug fix (correlates with PATCH in SemVer)
+- `docs:` - Documentation only changes
+- `style:` - Code style changes (formatting, whitespace)
+- `refactor:` - Code change that neither fixes a bug nor adds a feature
+- `perf:` - Performance improvement
+- `test:` - Adding or updating tests
+- `chore:` - Maintenance tasks, dependency updates
+- `ci:` - CI/CD configuration changes
+- `build:` - Build system or external dependency changes
+
+### Examples
+
+```bash
+feat: add syntax highlighting for code blocks
+fix: resolve hydration mismatch in theme switcher
+docs: update README with deployment instructions
+refactor(mdx): simplify mermaid component logic
+feat!: change API response format (breaking change)
+```
+
+### Rules
+
+- Use lowercase for type and description
+- No period at the end of the description
+- Use imperative mood ("add" not "added" or "adds")
+- Keep first line under 72 characters
+- Add body for complex changes explaining what and why
+
+## Pull Request Summary
+
+Always format PR summaries in **Markdown** with the following structure:
+
+```markdown
+## Summary
+- Bullet points describing the key changes (1-3 items)
+
+## Changes
+
+**Section Name**
+- Detailed change description
+- Another change
+
+**Another Section**
+- More changes as needed
+
+## Test plan
+- [ ] Checkbox items for testing the changes
+- [ ] Another test case
+```
+
+### PR Guidelines
+
+- Write clear, concise summaries focused on "what" and "why"
+- Group related changes under descriptive section headers
+- Use bullet points for readability
+- Include test plan with actionable verification steps
+- Reference related issues if applicable (e.g., `Fixes #123`)

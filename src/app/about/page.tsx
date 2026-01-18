@@ -7,10 +7,10 @@ const AboutPage = () => {
       <h1 className="text-3xl font-bold mb-8">About Me</h1>
 
       <section className="mb-12">
-        <p className="text-lg mb-6">
+        <p className="mb-6">
           I&apos;m a Staff Software Engineer working on compute infrastructure at LinkedIn. I&apos;m passionate about building distributed systems and designing scalable architectures.
         </p>
-        <p className="text-lg mb-6">
+        <p className="mb-6">
           Outside of work, I enjoy photography, racing simulators, and pushing myself with cross-training workouts. Most importantly, I cuddle with my beloved golden retriever, Wall-E.
         </p>
       </section>

@@ -1,3 +1,4 @@
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ImageProps } from 'next/image';
@@ -52,23 +53,42 @@ const MDXComponents = {
     );
   },
 
+  // Custom code component to preserve hljs classes from rehype-highlight
+  code: ({ className, children, ...props }: React.HTMLAttributes<HTMLElement>) => {
+    return (
+      <code className={className} {...props}>
+        {children}
+      </code>
+    );
+  },
+
   // Custom pre component to handle mermaid code blocks
   pre: ({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
     // Check if this is a mermaid code block
     const childElement = children as React.ReactElement<{
       className?: string;
-      children?: string;
+      children?: React.ReactNode;
     }>;
     
     if (
       childElement?.props?.className?.includes('language-mermaid') ||
       childElement?.props?.className?.includes('mermaid')
     ) {
-      const chart = childElement?.props?.children || '';
-      return <Mermaid chart={String(chart).trim()} />;
+      // For mermaid, we need to extract the raw text content
+      const extractText = (node: React.ReactNode): string => {
+        if (typeof node === 'string') return node;
+        if (typeof node === 'number') return String(node);
+        if (Array.isArray(node)) return node.map(extractText).join('');
+        if (React.isValidElement<{ children?: React.ReactNode }>(node)) {
+          return extractText(node.props.children);
+        }
+        return '';
+      };
+      const chart = extractText(childElement?.props?.children);
+      return <Mermaid chart={chart.trim()} />;
     }
 
-    // Default pre rendering
+    // Default pre rendering - pass through with all props
     return <pre {...props}>{children}</pre>;
   },
 };

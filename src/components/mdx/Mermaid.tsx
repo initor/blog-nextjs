@@ -1,19 +1,15 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import mermaid from 'mermaid';
 
 interface MermaidProps {
   chart: string;
 }
 
-// Initialize mermaid with configuration
-mermaid.initialize({
-  startOnLoad: false,
-  theme: 'neutral',
-  securityLevel: 'loose',
-  fontFamily: 'inherit',
-});
+// Helper to read CSS variable value
+function getCSSVar(name: string): string {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
 
 export default function Mermaid({ chart }: MermaidProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -25,6 +21,55 @@ export default function Mermaid({ chart }: MermaidProps) {
       if (!containerRef.current) return;
 
       try {
+        const mermaid = (await import('mermaid')).default;
+
+        // Read Catppuccin Frappé colors from CSS variables
+        const themeVariables = {
+          primaryColor: getCSSVar('--mermaid-node-bg'),
+          primaryTextColor: getCSSVar('--mermaid-primary-text'),
+          primaryBorderColor: getCSSVar('--mermaid-node-border'),
+          secondaryColor: getCSSVar('--mermaid-secondary'),
+          secondaryTextColor: getCSSVar('--mermaid-secondary-text'),
+          secondaryBorderColor: getCSSVar('--mermaid-node-border'),
+          tertiaryColor: getCSSVar('--mermaid-tertiary'),
+          tertiaryTextColor: getCSSVar('--mermaid-primary-text'),
+          tertiaryBorderColor: getCSSVar('--mermaid-node-border'),
+          lineColor: getCSSVar('--mermaid-line'),
+          textColor: getCSSVar('--mermaid-primary-text'),
+          mainBkg: getCSSVar('--mermaid-node-bg'),
+          background: getCSSVar('--mermaid-bg'),
+          nodeBorder: getCSSVar('--mermaid-node-border'),
+          clusterBkg: getCSSVar('--mermaid-node-bg'),
+          clusterBorder: getCSSVar('--mermaid-node-border'),
+          titleColor: getCSSVar('--mermaid-primary-text'),
+          edgeLabelBackground: getCSSVar('--mermaid-bg'),
+          // Sequence diagram specific
+          actorBkg: getCSSVar('--mermaid-actor-bg'),
+          actorBorder: getCSSVar('--mermaid-actor-border'),
+          actorTextColor: getCSSVar('--mermaid-primary-text'),
+          actorLineColor: getCSSVar('--mermaid-line'),
+          signalColor: getCSSVar('--mermaid-line'),
+          signalTextColor: getCSSVar('--mermaid-primary-text'),
+          labelBoxBkgColor: getCSSVar('--mermaid-node-bg'),
+          labelBoxBorderColor: getCSSVar('--mermaid-node-border'),
+          labelTextColor: getCSSVar('--mermaid-primary-text'),
+          loopTextColor: getCSSVar('--mermaid-primary-text'),
+          noteBkgColor: getCSSVar('--mermaid-note-bg'),
+          noteBorderColor: getCSSVar('--mermaid-note-border'),
+          noteTextColor: getCSSVar('--mermaid-primary-text'),
+          activationBkgColor: getCSSVar('--mermaid-primary'),
+          activationBorderColor: getCSSVar('--mermaid-node-border'),
+          sequenceNumberColor: getCSSVar('--mermaid-bg'),
+        };
+
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: 'base',
+          themeVariables,
+          securityLevel: 'loose',
+          fontFamily: 'inherit',
+        });
+
         const id = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
         const { svg } = await mermaid.render(id, chart);
         setSvg(svg);
@@ -49,7 +94,7 @@ export default function Mermaid({ chart }: MermaidProps) {
   return (
     <div
       ref={containerRef}
-      className="my-6 flex justify-center overflow-x-auto"
+      className="mermaid-diagram my-6 flex justify-center overflow-x-auto"
       dangerouslySetInnerHTML={{ __html: svg }}
     />
   );
