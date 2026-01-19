@@ -275,7 +275,6 @@
   .prose sup:has(a[href^="#user-content-fn"]) {
     @apply text-[0.65rem];
     margin-left: 0.1em;
-    top: -0.6em;
   }
 
   .prose a[href^="#fn"],
@@ -496,4 +495,10 @@ sub {
 
 sup {
   top: -0.5em;
+}
+
+/* Footnote superscript override - must be after general sup rule */
+.prose sup:has(a[href^="#fn"]),
+.prose sup:has(a[href^="#user-content-fn"]) {
+  top: -0.6em;
 }
