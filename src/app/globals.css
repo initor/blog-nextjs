@@ -71,6 +71,10 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+
+    /* Link color - Catppuccin Mocha Lavender */
+    --link-color: #b4befe;
+    --link-color-hover: #cdd6f4;
   }
 }
 
