@@ -37,6 +37,10 @@
   --code-attr: #414559;
   --code-inline: #ea76cb; /* Catppuccin Frappé pink for inline code */
 
+  /* Link color - Catppuccin Latte Lavender */
+  --link-color: #7287fd;
+  --link-color-hover: #5c6bc0;
+
   /* Mermaid diagram - Catppuccin Frappé Light */
   --mermaid-bg: #f2f4f8;
   --mermaid-primary: #4b78c9;
@@ -267,9 +271,11 @@
   }
 
   /* Footnotes - highlighted with brackets in blue, smaller with leading space */
-  .prose sup {
-    @apply text-[0.65rem] leading-none;
+  .prose sup:has(a[href^="#fn"]),
+  .prose sup:has(a[href^="#user-content-fn"]) {
+    @apply text-[0.65rem];
     margin-left: 0.1em;
+    top: -0.6em;
   }
 
   .prose a[href^="#fn"],
@@ -468,4 +474,26 @@ pre code.hljs {
 pre code::selection,
 pre code *::selection {
   background: var(--code-selection);
+}
+
+/* =============================================================================
+   Subscript & Superscript - Override Tailwind preflight
+   Must be outside @layer to have higher specificity
+   ============================================================================= */
+
+sub,
+sup {
+  font-size: 0.65em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+  font-weight: 600;
+}
+
+sub {
+  bottom: -0.3em;
+}
+
+sup {
+  top: -0.5em;
 }

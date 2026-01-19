@@ -7,8 +7,8 @@ export const siteConfig = {
   // Homepage specific configuration
   home: {
     title: "Wayne Wen",
-    subtitle: "Software Engineer",
-    introduction: "Building distributed systems and sharing my learnings.",
+    subtitle: "Artist",
+    introduction: "Making critical systems boring at scale.",
 
     // Social links with display preferences
     socialLinks: {

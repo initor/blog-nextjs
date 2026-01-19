@@ -76,7 +76,7 @@ export default async function PreviewPostPage({
   }
 
   return (
-    <article className="max-w-4xl mx-auto px-4 py-8">
+    <article className="max-w-2xl mx-auto px-4 py-8">
       <header className="mb-6">
         <div className="flex items-start gap-3 mb-1.5">
           <h1 className="text-4xl font-bold">{post.frontMatter.title}</h1>
@@ -94,25 +94,6 @@ export default async function PreviewPostPage({
           <span>·</span>
           <span>{post.frontMatter.readingTime.text}</span>
         </div>
-
-        {post.frontMatter.description && (
-          <p className="text-base text-gray-600 dark:text-gray-400 mb-1.5 leading-[1.55]">
-            {post.frontMatter.description}
-          </p>
-        )}
-
-        {post.frontMatter.tags && (
-          <div className="flex flex-wrap gap-1.5">
-            {post.frontMatter.tags.map((tag) => (
-              <span
-                key={tag}
-                className="px-2.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded-full text-xs"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
       </header>
 
       <div className="prose dark:prose-invert max-w-none">

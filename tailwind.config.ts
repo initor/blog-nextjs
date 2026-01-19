@@ -18,7 +18,7 @@ const config: Config = {
           css: {
             '--tw-prose-body': 'var(--foreground)',
             '--tw-prose-headings': 'var(--foreground)',
-            '--tw-prose-links': 'var(--foreground)',
+            '--tw-prose-links': 'var(--link-color)',
             fontFamily: 'var(--font-body), sans-serif',
             h1: {
               fontFamily: 'var(--font-title), sans-serif',
@@ -36,11 +36,13 @@ const config: Config = {
               fontSize: '1rem',
             },
             a: {
-              color: 'var(--foreground)',
+              color: 'var(--link-color)',
               textDecoration: 'underline',
-              textUnderlineOffset: '2px',
+              textUnderlineOffset: '3px',
+              textDecorationThickness: '1px',
+              transition: 'color 0.2s ease',
               '&:hover': {
-                opacity: 0.8,
+                color: 'var(--link-color-hover)',
               },
             },
             code: {
