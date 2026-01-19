@@ -279,8 +279,7 @@
      See "Footnote superscript override" section at end of file. */
   .prose sup:has(a[href^="#fn"]),
   .prose sup:has(a[href^="#user-content-fn"]) {
-    @apply text-[0.65rem];
-    margin-left: 0.1em;
+    @apply text-[0.65rem] ml-[0.1em];
   }
 
   .prose a[href^="#fn"],
