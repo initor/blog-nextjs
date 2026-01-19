@@ -20,13 +20,13 @@ const AboutPage = () => {
 
         <figure className="relative">
           <Image
-            src="/images/medium/half_moon_bay_medium.png"
+            src="/images/large/half_moon_bay_large.png"
             alt="Half Moon Bay"
-            width={1200}
-            height={800}
+            width={1600}
+            height={1068}
             className="rounded-sm"
-            sizes="(max-width: 768px) 100vw, 800px"
-            quality={85}
+            sizes="(max-width: 768px) calc(100vw - 32px), 640px"
+            quality={100}
             priority
           />
           <figcaption className="mt-2 text-sm text-zinc-600">
@@ -37,13 +37,13 @@ const AboutPage = () => {
         <br/>
         <figure className="relative">
           <Image
-            src="/images/medium/wall_e_medium.jpg"
+            src="/images/large/wall_e_large.jpg"
             alt="Wall-E"
-            width={1200}
-            height={800}
+            width={1600}
+            height={1068}
             className="rounded-sm"
-            sizes="(max-width: 768px) 100vw, 800px"
-            quality={85}
+            sizes="(max-width: 768px) calc(100vw - 32px), 640px"
+            quality={100}
             priority
           />
           <figcaption className="mt-2 text-sm text-zinc-600">
@@ -54,13 +54,13 @@ const AboutPage = () => {
         <br/>
         <figure className="relative">
           <Image
-            src="/images/medium/993_carrera_medium.png"
+            src="/images/large/993_carrera_large.png"
             alt="993 Carrera"
-            width={1200}
-            height={800}
+            width={1600}
+            height={1068}
             className="rounded-sm"
-            sizes="(max-width: 768px) 100vw, 800px"
-            quality={85}
+            sizes="(max-width: 768px) calc(100vw - 32px), 640px"
+            quality={100}
             priority
           />
           <figcaption className="mt-2 text-sm text-zinc-600">
@@ -71,17 +71,34 @@ const AboutPage = () => {
         <br/>
         <figure className="relative">
           <Image
-            src="/images/medium/992_gt3_medium.jpg"
+            src="/images/large/992_gt3_large.jpg"
             alt="992 GT3"
-            width={1200}
-            height={800}
+            width={1600}
+            height={1068}
             className="rounded-sm"
-            sizes="(max-width: 768px) 100vw, 800px"
-            quality={85}
+            sizes="(max-width: 768px) calc(100vw - 32px), 640px"
+            quality={100}
             priority
           />
           <figcaption className="mt-2 text-sm text-zinc-600">
             992 GT3
+          </figcaption>
+        </figure>
+
+        <br/>
+        <figure className="relative">
+          <Image
+            src="/images/large/cervelo_s5_large.jpg"
+            alt="Cervélo S5"
+            width={1600}
+            height={1068}
+            className="rounded-sm"
+            sizes="(max-width: 768px) calc(100vw - 32px), 640px"
+            quality={100}
+            priority
+          />
+          <figcaption className="mt-2 text-sm text-zinc-600">
+            Cervélo S5
           </figcaption>
         </figure>
       </section>
