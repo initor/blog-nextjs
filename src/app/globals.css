@@ -274,7 +274,9 @@
     color: var(--code-inline) !important;
   }
 
-  /* Footnotes - highlighted with brackets in blue, smaller with leading space */
+  /* Footnotes - highlighted with brackets in blue, smaller with leading space
+     Note: Positioning (top) is set outside @layer base to override general sup rule.
+     See "Footnote superscript override" section at end of file. */
   .prose sup:has(a[href^="#fn"]),
   .prose sup:has(a[href^="#user-content-fn"]) {
     @apply text-[0.65rem];
@@ -501,7 +503,10 @@ sup {
   top: -0.5em;
 }
 
-/* Footnote superscript override - must be after general sup rule */
+/* Footnote superscript override
+   Must be outside @layer to override general sup positioning above.
+   Styles inside @layer base have lower cascade priority than unlayered styles,
+   so this rule must be here (after the general sup rule) for specificity to work. */
 .prose sup:has(a[href^="#fn"]),
 .prose sup:has(a[href^="#user-content-fn"]) {
   top: -0.6em;

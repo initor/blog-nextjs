@@ -11,7 +11,7 @@ const AboutPage = () => {
           I&apos;m Wayne, a Staff Software Engineer on the compute infrastructure team at LinkedIn. I build the reliability-critical parts of our Kubernetes platform that help big systems behave.
         </p>
         <p className="mb-6">
-        When I&apos;m not thinking about clusters, I&apos;m usually behind a camera, on a racing sim rig, or training to get a little stronger. Yes, I spend an unreasonable amount of time cuddling my golden retriever, Wall‑E.
+        When I&apos;m not thinking about clusters, I&apos;m usually behind a camera, on a racing sim rig, or training to get a little stronger. Yes, I spend an unreasonable amount of time cuddling my golden retriever, Wall-E.
         </p>
       </section>
 
@@ -38,7 +38,7 @@ const AboutPage = () => {
         <figure className="relative">
           <Image
             src="/images/medium/wall_e_medium.jpg"
-            alt="Wall E"
+            alt="Wall-E"
             width={1200}
             height={800}
             className="rounded-sm"
