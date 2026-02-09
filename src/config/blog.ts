@@ -1,3 +1,5 @@
+import { env } from "@/env";
+
 export const blogConfig = {
   title: "initial",
   description: "Weezy thoughts",
@@ -13,7 +15,7 @@ export const blogConfig = {
   // Analytics, social sharing, and SEO defaults
   analytics: {
     // e.g., Google Analytics ID
-    googleAnalyticsId: process.env.NEXT_PUBLIC_GA_ID,
+    googleAnalyticsId: env.NEXT_PUBLIC_GA_ID,
   },
   openGraph: {
     type: 'website', // default type, will be overridden with 'article' for blog posts
