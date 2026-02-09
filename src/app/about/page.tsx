@@ -44,7 +44,6 @@ const AboutPage = () => {
             className="rounded-sm"
             sizes="(max-width: 768px) calc(100vw - 32px), 640px"
             quality={100}
-            priority
           />
           <figcaption className="mt-2 text-sm text-zinc-600">
             dearest Wall-E
@@ -61,7 +60,6 @@ const AboutPage = () => {
             className="rounded-sm"
             sizes="(max-width: 768px) calc(100vw - 32px), 640px"
             quality={100}
-            priority
           />
           <figcaption className="mt-2 text-sm text-zinc-600">
             993 Carrera
@@ -78,7 +76,6 @@ const AboutPage = () => {
             className="rounded-sm"
             sizes="(max-width: 768px) calc(100vw - 32px), 640px"
             quality={100}
-            priority
           />
           <figcaption className="mt-2 text-sm text-zinc-600">
             992 GT3
@@ -95,7 +92,6 @@ const AboutPage = () => {
             className="rounded-sm"
             sizes="(max-width: 768px) calc(100vw - 32px), 640px"
             quality={100}
-            priority
           />
           <figcaption className="mt-2 text-sm text-zinc-600">
             Cervélo S5

@@ -8,6 +8,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Analytics } from "@vercel/analytics/next"
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { blogConfig } from '@/config/blog'
 import './globals.css'
 
 const atkinson = localFont({
@@ -134,7 +135,9 @@ export default function RootLayout({
             © {new Date().getFullYear()} Wayne Wen
           </div>
         </footer>
-        <GoogleAnalytics gaId="G-P9BJ1DCTPB" />
+        {blogConfig.analytics.googleAnalyticsId && (
+          <GoogleAnalytics gaId={blogConfig.analytics.googleAnalyticsId} />
+        )}
         <Analytics />
       </body>
     </html>

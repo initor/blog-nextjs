@@ -2,9 +2,16 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import readingTime, { ReadTimeResults } from 'reading-time';
+import { ZodError } from 'zod';
+import { FrontmatterSchema, type Frontmatter } from './schemas';
 
 // Content type definitions
 export type ContentType = 'blog' | 'preview' | 'archive';
+
+/** Type guard for Node.js filesystem errors (ENOENT, EACCES, etc.) */
+function isNodeError(error: unknown): error is NodeJS.ErrnoException {
+  return error instanceof Error && 'code' in error;
+}
 
 const CONTENT_PATHS: Record<ContentType, string> = {
   blog: path.join(process.cwd(), 'src/content/blog'),
@@ -12,15 +19,10 @@ const CONTENT_PATHS: Record<ContentType, string> = {
   archive: path.join(process.cwd(), 'src/content/archive'),
 };
 
-export interface PostFrontMatter {
-  title: string;
-  date: string;
+/** Full post frontmatter including computed readingTime */
+export type PostFrontMatter = Frontmatter & {
   readingTime: ReadTimeResults;
-  description?: string;
-  tags?: string[];
-  category?: string;
-  ogImage?: string;
-}
+};
 
 export interface Post {
   frontMatter: PostFrontMatter;
@@ -51,7 +53,7 @@ export async function getAllPosts(contentType: ContentType = 'blog'): Promise<Po
 
         return {
           frontMatter: {
-            ...(data as Omit<PostFrontMatter, 'readingTime'>),
+            ...FrontmatterSchema.parse(data),
             readingTime: readingTime(content),
           },
           slug: fileName.replace(/\.mdx?$/, ''),
@@ -83,14 +85,28 @@ export async function getPostBySlug(slug: string, contentType: ContentType = 'bl
 
     return {
       frontMatter: {
-        ...(data as Omit<PostFrontMatter, 'readingTime'>),
+        ...FrontmatterSchema.parse(data),
         readingTime: readingTime(content),
       },
       slug,
       content,
     };
   } catch (error) {
-    console.error(error);
+    if (error instanceof ZodError) {
+      console.error(
+        `[${contentType}/${slug}] Frontmatter validation failed:`,
+        error.issues.map(i => `${i.path.join('.')}: ${i.message}`).join(', ')
+      );
+      throw error;
+    }
+
+    if (isNodeError(error) && error.code === 'ENOENT') {
+      // File not found -- expected for invalid slugs, no logging needed
+      return undefined;
+    }
+
+    // Unexpected error -- log with context for debugging
+    console.error(`[${contentType}/${slug}] Unexpected error loading post:`, error);
     return undefined;
   }
 }
