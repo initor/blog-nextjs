@@ -10,7 +10,7 @@ export const blogConfig = {
     linkedin: "w3e",
     bluesky: "waynewen.com",
   },
-  siteUrl: "https://www.waynewen.com",
+  siteUrl: "https://waynewen.com",
   defaultTheme: 'system', // for dark mode settings
   // Analytics, social sharing, and SEO defaults
   analytics: {
