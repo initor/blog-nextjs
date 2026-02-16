@@ -10,6 +10,7 @@ export const FrontmatterSchema = z.object({
   tags: z.array(z.string()).optional().default([]),
   category: z.string().optional(),
   description: z.string().optional(),
+  location: z.string().optional(),
   ogImage: z.string().optional(),
 });
 

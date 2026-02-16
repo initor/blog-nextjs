@@ -38,6 +38,15 @@ const MDXComponents = {
     );
   },
 
+  // Unwrap images from <p> tags to avoid <div> inside <p> hydration errors
+  p: ({ children, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => {
+    const childArray = React.Children.toArray(children);
+    if (childArray.length === 1 && React.isValidElement(childArray[0]) && (childArray[0] as React.ReactElement<{ src?: string }>).props.src) {
+      return <>{children}</>;
+    }
+    return <p {...props}>{children}</p>;
+  },
+
   // Add custom heading components with anchor links
   h2: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => {
     const id = typeof children === 'string'
