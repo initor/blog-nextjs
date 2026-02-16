@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import {
   IBM_Plex_Sans,
@@ -58,9 +59,17 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: 'swap',
 })
 
-export const metadata = {
+export const metadata: Metadata = {
+  metadataBase: new URL(blogConfig.siteUrl),
   title: 'Wayne Wen',
   description: 'Personal blog',
+  alternates: {
+    types: {
+      'application/atom+xml': [
+        { url: '/feed.xml', title: 'Wayne Wen - Atom Feed' },
+      ],
+    },
+  },
   icons: {
     icon: [
       {

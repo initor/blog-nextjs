@@ -28,6 +28,13 @@ vi.mock('@/components/mdx/MDXComponents', () => ({
 vi.mock('remark-gfm', () => ({ default: {} }));
 vi.mock('rehype-highlight', () => ({ default: {} }));
 
+vi.mock('@/config/blog', () => ({
+  blogConfig: {
+    siteUrl: 'https://example.com',
+    author: { name: 'Test Author' },
+  },
+}));
+
 const mockPost = {
   frontMatter: {
     title: 'Test Post Title',
@@ -114,5 +121,47 @@ describe('PostPageLayout', () => {
   it('passes slug and contentType to getPostBySlug', async () => {
     await renderPostPageLayout('test-post', 'blog');
     expect(mockGetPostBySlug).toHaveBeenCalledWith('test-post', 'blog');
+  });
+
+  // JSON-LD structured data tests
+
+  it('renders JSON-LD script tag for blog content type', async () => {
+    const { container } = await renderPostPageLayout('test-post', 'blog');
+    const script = container.querySelector('script[type="application/ld+json"]');
+    expect(script).not.toBeNull();
+    // Parse the JSON-LD content (replace escaped sequences for parsing)
+    const content = script!.textContent!.replace(/\\u003c/g, '<');
+    const jsonLd = JSON.parse(content);
+    expect(jsonLd['@type']).toBe('BlogPosting');
+    expect(jsonLd.headline).toBe('Test Post Title');
+  });
+
+  it('does NOT render JSON-LD for preview content type', async () => {
+    const { container } = await renderPostPageLayout('test-post', 'preview');
+    const script = container.querySelector('script[type="application/ld+json"]');
+    expect(script).toBeNull();
+  });
+
+  it('does NOT render JSON-LD for archive content type', async () => {
+    const { container } = await renderPostPageLayout('test-post', 'archive');
+    const script = container.querySelector('script[type="application/ld+json"]');
+    expect(script).toBeNull();
+  });
+
+  it('JSON-LD output does not contain literal < characters', async () => {
+    // Use a title that contains < to verify XSS safety
+    const xssPost = {
+      ...mockPost,
+      frontMatter: {
+        ...mockPost.frontMatter,
+        title: 'Test</script><script>alert("xss")</script>',
+      },
+    };
+    mockGetPostBySlug.mockResolvedValue(xssPost);
+    const { container } = await renderPostPageLayout('test-post', 'blog');
+    const script = container.querySelector('script[type="application/ld+json"]');
+    expect(script).not.toBeNull();
+    // The raw textContent should not contain literal < (they should be escaped)
+    expect(script!.innerHTML).not.toContain('<');
   });
 });

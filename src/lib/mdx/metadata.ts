@@ -45,6 +45,9 @@ export function createGenerateMetadata(contentType: ContentType) {
       title,
       description: post.frontMatter.description,
       authors: [{ name: blogConfig.author.name }],
+      alternates: {
+        canonical: `/${contentType}/${post.slug}`,
+      },
       openGraph: {
         title: post.frontMatter.title,
         description: post.frontMatter.description,
