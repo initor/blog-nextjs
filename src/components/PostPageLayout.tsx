@@ -59,6 +59,12 @@ export default async function PostPageLayout({
           </time>
           <span>·</span>
           <span>{post.frontMatter.readingTime.text}</span>
+          {post.frontMatter.location && (
+            <>
+              <span>·</span>
+              <span>{post.frontMatter.location}</span>
+            </>
+          )}
         </div>
       </header>
 
