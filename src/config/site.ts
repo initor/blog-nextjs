@@ -14,27 +14,27 @@ export const siteConfig = {
     socialLinks: {
       github: {
         url: `https://github.com/${blogConfig.author.github}`,
-        show: false,
+        show: true,
         priority: 1,
+      },
+      linkedin: {
+        url: `https://linkedin.com/in/${blogConfig.author.linkedin}`,
+        show: true,
+        priority: 2,
       },
       twitter: {
         url: `https://twitter.com/${blogConfig.author.twitter}`,
         show: true,
-        priority: 2,
+        priority: 3,
       },
       bluesky: {
         url: `https://bsky.app/profile/${blogConfig.author.bluesky}`,
-        show: true,
-        priority: 3,
-      },
-      linkedin: {
-        url: `https://linkedin.com/in/${blogConfig.author.linkedin}`,
         show: true,
         priority: 4,
       },
       discord: {
         url: `https://discord.gg/TCNdj3ahPz`,
-        show: true,
+        show: false,
         priority: 5,
       },
     },
