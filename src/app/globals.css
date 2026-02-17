@@ -901,7 +901,7 @@ html {
     }
   }
 
-  /* Reconcile Pipeline — vertical step flow with error bracket */
+  /* Reconcile Pipeline — horizontal flow with error annotation */
   .rp {
     margin: 1.5em 0;
     padding: 0;
@@ -911,125 +911,85 @@ html {
     overflow: hidden;
   }
 
-  .rp-body {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    padding: 1rem 1.25rem;
-    gap: 0 1rem;
-  }
-
-  .rp-steps {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
+  .rp-flow {
+    display: flex;
+    align-items: center;
     gap: 0;
+    padding: 0.75rem 1rem;
+    overflow-x: auto;
   }
 
   .rp-step {
-    display: grid;
-    grid-template-columns: 1.75rem 1fr;
-    grid-template-rows: auto auto;
-    gap: 0 0.6rem;
-    align-items: start;
-  }
-
-  .rp-step-num {
-    grid-row: 1;
-    width: 1.75rem;
-    height: 1.75rem;
-    border-radius: 50%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 0.7rem;
-    font-weight: 600;
+    gap: 0;
     flex-shrink: 0;
   }
 
-  .rp-step-normal .rp-step-num {
-    background: var(--mermaid-node-bg);
-    border: 1.5px solid var(--mermaid-node-border);
-    color: var(--code-fg);
-  }
-
-  .rp-step-error .rp-step-num {
-    background: var(--mermaid-error-fill);
-    border: 1.5px solid var(--mermaid-error);
-    color: var(--mermaid-error);
-  }
-
-  .rp-step-content {
-    grid-row: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-    padding-top: 0.2rem;
-  }
-
   .rp-step-label {
-    font-family: var(--font-heading), system-ui, sans-serif;
-    font-weight: 600;
-    font-size: 0.8rem;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.68rem;
+    font-weight: 500;
+    padding: 0.3rem 0.55rem;
+    border-radius: 0.3rem;
+    border: 1.5px solid;
+    white-space: nowrap;
+  }
+
+  .rp-step-normal .rp-step-label {
+    background: var(--mermaid-node-bg);
+    border-color: var(--mermaid-node-border);
     color: var(--code-fg);
   }
 
   .rp-step-error .rp-step-label {
+    background: var(--mermaid-error-fill);
+    border-color: var(--mermaid-error);
     color: var(--mermaid-error);
-  }
-
-  .rp-step-note {
-    font-family: var(--font-body), system-ui, sans-serif;
-    font-size: 0.7rem;
-    color: var(--code-comment);
-    line-height: 1.3;
+    font-weight: 600;
   }
 
   .rp-arrow {
-    grid-column: 1;
-    grid-row: 2;
-    display: flex;
-    justify-content: center;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--code-comment);
-    opacity: 0.5;
-    padding: 0.15rem 0;
+    opacity: 0.45;
+    padding: 0 0.3rem;
+    flex-shrink: 0;
   }
 
-  .rp-bracket {
-    grid-column: 2;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 0;
+  .rp-annotation {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 0 1rem 0.6rem;
+    gap: 0.2rem 0;
   }
 
   .rp-bracket-line {
-    width: 3px;
-    align-self: stretch;
+    height: 3px;
     border-radius: 1.5px;
     background: var(--mermaid-error);
-    opacity: 0.6;
+    opacity: 0.5;
   }
 
   .rp-bracket-label {
     font-family: var(--font-body), system-ui, sans-serif;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     font-style: italic;
     color: var(--mermaid-error);
-    max-width: 10rem;
     line-height: 1.3;
+    text-align: center;
   }
 
   @media (max-width: 480px) {
-    .rp-body {
+    .rp-flow {
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+    .rp-annotation {
       grid-template-columns: 1fr;
     }
-    .rp-bracket {
-      grid-column: 1;
-      margin-left: 2.35rem;
-      padding: 0.4rem 0;
+    .rp-bracket-label {
+      text-align: left;
     }
   }
 
