@@ -30,7 +30,6 @@ export default function ReconcilePipeline({
     stepList = Array.isArray(steps) ? steps : [];
   }
 
-  // Find contiguous error range for the bracket
   const errorStart = stepList.findIndex((s) => s.style === 'error');
   const errorEnd = stepList.reduce(
     (last, s, i) => (s.style === 'error' ? i : last),
@@ -40,32 +39,37 @@ export default function ReconcilePipeline({
 
   return (
     <figure className="rp not-prose">
-      <div className="rp-body">
-        <ol className="rp-steps">
-          {stepList.map((step, i) => (
-            <li key={i} className={`rp-step ${stepStyle[step.style] || 'rp-step-normal'}`}>
-              <div className="rp-step-num">{i + 1}</div>
-              <div className="rp-step-content">
-                <span className="rp-step-label">{step.label}</span>
-                <span className="rp-step-note">{step.note}</span>
-              </div>
-              {i < stepList.length - 1 && <div className="rp-arrow">↓</div>}
-            </li>
-          ))}
-        </ol>
-        {hasErrorRange && annotation && (
+      <div className="rp-flow">
+        {stepList.map((step, i) => (
           <div
-            className="rp-bracket"
+            key={i}
+            className={`rp-step ${stepStyle[step.style] || 'rp-step-normal'}`}
+          >
+            <span className="rp-step-label">{step.label}</span>
+            {i < stepList.length - 1 && <span className="rp-arrow">→</span>}
+          </div>
+        ))}
+      </div>
+      {hasErrorRange && annotation && (
+        <div className="rp-annotation">
+          <div
+            className="rp-bracket-line"
             style={{
-              gridRowStart: errorStart + 1,
-              gridRowEnd: errorEnd + 2,
+              gridColumnStart: errorStart + 1,
+              gridColumnEnd: errorEnd + 2,
+            }}
+          />
+          <span
+            className="rp-bracket-label"
+            style={{
+              gridColumnStart: errorStart + 1,
+              gridColumnEnd: errorEnd + 2,
             }}
           >
-            <div className="rp-bracket-line" />
-            <span className="rp-bracket-label">{annotation}</span>
-          </div>
-        )}
-      </div>
+            {annotation}
+          </span>
+        </div>
+      )}
     </figure>
   );
 }

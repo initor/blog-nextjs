@@ -7,11 +7,9 @@ description: 'A routine annotation change triggered unexpected pod churn. The tr
 location: 'Palo Alto, CA'
 ---
 
-You are running the workload platform for the company. One day you need to add an annotation to a fleet of pods. Pure metadata, the Kubernetes equivalent of sticking a Post-It note on a resource.
+I run the stateless workload platform for my company. One day, I needed to add an annotation to a workload's pods. Pure metadata, the Kubernetes equivalent of sticking a Post-It note on a resource. Patched the change. The controller reconciled. And new pods started spinning up.
 
-You push the change. The controller reconciles. And...
-
-Wait. Why are new pods spinning up?
+But, why?
 
 ## Something's Off
 
@@ -21,22 +19,11 @@ But right after we pushed the change, about 5% of pods were being *recreated*: n
 
 ## Two Knobs
 
-Before we dig into code, one concept matters: how CloneSet rolls out changes.
-
-Two knobs control the rollout:
-
-- `maxUnavailable`: how many pods can be down at once. The safety limit.
-- `maxSurge`: how many *extra* pods to create above the desired count. The speed lever.
-
-Together they set the pace. Here is what that looks like with 100 replicas, maxSurge at 10%, and maxUnavailable at 5%, and step through the same rollout interactively:
+Before we dig into code, one concept matters. CloneSet rolling updates are governed by two knobs: `maxUnavailable` (how many pods can be down at once) and `maxSurge` (how many extra pods to create above the desired count). Together they set the rollout pace. Step through a 100-replica rollout with maxSurge at 10% and maxUnavailable at 5%:
 
 <RollingUpdateVisualizer replicas={100} maxSurge={10} maxUnavailable={5} />
 
-maxSurge makes rolling updates fast and safe: new pods come up before old ones go down. Capacity stays healthy throughout.
-
-But here is the thing. Surge exists to *replace* pods. What happens when pods do not need replacing?
-
-Our CloneSet had maxSurge set to 5%. And exactly 5% of pods were being phantom-created during an in-place update. Not a coincidence.
+maxSurge makes rolling updates fast and safe: new pods come up before old ones go down. But surge exists to *replace* pods. What happens when pods do not need replacing? Our CloneSet had maxSurge set to 5%, and exactly 5% of pods were being phantom-created during an in-place update. Not a coincidence.
 
 ## Inside the Loop
 
@@ -69,44 +56,25 @@ It sees a revision diff, computes surge, and tells the controller to create pods
 
 ## The Wrong Order
 
-Here is the reconciliation pipeline, step by step:
-
-<ReconcilePipeline
-  annotation="Runs before the controller knows whether in-place update will handle it"
-  steps='[
-    {"label":"Count updates","note":"Detects revision difference between current and desired state","style":"normal"},
-    {"label":"Compute surge","note":"Calculates how many extra pods to create, assumes recreate","style":"error"},
-    {"label":"Create extra pods","note":"Surge pods are scheduled and start running","style":"error"},
-    {"label":"Try in-place update","note":"Discovers it can just patch the existing pods","style":"normal"},
-    {"label":"Delete surplus","note":"Cleans up the pods that were never needed","style":"normal"}
-  ]'
-/>
-
-For recreate updates, this ordering is correct: you need new pods ready before tearing old ones down. But for in-place updates, steps 2 and 3 fire before the controller knows patching will handle it. Pods get created that were never needed.
+The reconciliation pipeline runs in a fixed order: count how many pods need updating, compute surge, create the surge pods, *then* check for in-place updates, and finally delete surplus. For recreate updates, this ordering works. But for in-place updates, surge computation and pod creation fire before the controller knows that patching will handle the change:
 
 <TimelineCompare
-  leftTitle="Expected: In-Place Update"
-  leftSubtitle="100 replicas · in-place patch"
+  leftTitle="Expected"
+  leftSubtitle="in-place patch"
   leftSteps='[
-    {"label":"Before","pods":[{"count":100,"style":"v1"}],"note":"All 100 pods running current revision."},
-    {"label":"Patching:40%","pods":[{"count":60,"style":"v1"},{"count":40,"style":"patch"}],"note":"40 pods patched in place. No new pods."},
-    {"label":"Patching:90%","pods":[{"count":10,"style":"v1"},{"count":90,"style":"patch"}],"note":"Almost done. Still exactly 100 pods."},
-    {"label":"Complete","pods":[{"count":100,"style":"v2"}],"note":"All 100 updated. Zero churn."}
+    {"label":"Before","pods":[{"count":100,"style":"v1"}]},
+    {"label":"Complete","pods":[{"count":100,"style":"v2"}]}
   ]'
-  leftCaption="Same pods, new metadata. Total never changes."
-  rightTitle="Actual: The Phantom Surge"
-  rightSubtitle="100 replicas · maxSurge: 5% · in-place patch"
+  rightTitle="Actual"
+  rightSubtitle="maxSurge: 5%"
   rightSteps='[
-    {"label":"Before","pods":[{"count":100,"style":"v1"}],"note":"All 100 pods running current revision."},
-    {"label":"Surge fires","pods":[{"count":100,"style":"v1"},{"count":5,"style":"phantom"}],"note":"5 surge pods created before strategy check."},
-    {"label":"Patching begins","pods":[{"count":60,"style":"v1"},{"count":40,"style":"patch"},{"count":5,"style":"phantom"}],"note":"Originals patch in place. Phantoms sit idle."},
-    {"label":"Patching complete","pods":[{"count":100,"style":"v2"},{"count":5,"style":"phantom"}],"note":"All patched. Phantoms still running."},
-    {"label":"Cleanup","pods":[{"count":100,"style":"v2"}],"note":"Phantoms deleted. Created and destroyed for nothing."}
+    {"label":"Before","pods":[{"count":100,"style":"v1"}]},
+    {"label":"Surge fires","pods":[{"count":100,"style":"v1"},{"count":5,"style":"phantom"}]},
+    {"label":"Complete","pods":[{"count":100,"style":"v2"}]}
   ]'
-  rightCaption="Five pods appear, persist through the update, then vanish."
 />
 
-Create. Patch. Delete. Every reconciliation cycle. Pods appearing and vanishing like ghosts, doing nothing, costing everything.
+Five phantom pods, created and destroyed for nothing. Every reconciliation cycle.
 
 ## One Boolean
 
@@ -130,6 +98,6 @@ I opened a PR to fix this upstream in OpenKruise: [openkruise/kruise#2377](https
 
 ## Takeaways
 
-The root cause was ordering. Surge calculation runs before the controller checks whether in-place update will handle the change. Each feature works fine alone: in-place update with `maxSurge=0` never triggers it, and surge with recreate updates behaves as designed. The bug only shows up when both are active, an intersection no single-feature test covered.
+Ordering matters in the control loop. Surge calculation runs before the controller checks whether in-place update will handle the change. Each feature works fine alone: in-place update with `maxSurge=0` never triggers it, and surge with recreate updates behaves as designed. The bug only shows up when both are active, an intersection no single-feature test covered.
 
 The fix adds one boolean gating the surge path. Every cluster running `InPlaceIfPossible` with `maxSurge > 0` was silently hitting this.
