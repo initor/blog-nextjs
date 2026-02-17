@@ -3,6 +3,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { ImageProps } from 'next/image';
 import Mermaid from './Mermaid';
+import PodGrid from './PodGrid';
+import RolloutTimeline from './RolloutTimeline';
+import RollingUpdateVisualizer from './RollingUpdateVisualizer';
+import ReconcilePipeline from './ReconcilePipeline';
+import TimelineCompare from './TimelineCompare';
 
 const MDXComponents = {
   // Custom link component
@@ -70,6 +75,13 @@ const MDXComponents = {
       </code>
     );
   },
+
+  // Illustration components
+  PodGrid,
+  RolloutTimeline,
+  RollingUpdateVisualizer,
+  ReconcilePipeline,
+  TimelineCompare,
 
   // Custom pre component to handle mermaid code blocks
   pre: ({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
