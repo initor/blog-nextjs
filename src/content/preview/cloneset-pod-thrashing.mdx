@@ -1,0 +1,92 @@
+---
+title: 'CloneSet Pod Thrashing'
+date: '2026-02-16'
+tags: ['kubernetes', 'debugging', 'open-source']
+category: 'engineering'
+description: 'OpenKruise CloneSet creates and destroys unnecessary surge pods during in-place updates. A one-boolean fix eliminates the thrashing.'
+location: 'Palo Alto, CA'
+---
+
+OpenKruise [CloneSet](https://github.com/openkruise/kruise) supports **in-place updates**: patching pod metadata or images without deleting the pod. No restart, no rescheduling. But when a CloneSet has `maxSurge > 0` and uses the `InPlaceIfPossible` strategy, every in-place update creates unnecessary surge pods that are immediately destroyed.
+
+We call this **pod thrashing**. The controller computes surge demand before checking whether in-place update will handle the change, so it spins up pods that serve no purpose and tears them down in the same reconciliation cycle. For a CloneSet with `maxSurge` set to 5%, exactly 5% of replicas are created and destroyed on every in-place update. Not a coincidence.
+
+## CloneSet Rolling Updates
+
+CloneSet rolling updates are governed by two parameters: `maxUnavailable` (how many pods can be down at once) and `maxSurge` (how many extra pods to create above the desired count). Together they control the rollout pace. Step through a 100-replica rollout with maxSurge at 10% and maxUnavailable at 5%:
+
+<RollingUpdateVisualizer replicas={100} maxSurge={10} maxUnavailable={5} />
+
+maxSurge makes rolling updates fast and safe: new pods come up before old ones go down. But surge exists to serve **recreate updates** where pods must be replaced. In-place updates patch pods without replacement. Surge has no role to play.
+
+## The Bug
+
+CloneSet reconciliation runs in a fixed order inside `calculateDiffsWithExpectation`, the central diffing function:
+
+```go
+func calculateDiffsWithExpectation(
+    cs              *appsv1beta1.CloneSet,
+    pods            []*v1.Pod,
+    currentRevision string,
+    updateRevision  string,
+    isPodUpdate     IsPodUpdateFunc,
+) (res expectationDiffs) {
+```
+
+This function computes the delta between current state and desired state: how many pods to create, delete, or update in place.
+
+Deep inside sits the surge logic:
+
+```go
+// Use surge for old and new revision updating
+var updateSurge, updateOldRevisionSurge int
+if util.IsIntPlusAndMinus(updateOldDiff, updateNewDiff) {
+    if util.IntAbs(updateOldDiff) <= util.IntAbs(updateNewDiff) {
+        updateSurge = util.IntAbs(updateOldDiff)
+```
+
+The problem: this surge calculation sees a revision diff, computes surge, and tells the controller to create pods. It does not check whether the update can happen in place. That decision lives downstream. The pipeline order is: count pods needing update, compute surge, create surge pods, *then* check for in-place updates, and finally delete surplus.
+
+For recreate updates, this ordering works. For in-place updates, surge fires before the controller knows that patching will handle the change:
+
+<TimelineCompare
+  leftTitle="Expected"
+  leftSubtitle="in-place patch"
+  leftSteps='[
+    {"label":"Before","pods":[{"count":100,"style":"v1"}]},
+    {"label":"Complete","pods":[{"count":100,"style":"v2"}]}
+  ]'
+  rightTitle="Actual"
+  rightSubtitle="maxSurge: 5%"
+  rightSteps='[
+    {"label":"Before","pods":[{"count":100,"style":"v1"}]},
+    {"label":"Surge fires","pods":[{"count":100,"style":"v1"},{"count":5,"style":"thrash"}]},
+    {"label":"Complete","pods":[{"count":100,"style":"v2"}]}
+  ]'
+/>
+
+Five unnecessary pods, created and destroyed every reconciliation cycle.
+
+## The Fix
+
+A single boolean gate on the surge path:
+
+```go
+func calculateDiffsWithExpectation(
+    ...
+    canInPlaceUpdate bool,          // new parameter
+    isPodUpdate      IsPodUpdateFunc,
+) (res expectationDiffs) {
+    // ...
+    // When in-place update is possible, surge is unnecessary.
+    if !canInPlaceUpdate && util.IsIntPlusAndMinus(updateOldDiff, updateNewDiff) {
+    // ^^^^^^^^^^^^^^^^^    one boolean gate
+```
+
+Callers pre-compute the boolean via `CanUpdateInPlace()`. The function stays pure. All existing tests pass unchanged: `canInPlaceUpdate=false` preserves the original behavior for recreate updates.
+
+## Who's Affected
+
+Every cluster running `InPlaceIfPossible` with `maxSurge > 0` hits this silently. Each feature works in isolation: in-place update with `maxSurge=0` never triggers the surge path, and surge with recreate updates behaves as designed. The thrashing only surfaces when both are active, an intersection no single-feature test covered.
+
+The fix is upstream: [openkruise/kruise#2377](https://github.com/openkruise/kruise/pull/2377).
