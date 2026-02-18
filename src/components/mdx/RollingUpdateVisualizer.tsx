@@ -183,6 +183,26 @@ function simulate(
     steps.push(snap(label, note));
   }
 
+  // Consolidate: move surge-position pods into empty base slots
+  let needsConsolidation = false;
+  for (let i = 0; i < replicas; i++) {
+    if (pods[i].status === 'empty') {
+      for (let j = replicas; j < totalSlots; j++) {
+        if (pods[j].status === 'new') {
+          pods[i].status = 'new';
+          pods[j].status = 'empty';
+          needsConsolidation = true;
+          break;
+        }
+      }
+    }
+  }
+  if (needsConsolidation) {
+    steps.push(
+      snap('Settled', `Surge pods consolidated. ${replicas} pods in final positions.`),
+    );
+  }
+
   return steps;
 }
 
