@@ -515,7 +515,7 @@ html {
     color: #b07b16;
   }
 
-  .pod-phantom {
+  .pod-thrash {
     background: var(--mermaid-error-fill);
     border-color: var(--mermaid-error);
     border-style: dashed;
@@ -687,7 +687,7 @@ html {
   .rt-group-label-v2 { color: var(--mermaid-success); }
   .rt-group-label-surge { color: var(--mermaid-success); }
   .rt-group-label-drain { color: var(--mermaid-error); }
-  .rt-group-label-phantom { color: var(--mermaid-error); }
+  .rt-group-label-thrash { color: var(--mermaid-error); }
   .rt-group-label-patch { color: var(--mermaid-warning); }
 
   .rt-pod {
@@ -715,7 +715,7 @@ html {
     border: 1.5px solid var(--mermaid-error);
   }
 
-  .rt-pod-phantom {
+  .rt-pod-thrash {
     background: color-mix(in srgb, var(--mermaid-error) 20%, transparent);
     border: 1.5px dashed var(--mermaid-error);
   }

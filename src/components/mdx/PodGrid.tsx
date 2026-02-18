@@ -10,7 +10,7 @@ interface PodGridProps {
   caption?: string;
 }
 
-type PodState = 'running' | 'surge' | 'drain' | 'phantom' | 'patch';
+type PodState = 'running' | 'surge' | 'drain' | 'thrash' | 'patch';
 
 interface ParsedPod {
   version: string;
@@ -20,7 +20,7 @@ interface ParsedPod {
 function parsePod(token: string): ParsedPod {
   if (token.startsWith('+')) return { version: token.slice(1), state: 'surge' };
   if (token.startsWith('~')) return { version: token.slice(1), state: 'drain' };
-  if (token.startsWith('!')) return { version: token.slice(1), state: 'phantom' };
+  if (token.startsWith('!')) return { version: token.slice(1), state: 'thrash' };
   if (token.endsWith('*')) return { version: token.slice(0, -1), state: 'patch' };
   return { version: token, state: 'running' };
 }

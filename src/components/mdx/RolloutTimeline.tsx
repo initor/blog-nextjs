@@ -1,6 +1,6 @@
 interface PodGroup {
   count: number;
-  style: 'v1' | 'v2' | 'surge' | 'drain' | 'phantom' | 'patch';
+  style: 'v1' | 'v2' | 'surge' | 'drain' | 'thrash' | 'patch';
 }
 
 interface Step {
@@ -22,7 +22,7 @@ const podClass: Record<string, string> = {
   v2: 'rt-pod-v2',
   surge: 'rt-pod-surge',
   drain: 'rt-pod-drain',
-  phantom: 'rt-pod-phantom',
+  thrash: 'rt-pod-thrash',
   patch: 'rt-pod-patch',
 };
 
@@ -31,7 +31,7 @@ const labelClass: Record<string, string> = {
   v2: 'rt-group-label-v2',
   surge: 'rt-group-label-surge',
   drain: 'rt-group-label-drain',
-  phantom: 'rt-group-label-phantom',
+  thrash: 'rt-group-label-thrash',
   patch: 'rt-group-label-patch',
 };
 
