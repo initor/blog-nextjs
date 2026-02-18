@@ -2,7 +2,10 @@
 
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 
+type PodStatus = 'old' | 'old-term' | 'new-pend' | 'new' | 'empty';
+
 interface StepState {
+  pods: PodStatus[];
   oldRunning: number;
   oldTerminating: number;
   newRunning: number;
@@ -12,99 +15,172 @@ interface StepState {
   note: string;
 }
 
+/** Seeded PRNG (mulberry32) for deterministic randomness. */
+function mulberry32(seed: number): () => number {
+  let s = seed | 0;
+  return () => {
+    s = (s + 0x6d2b79f5) | 0;
+    let t = Math.imul(s ^ (s >>> 15), 1 | s);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
 /**
- * Simulates a CloneSet rolling update.
+ * Simulates a CloneSet rolling update with per-pod position tracking.
  *
- * Key formula from CloneSet's calculateDiffsWithExpectation:
- *   deleteReadyLimit = maxUnavailable + (totalPods - replicas) - totalUnavailable
+ * Each pod occupies a fixed grid position and transitions through states
+ * in place: old → old-term → empty → new-pend → new. Pods drain and
+ * start at varying speeds (1-3 cycles to drain, 1-2 cycles to start)
+ * so faster pods resolve before slower neighbors.
  *
- * After simplification (pending pods cancel out):
- *   deleteReadyLimit = (oldRunning + newRunning) - (replicas - maxUnavailable)
- *                    = available - minAvailable
- *
- * This means surge surplus flows into the drain budget. With maxSurge=5 and
- * maxUnavailable=10, the controller keeps 15 pods in flight per cycle — not just 10.
+ * A seeded PRNG keeps the simulation deterministic per set of props.
  */
 function simulate(
   replicas: number,
   maxSurge: number,
   maxUnavail: number,
 ): StepState[] {
+  const rand = mulberry32(replicas * 1000 + maxSurge * 100 + maxUnavail);
   const steps: StepState[] = [];
-  let oldR = replicas;
-  let newR = 0;
+  const totalSlots = replicas + maxSurge;
+
+  interface PodSlot {
+    status: PodStatus;
+    cycles: number;
+  }
+
+  const pods: PodSlot[] = [];
+  for (let i = 0; i < replicas; i++) pods.push({ status: 'old', cycles: 0 });
+  for (let i = 0; i < maxSurge; i++) pods.push({ status: 'empty', cycles: 0 });
+
+  function countStatus(s: PodStatus): number {
+    let n = 0;
+    for (const p of pods) if (p.status === s) n++;
+    return n;
+  }
+
+  function snap(label: string, note: string): StepState {
+    const oldRunning = countStatus('old');
+    const oldTerminating = countStatus('old-term');
+    const newRunning = countStatus('new');
+    const newPending = countStatus('new-pend');
+    return {
+      pods: pods.map((p) => p.status),
+      oldRunning,
+      oldTerminating,
+      newRunning,
+      newPending,
+      total: oldRunning + oldTerminating + newRunning + newPending,
+      label,
+      note,
+    };
+  }
+
+  steps.push(
+    snap('Steady state', `All ${replicas} pods running current revision.`),
+  );
+
   const minAvailable = replicas - maxUnavail;
 
-  steps.push({
-    oldRunning: replicas,
-    oldTerminating: 0,
-    newRunning: 0,
-    newPending: 0,
-    total: replicas,
-    label: 'Steady state',
-    note: `All ${replicas} pods running current revision.`,
-  });
+  for (let cycle = 0; cycle < 500; cycle++) {
+    // 1. Tick timers: resolve finished pods
+    for (const p of pods) {
+      if (p.status === 'old-term') {
+        p.cycles--;
+        if (p.cycles <= 0) p.status = 'empty';
+      } else if (p.status === 'new-pend') {
+        p.cycles--;
+        if (p.cycles <= 0) p.status = 'new';
+      }
+    }
 
-  while (oldR > 0) {
-    // Scale up: fill surge headroom
-    const total = oldR + newR;
-    const headroom = Math.max(0, replicas + maxSurge - total);
-    const needed = Math.max(0, replicas - newR);
-    const scaleUp = Math.min(headroom, needed, oldR, maxSurge);
+    // 2. Count current state
+    const oldRunning = countStatus('old');
+    const oldTerminating = countStatus('old-term');
+    const newRunning = countStatus('new');
+    const newPending = countStatus('new-pend');
+    const totalPods = oldRunning + oldTerminating + newRunning + newPending;
 
-    // Scale down: CloneSet formula — available minus minAvailable
-    // NOT capped at maxUnavailable; surge surplus expands the drain budget
-    const available = oldR + newR;
+    // 3. Done?
+    if (oldRunning === 0 && oldTerminating === 0 && newPending === 0) {
+      const last = steps[steps.length - 1];
+      if (last.oldTerminating > 0 || last.newPending > 0) {
+        steps.push(
+          snap(
+            'Complete',
+            `All ${replicas} pods running new revision. Zero downtime.`,
+          ),
+        );
+      }
+      break;
+    }
+
+    // 4. Controller decisions
+    const available = oldRunning + newRunning;
     const deleteReadyLimit = Math.max(0, available - minAvailable);
-    const scaleDown = Math.min(deleteReadyLimit, oldR);
+    const scaleDown = Math.min(deleteReadyLimit, oldRunning);
 
-    const displayOld = oldR - scaleDown;
-    const inFlight = scaleUp + scaleDown;
-    const pctDone = Math.round(((newR + scaleUp) / replicas) * 100);
+    const headroom = Math.max(0, replicas + maxSurge - totalPods);
+    const needed = Math.max(0, replicas - newRunning - newPending);
+    const scaleUp = Math.min(headroom, needed, maxSurge);
+
+    // 5. Pick random old pods to drain
+    if (scaleDown > 0) {
+      const oldIdx: number[] = [];
+      for (let i = 0; i < totalSlots; i++) {
+        if (pods[i].status === 'old') oldIdx.push(i);
+      }
+      for (let i = oldIdx.length - 1; i > 0; i--) {
+        const j = Math.floor(rand() * (i + 1));
+        [oldIdx[i], oldIdx[j]] = [oldIdx[j], oldIdx[i]];
+      }
+      for (let i = 0; i < scaleDown; i++) {
+        pods[oldIdx[i]].status = 'old-term';
+        pods[oldIdx[i]].cycles = 1 + Math.floor(rand() * 3); // 1-3 cycles
+      }
+    }
+
+    // 6. Place new pods in empty slots (prefer lower indices)
+    if (scaleUp > 0) {
+      const emptyIdx: number[] = [];
+      for (let i = 0; i < totalSlots; i++) {
+        if (pods[i].status === 'empty') emptyIdx.push(i);
+      }
+      for (let i = 0; i < scaleUp && i < emptyIdx.length; i++) {
+        pods[emptyIdx[i]].status = 'new-pend';
+        pods[emptyIdx[i]].cycles = 1 + Math.floor(rand() * 2); // 1-2 cycles
+      }
+    }
+
+    // 7. Snapshot with label
+    const curNew = countStatus('new');
+    const curPend = countStatus('new-pend');
+    const pctDone = Math.round(((curNew + curPend) / replicas) * 100);
 
     let label: string;
     let note: string;
+    const curOld = countStatus('old');
+    const curTerm = countStatus('old-term');
+
     if (steps.length === 1) {
       label = 'Surge + drain';
       note =
         `${scaleUp} new pods created (maxSurge). ` +
         `${scaleDown} old pods draining. ` +
-        `${inFlight} in flight. Total peaks at ${displayOld + scaleDown + newR + scaleUp}.`;
-    } else if (needed - scaleUp <= 0 && displayOld === 0) {
+        `${scaleUp + scaleDown} in flight. Total peaks at ${curOld + curTerm + curNew + curPend}.`;
+    } else if (curOld === 0 && scaleDown === 0 && scaleUp === 0) {
+      label = 'Draining';
+      note = `${curTerm} pods still draining. ${curNew} v2 running, ${curPend} starting.`;
+    } else if (needed <= scaleUp && curOld === 0) {
       label = 'Final drain';
-      note = `Last ${scaleDown} old pods draining. ${newR} v2 already running.`;
+      note = `Last ${curTerm} old pods draining. ${curNew} v2 already running.`;
     } else {
       label = `Rolling — ${pctDone}%`;
-      note = `${scaleDown} draining · ${scaleUp} starting · ${inFlight} in flight · ${newR} v2 ready`;
+      note = `${scaleDown} draining · ${scaleUp} starting · ${curTerm + curPend} in flight · ${curNew} v2 ready`;
     }
 
-    steps.push({
-      oldRunning: displayOld,
-      oldTerminating: scaleDown,
-      newRunning: newR,
-      newPending: scaleUp,
-      total: displayOld + scaleDown + newR + scaleUp,
-      label,
-      note,
-    });
-
-    // Resolve for next cycle: pending → running, terminating → gone
-    oldR -= scaleDown;
-    newR += scaleUp;
-  }
-
-  // Final clean state (no in-flight pods)
-  const last = steps[steps.length - 1];
-  if (last.oldTerminating > 0 || last.newPending > 0) {
-    steps.push({
-      oldRunning: 0,
-      oldTerminating: 0,
-      newRunning: replicas,
-      newPending: 0,
-      total: replicas,
-      label: 'Complete',
-      note: `All ${replicas} pods running new revision. Zero downtime.`,
-    });
+    steps.push(snap(label, note));
   }
 
   return steps;
@@ -178,12 +254,12 @@ export default function RollingUpdateVisualizer({
     [],
   );
 
-  // Build dot array grouped by state
-  const dots: ('old' | 'old-term' | 'new' | 'new-pend')[] = [];
-  for (let i = 0; i < step.oldRunning; i++) dots.push('old');
-  for (let i = 0; i < step.oldTerminating; i++) dots.push('old-term');
-  for (let i = 0; i < step.newRunning; i++) dots.push('new');
-  for (let i = 0; i < step.newPending; i++) dots.push('new-pend');
+  // Render up to the last non-empty position to avoid trailing gaps
+  const lastActive = step.pods.reduce(
+    (last, s, i) => (s !== 'empty' ? i : last),
+    -1,
+  );
+  const visiblePods = step.pods.slice(0, lastActive + 1);
 
   const surgePercent = Math.round((maxSurge / replicas) * 100);
   const unavailPercent = Math.round((maxUnavailable / replicas) * 100);
@@ -199,9 +275,13 @@ export default function RollingUpdateVisualizer({
       </div>
 
       <div className="rv-body">
-        <div className="rv-grid" aria-label={`${dots.length} pods`}>
-          {dots.map((status, i) => (
-            <div key={i} className={`rv-dot rv-dot-${status}`} />
+        <div className="rv-grid" aria-label={`${step.total} pods`}>
+          {visiblePods.map((status, i) => (
+            <div
+              key={i}
+              className={`rv-dot${status !== 'empty' ? ` rv-dot-${status}` : ''}`}
+              style={status === 'empty' ? { visibility: 'hidden' } : undefined}
+            />
           ))}
         </div>
 
