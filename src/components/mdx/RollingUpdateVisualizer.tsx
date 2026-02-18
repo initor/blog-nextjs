@@ -22,8 +22,8 @@ interface StepState {
  *   deleteReadyLimit = (oldRunning + newRunning) - (replicas - maxUnavailable)
  *                    = available - minAvailable
  *
- * This means surge surplus flows into the drain budget. With maxSurge=10 and
- * maxUnavailable=5, the controller keeps 15 pods in flight per cycle — not just 5.
+ * This means surge surplus flows into the drain budget. With maxSurge=5 and
+ * maxUnavailable=10, the controller keeps 15 pods in flight per cycle — not just 10.
  */
 function simulate(
   replicas: number,
@@ -50,7 +50,7 @@ function simulate(
     const total = oldR + newR;
     const headroom = Math.max(0, replicas + maxSurge - total);
     const needed = Math.max(0, replicas - newR);
-    const scaleUp = Math.min(headroom, needed, oldR);
+    const scaleUp = Math.min(headroom, needed, oldR, maxSurge);
 
     // Scale down: CloneSet formula — available minus minAvailable
     // NOT capped at maxUnavailable; surge surplus expands the drain budget
@@ -119,8 +119,8 @@ interface Props {
 
 export default function RollingUpdateVisualizer({
   replicas = 100,
-  maxSurge = 10,
-  maxUnavailable = 5,
+  maxSurge = 5,
+  maxUnavailable = 10,
   title = 'Rolling Update',
 }: Props) {
   const steps = useMemo(

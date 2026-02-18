@@ -13,9 +13,9 @@ We call this **pod thrashing**. The controller computes surge demand before chec
 
 ## CloneSet Rolling Updates
 
-CloneSet rolling updates are governed by two parameters: `maxUnavailable` (how many pods can be down at once) and `maxSurge` (how many extra pods to create above the desired count). Together they control the rollout pace. Step through a 100-replica rollout with maxSurge at 10% and maxUnavailable at 5%:
+CloneSet rolling updates are governed by two parameters: `maxUnavailable` (how many pods can be down at once) and `maxSurge` (how many extra pods to create above the desired count). Together they control the rollout pace. Step through a 100-replica rollout with maxSurge at 5% and maxUnavailable at 10%:
 
-<RollingUpdateVisualizer replicas={100} maxSurge={10} maxUnavailable={5} />
+<RollingUpdateVisualizer replicas={100} maxSurge={5} maxUnavailable={10} />
 
 maxSurge makes rolling updates fast and safe: new pods come up before old ones go down. But surge exists to serve **recreate updates** where pods must be replaced. In-place updates patch pods without replacement. Surge has no role to play.
 
