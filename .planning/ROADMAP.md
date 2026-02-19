@@ -63,7 +63,7 @@ See: `.planning/milestones/v1.3-ROADMAP.md` for full details.
 - Decimal phases (9.1, 9.2): Urgent insertions if needed (marked with INSERTED)
 
 - [x] **Phase 9: Visualization Components** - Interactive workspace layout and workflow orchestration components for the agentic workflow post (completed 2026-02-19)
-- [ ] **Phase 10: Agentic Workflow Post** - Complete preview post with three-era narrative, hackathon story, workflow deep-dive, and embedded visualizations (gap closure in progress)
+- [x] **Phase 10: Agentic Workflow Post** - Complete preview post with three-era narrative, hackathon story, workflow deep-dive, and embedded visualizations (gap closure in progress) (completed 2026-02-19)
 
 ## Phase Details
 
@@ -117,7 +117,7 @@ Phases execute in numeric order: 9 -> 10
 | (ad-hoc) The Phantom Pods | v1.2 | 2 PRs | Complete | 2026-02-17 |
 | (ad-hoc) Interactive Visualizations | v1.3 | 4 PRs | Complete | 2026-02-18 |
 | 9. Visualization Components | v1.4 | 2/2 | Complete | 2026-02-19 |
-| 10. Agentic Workflow Post | v1.4 | 1/2 | Gap Closure | -- |
+| 10. Agentic Workflow Post | 2/2 | Complete   | 2026-02-19 | -- |
 
 ---
 *Roadmap created: 2026-02-08*
