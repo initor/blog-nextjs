@@ -9,11 +9,11 @@ Requirements for the Agentic Workflow Post milestone. Each maps to roadmap phase
 
 ### Content
 
-- [ ] **POST-01**: Preview post with three-era narrative structure and "decades/days" thematic framing
-- [ ] **POST-02**: Era 1-2 reflective setup covering pre-chatbot (2014) and chatbot (2023) learning paradigms
-- [ ] **POST-03**: Era 3A hackathon turning point -- 10 markdown skills, zero code, failed prior attempts (Slack bot, chatbot, MCP), why agents succeeded
-- [ ] **POST-04**: Era 3B personal workflow deep-dive -- directory-as-context-boundary, GSD resume across sessions, parallelized agents, custom skills (monet), projects/ vs ideas/ organization
-- [ ] **POST-05**: Closing section returning to decades/days theme -- bottleneck shift from finding information to orchestrating context
+- [x] **POST-01**: Preview post with three-era narrative structure and "decades/days" thematic framing
+- [x] **POST-02**: Era 1-2 reflective setup covering pre-chatbot (2014) and chatbot (2023) learning paradigms
+- [x] **POST-03**: Era 3A hackathon turning point -- 10 markdown skills, zero code, failed prior attempts (Slack bot, chatbot, MCP), why agents succeeded
+- [x] **POST-04**: Era 3B personal workflow deep-dive -- directory-as-context-boundary, GSD resume across sessions, parallelized agents, custom skills (monet), projects/ vs ideas/ organization
+- [x] **POST-05**: Closing section returning to decades/days theme -- bottleneck shift from finding information to orchestrating context
 
 ### Visualization
 
@@ -49,11 +49,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | VIZ-01 | Phase 9 | Complete |
 | VIZ-02 | Phase 9 | Complete |
-| POST-01 | Phase 10 | Pending |
-| POST-02 | Phase 10 | Pending |
-| POST-03 | Phase 10 | Pending |
-| POST-04 | Phase 10 | Pending |
-| POST-05 | Phase 10 | Pending |
+| POST-01 | Phase 10 | Complete |
+| POST-02 | Phase 10 | Complete |
+| POST-03 | Phase 10 | Complete |
+| POST-04 | Phase 10 | Complete |
+| POST-05 | Phase 10 | Complete |
 
 **Coverage:**
 - v1.4 requirements: 7 total
