@@ -43,9 +43,11 @@ This was the moment I understood what had actually changed. Agents don't just an
 
 ### The Workflow
 
+Those skills from the hackathon didn't stay as one-off scripts. They became reusable context -- structured instructions that any agent can pick up and execute. A skill called "monet" teaches an agent a particular visual style. Another teaches deployment pipelines. Another teaches how to write blog posts in a specific voice. They're not code. They're composable specifications, and they're what make the jump from "one impressive demo" to "a repeatable workflow."
+
 That realization restructured how I organize everything. The old model -- one project, one editor, one stream of consciousness -- doesn't survive contact with agents that can work in parallel. When agents can execute independently, the constraint shifts from "how fast can I work" to "how well can I partition work." The new model treats directory structure as a context boundary.
 
-Every project lives in its own directory with its own planning documents, context files, and agent instructions. An agent working on the web app never sees the infrastructure tool's codebase. An agent researching authentication patterns doesn't get distracted by the data pipeline's schema. The directory is the unit of isolation, and isolation is what makes parallelism safe.
+The workspace splits into projects and ideas -- active builds separated from things still being explored. This distinction matters because it tells agents where to find actionable work and where to find speculative context. Every project lives in its own directory with its own planning documents, state files, and agent instructions. An agent working on the web app never sees the infrastructure tool's codebase. An agent researching authentication patterns doesn't get distracted by the data pipeline's schema. The directory is the unit of isolation, and isolation is what makes parallelism safe.
 
 <WorkspaceLayout />
 
@@ -53,7 +55,7 @@ Every project lives in its own directory with its own planning documents, contex
 
 This structure isn't just organizational tidiness. It's an architecture for concurrent agent execution. When I start a work session, I don't open a single project. I dispatch multiple agents to different directories, each with its own slice of the problem. One is building API routes. Another is refactoring an authentication module. A third is researching patterns in a completely different codebase. They run simultaneously, each scoped to its own context, each producing commits I can review when they finish.
 
-The orchestrator -- sometimes me, sometimes another agent -- manages the session. It dispatches work, waits for results, and collects the output. The individual agents don't need to know about each other. They just need a clear directory, a clear spec, and enough context to execute.
+The orchestrator -- sometimes me, sometimes another agent -- manages the session. It dispatches work, waits for results, and collects the output. The individual agents don't need to know about each other. They just need a clear directory, a clear spec, and enough context to execute. And because the state lives in files -- planning documents, summaries, decisions -- the session survives closing the laptop. When I come back tomorrow, a new agent reads the project state and picks up exactly where the last one stopped. No re-briefing. No lost context. The directory remembers what the agent forgot.
 
 <WorkflowOrchestration />
 
