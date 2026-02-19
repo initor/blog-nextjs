@@ -63,7 +63,7 @@ See: `.planning/milestones/v1.3-ROADMAP.md` for full details.
 - Decimal phases (9.1, 9.2): Urgent insertions if needed (marked with INSERTED)
 
 - [x] **Phase 9: Visualization Components** - Interactive workspace layout and workflow orchestration components for the agentic workflow post (completed 2026-02-19)
-- [x] **Phase 10: Agentic Workflow Post** - Complete preview post with three-era narrative, hackathon story, workflow deep-dive, and embedded visualizations (completed 2026-02-19)
+- [ ] **Phase 10: Agentic Workflow Post** - Complete preview post with three-era narrative, hackathon story, workflow deep-dive, and embedded visualizations (gap closure in progress)
 
 ## Phase Details
 
@@ -79,8 +79,8 @@ See: `.planning/milestones/v1.3-ROADMAP.md` for full details.
 **Plans**: 2 plans
 
 Plans:
-- [ ] 09-01-PLAN.md -- WorkspaceLayout: interactive card-based file tree with expand/collapse and annotations
-- [ ] 09-02-PLAN.md -- WorkflowOrchestration: auto-playing parallelized agent session animation
+- [x] 09-01-PLAN.md -- WorkspaceLayout: interactive card-based file tree with expand/collapse and annotations
+- [x] 09-02-PLAN.md -- WorkflowOrchestration: auto-playing parallelized agent session animation
 
 ### Phase 10: Agentic Workflow Post
 **Goal**: Readers can read a complete reflective essay tracing the evolution from decades-of-study to days-of-building, with the agentic workflow visualizations bringing the personal workflow section to life
@@ -93,10 +93,11 @@ Plans:
   4. Era 3 hackathon section tells the turning point story: 10 markdown skills, zero code written, failed prior attempts (Slack bot, chatbot, MCP), and why agents succeeded where others failed
   5. Era 3 personal workflow section embeds both interactive visualizations (workspace layout + workflow orchestration) and covers directory-as-context-boundary, GSD session resume, parallelized agents, custom skills, and projects/ vs ideas/ organization
   6. Closing section returns to the decades/days theme -- the bottleneck shifted from finding information to orchestrating context
-**Plans**: 1 plan
+**Plans**: 2 plans
 
 Plans:
-- [ ] 10-01-PLAN.md -- Write complete "Decades to Days" preview post with three-era narrative and embedded visualizations
+- [x] 10-01-PLAN.md -- Write complete "Decades to Days" preview post with three-era narrative and embedded visualizations
+- [ ] 10-02-PLAN.md -- Gap closure: add missing workflow specifics (GSD session resume, custom skills, projects/ vs ideas/)
 
 ## Progress
 
@@ -116,8 +117,8 @@ Phases execute in numeric order: 9 -> 10
 | (ad-hoc) The Phantom Pods | v1.2 | 2 PRs | Complete | 2026-02-17 |
 | (ad-hoc) Interactive Visualizations | v1.3 | 4 PRs | Complete | 2026-02-18 |
 | 9. Visualization Components | v1.4 | 2/2 | Complete | 2026-02-19 |
-| 10. Agentic Workflow Post | v1.4 | 1/1 | Complete | 2026-02-19 |
+| 10. Agentic Workflow Post | v1.4 | 1/2 | Gap Closure | -- |
 
 ---
 *Roadmap created: 2026-02-08*
-*Last updated: 2026-02-19 (v1.4 milestone complete)*
+*Last updated: 2026-02-19 (Phase 10 gap closure planned)*
