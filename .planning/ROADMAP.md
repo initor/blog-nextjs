@@ -93,10 +93,10 @@ Plans:
   4. Era 3 hackathon section tells the turning point story: 10 markdown skills, zero code written, failed prior attempts (Slack bot, chatbot, MCP), and why agents succeeded where others failed
   5. Era 3 personal workflow section embeds both interactive visualizations (workspace layout + workflow orchestration) and covers directory-as-context-boundary, GSD session resume, parallelized agents, custom skills, and projects/ vs ideas/ organization
   6. Closing section returns to the decades/days theme -- the bottleneck shifted from finding information to orchestrating context
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 10-01: TBD
+- [ ] 10-01-PLAN.md -- Write complete "Decades to Days" preview post with three-era narrative and embedded visualizations
 
 ## Progress
 
