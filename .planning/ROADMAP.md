@@ -6,7 +6,7 @@
 - v1.1 SEO & Discoverability - Phases 5-8 (shipped 2026-02-16)
 - v1.2 Content: The Phantom Pods - ad-hoc, PRs #31 + #32 (shipped 2026-02-17)
 - v1.3 Interactive Visualizations - ad-hoc, PRs #33-#36 (shipped 2026-02-18)
-- v1.4 Agentic Workflow Post - Phases 9-10 (in progress)
+- v1.4 Agentic Workflow Post - Phases 9-10 (shipped 2026-02-19)
 
 ## Phases
 
@@ -54,7 +54,7 @@ See: `.planning/milestones/v1.3-ROADMAP.md` for full details.
 
 </details>
 
-### v1.4 Agentic Workflow Post (In Progress)
+### v1.4 Agentic Workflow Post (SHIPPED 2026-02-19)
 
 **Milestone Goal:** Publish a reflective preview post about the three eras of developer capability (pre-chatbot, chatbot, agentic) with interactive visualizations of the agentic-era personal workflow.
 
@@ -63,7 +63,7 @@ See: `.planning/milestones/v1.3-ROADMAP.md` for full details.
 - Decimal phases (9.1, 9.2): Urgent insertions if needed (marked with INSERTED)
 
 - [x] **Phase 9: Visualization Components** - Interactive workspace layout and workflow orchestration components for the agentic workflow post (completed 2026-02-19)
-- [ ] **Phase 10: Agentic Workflow Post** - Complete preview post with three-era narrative, hackathon story, workflow deep-dive, and embedded visualizations
+- [x] **Phase 10: Agentic Workflow Post** - Complete preview post with three-era narrative, hackathon story, workflow deep-dive, and embedded visualizations (completed 2026-02-19)
 
 ## Phase Details
 
@@ -115,9 +115,9 @@ Phases execute in numeric order: 9 -> 10
 | 8. Atom Feed | v1.1 | 1/1 | Complete | 2026-02-16 |
 | (ad-hoc) The Phantom Pods | v1.2 | 2 PRs | Complete | 2026-02-17 |
 | (ad-hoc) Interactive Visualizations | v1.3 | 4 PRs | Complete | 2026-02-18 |
-| 9. Visualization Components | v1.4 | Complete    | 2026-02-19 | - |
-| 10. Agentic Workflow Post | v1.4 | 0/TBD | Not started | - |
+| 9. Visualization Components | v1.4 | 2/2 | Complete | 2026-02-19 |
+| 10. Agentic Workflow Post | v1.4 | 1/1 | Complete | 2026-02-19 |
 
 ---
 *Roadmap created: 2026-02-08*
-*Last updated: 2026-02-18 (v1.4 milestone roadmap created)*
+*Last updated: 2026-02-19 (v1.4 milestone complete)*
