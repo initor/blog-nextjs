@@ -9,6 +9,7 @@ import RollingUpdateVisualizer from './RollingUpdateVisualizer';
 import ReconcilePipeline from './ReconcilePipeline';
 import TimelineCompare from './TimelineCompare';
 import WorkspaceLayout from './WorkspaceLayout';
+import WorkflowOrchestration from './WorkflowOrchestration';
 
 const MDXComponents = {
   // Custom link component
@@ -84,6 +85,7 @@ const MDXComponents = {
   ReconcilePipeline,
   TimelineCompare,
   WorkspaceLayout,
+  WorkflowOrchestration,
 
   // Custom pre component to handle mermaid code blocks
   pre: ({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
