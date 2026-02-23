@@ -30,7 +30,7 @@ Requirements for the Agentic Workflow Post Revision milestone. Each maps to road
 
 ### Visualization
 
-- [ ] **VIZ-01**: New interactive visualization component showing context flow across sessions (session timeline merged with context funnel concept)
+- [x] **VIZ-01**: New interactive visualization component showing context flow across sessions (session timeline merged with context funnel concept)
 - [ ] **VIZ-02**: Evaluate existing WorkspaceLayout and WorkflowOrchestration -- keep if they earn their place in restructured post, remove if redundant
 
 ### Quality
@@ -73,7 +73,7 @@ Requirements for the Agentic Workflow Post Revision milestone. Each maps to road
 | STRC-01 | Phase 15 | Pending |
 | STRC-02 | Phase 15 | Pending |
 | STRC-03 | Phase 12 | Pending |
-| VIZ-01 | Phase 11 | Pending |
+| VIZ-01 | Phase 11 | Complete |
 | VIZ-02 | Phase 12 | Pending |
 | QUAL-01 | Phase 15 | Pending |
 | QUAL-02 | Phase 15 | Pending |
