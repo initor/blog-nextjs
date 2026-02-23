@@ -57,6 +57,10 @@ This structure isn't just organizational tidiness. It's an architecture for conc
 
 The orchestrator -- sometimes me, sometimes another agent -- manages the session. It dispatches work, waits for results, and collects the output. The individual agents don't need to know about each other. They just need a clear directory, a clear spec, and enough context to execute. And because the state lives in files -- planning documents, summaries, decisions -- the session survives closing the laptop. When I come back tomorrow, a new agent reads the project state and picks up exactly where the last one stopped. No re-briefing. No lost context. The directory remembers what the agent forgot.
 
+<SessionContextFlow />
+
+*Watch context narrow at session boundaries -- some threads are pruned, others summarized, and each new session inherits a distilled starting point.*
+
 <WorkflowOrchestration />
 
 *Watch the agents work in parallel -- each focused on its own slice of the problem.*
