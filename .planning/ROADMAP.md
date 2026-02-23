@@ -86,10 +86,10 @@ See: `.planning/milestones/v1.4-ROADMAP.md` for full details.
   2. The visualization communicates the concept of context accumulation -- each session inherits summarized context from prior sessions
   3. The component follows established patterns (client-side, JSON string props, CSS-prefixed styles, IntersectionObserver or step-through interaction)
   4. The component renders without errors in the preview post at /preview/decades-to-days
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 11-01: TBD
+- [ ] 11-01-PLAN.md — Build SessionContextFlow Sankey visualization component with SVG rendering, IntersectionObserver animation, and cf-* CSS styles
 
 ### Phase 12: Post Restructure
 **Goal**: The post skeleton is inverted so the Agentic development journey leads and Study/Chat eras move to closing
