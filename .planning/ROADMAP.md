@@ -101,10 +101,11 @@ Plans:
   2. Study and Chat era sections are repositioned as reflective closing material
   3. Existing visualizations (WorkspaceLayout, WorkflowOrchestration) are evaluated and either repositioned meaningfully within the restructured Agentic section or removed
   4. The post renders without broken imports or missing components after restructure
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 12-01: TBD
+- [ ] 12-01-PLAN.md — Revise visualization components: static WorkspaceLayout + merged AgentSessionFlow
+- [ ] 12-02-PLAN.md — Restructure post to lead with Agentic journey, compress Study/Chat to coda
 
 ### Phase 13: Hackathon Rewrite
 **Goal**: Readers understand the real motivation behind the hackathon -- platform operational toil, prior failed attempts, and the ChatGPT-designed workflow breakthrough
@@ -166,11 +167,11 @@ Plans:
 | 9. Visualization Components | v1.4 | 2/2 | Complete | 2026-02-19 |
 | 10. Agentic Workflow Post | v1.4 | 2/2 | Complete | 2026-02-19 |
 | 11. Session Context Visualization | v1.5 | Complete    | 2026-02-23 | 2026-02-22 |
-| 12. Post Restructure | v1.5 | 0/? | Not started | - |
+| 12. Post Restructure | v1.5 | 0/2 | Planning complete | - |
 | 13. Hackathon Rewrite | v1.5 | 0/? | Not started | - |
 | 14. Context Management Section | v1.5 | 0/? | Not started | - |
 | 15. Closing and Polish | v1.5 | 0/? | Not started | - |
 
 ---
 *Roadmap created: 2026-02-08*
-*Last updated: 2026-02-22 — Phase 11 complete (2/2 plans, gap closure done)*
+*Last updated: 2026-02-22 — Phase 12 planned (2 plans in 2 waves)*
