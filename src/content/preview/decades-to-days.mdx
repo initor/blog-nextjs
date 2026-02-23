@@ -1,33 +1,15 @@
 ---
-title: 'Decades to Days'
+title: 'The Weekend Everything Shifted'
 date: '2026-02-19'
 tags: ['agents', 'workflow', 'developer-tools']
 category: 'engineering'
-description: 'The bottleneck shifted from finding information to orchestrating context. Three eras of developer capability, and the hackathon that collapsed decades into days.'
+description: 'A hackathon weekend that collapsed decades of building into days -- and the workflow that made it repeatable.'
 location: 'Palo Alto, CA'
 ---
 
-In 2014 I spent a semester studying distributed systems by reading papers. One paper a week, maybe two. I took notes, re-read sections I didn't understand, and slowly built a mental model of how consensus protocols worked. It took months to feel like I could hold a meaningful conversation about Raft.
+Over a single weekend, I shipped ten production-ready agent skills -- markdown files that teach AI agents how to do specialized work -- without writing a single line of code by hand. Not ten lines. Ten complete features. The kind of output that used to take a team weeks of design, implementation, and testing. That weekend collapsed decades of learning-to-build into days of building. The question worth asking is: what changed?
 
-Twelve years later, over a single weekend, I shipped ten production-ready agent skills -- markdown files that teach AI agents how to do specialized work -- without writing a single line of code by hand. Not ten lines. Ten complete features. The kind of output that used to take a team weeks of design, implementation, and testing.
-
-That weekend collapsed decades of learning-to-build into days of building. The question worth asking is: what changed?
-
-## The Study Era
-
-For most of my career, the bottleneck was knowledge acquisition. You learned by reading documentation, studying source code, absorbing conference talks, and accumulating experience through years of trial and error. Getting good at something meant putting in the time. There were no shortcuts, and the people who shipped the best systems were simply the ones who had studied the longest.
-
-This worked. It scaled poorly, but it worked. A senior engineer's value was their accumulated mental models -- pattern-matching honed over a decade of reading, breaking, and fixing systems. You couldn't buy time. You couldn't parallelize learning. You sat with the material until it clicked, and if it took a year, it took a year. The gap between a junior and a senior was measured in calendar time, not talent.
-
-## The Chat Era
-
-Around 2023, chatbots changed the acquisition cost. Instead of reading three blog posts and a man page to understand a tool, you could ask a question and get a synthesized answer in seconds. The knowledge bottleneck loosened considerably. You could learn faster, explore more broadly, and get unstuck without the multi-hour deep-dive that used to be table stakes for anything unfamiliar.
-
-But the execution model didn't change. You still wrote the code. You still ran the tests. You still debugged the failures at 2am. The chatbot was a better reference manual -- faster than Stack Overflow, more patient than a colleague, available at any hour -- but the work itself was still yours to do. You were still the one translating knowledge into running software. The bottleneck moved from "I don't know how" to "I know how but haven't done it yet."
-
-## The Agentic Era
-
-### The Hackathon
+## The Hackathon
 
 The shift happened during a weekend hackathon. I had been trying to build a skills system for months -- a way to package reusable agent capabilities into something shareable and composable. I tried three different approaches. A Slack bot that would respond to commands. A chatbot wrapper with function calling. An MCP server that exposed tool endpoints. Each attempt produced working prototypes that missed the point. They were all ways of asking an AI to answer questions, just with different interfaces.
 
@@ -41,7 +23,7 @@ The previous three attempts failed because they were all variations on the same 
 
 This was the moment I understood what had actually changed. Agents don't just answer questions faster. They do the work. The bottleneck wasn't knowledge anymore, and it wasn't execution speed. It was something upstream of both: the ability to clearly describe what you want and structure enough context for the agent to execute independently.
 
-### The Workflow
+## The Workflow
 
 Those skills from the hackathon didn't stay as one-off scripts. They became reusable context -- structured instructions that any agent can pick up and execute. A skill called "monet" teaches an agent a particular visual style. Another teaches deployment pipelines. Another teaches how to write blog posts in a specific voice. They're not code. They're composable specifications, and they're what make the jump from "one impressive demo" to "a repeatable workflow."
 
@@ -51,28 +33,22 @@ The workspace splits into projects and ideas -- active builds separated from thi
 
 <WorkspaceLayout />
 
-*Click to expand directories and see how each project carries its own agent context.*
+*How each project carries its own agent context -- planning documents, state files, and instructions scoped to a single directory.*
 
 This structure isn't just organizational tidiness. It's an architecture for concurrent agent execution. When I start a work session, I don't open a single project. I dispatch multiple agents to different directories, each with its own slice of the problem. One is building API routes. Another is refactoring an authentication module. A third is researching patterns in a completely different codebase. They run simultaneously, each scoped to its own context, each producing commits I can review when they finish.
 
 The orchestrator -- sometimes me, sometimes another agent -- manages the session. It dispatches work, waits for results, and collects the output. The individual agents don't need to know about each other. They just need a clear directory, a clear spec, and enough context to execute. And because the state lives in files -- planning documents, summaries, decisions -- the session survives closing the laptop. When I come back tomorrow, a new agent reads the project state and picks up exactly where the last one stopped. No re-briefing. No lost context. The directory remembers what the agent forgot.
 
-<SessionContextFlow />
+<AgentSessionFlow />
 
-*Watch context narrow at session boundaries -- some threads are pruned, others summarized, and each new session inherits a distilled starting point.*
-
-<WorkflowOrchestration />
-
-*Watch the agents work in parallel -- each focused on its own slice of the problem.*
+*Each session works on focused tasks while context narrows between sessions -- some threads are pruned, others summarized, and each new session inherits a distilled starting point.*
 
 The compound effect is non-obvious. Three agents working in parallel don't produce three times the output of one agent. They produce something qualitatively different: progress across multiple fronts simultaneously, with each front maintaining its own coherent context. You stop thinking about tasks sequentially and start thinking about what can move forward right now, across everything you're working on. The kind of multi-project progress that used to require a team now happens in a single afternoon with one person and a well-organized workspace.
 
-## What Changes
+But it wasn't always this way.
 
-The phrase "decades to days" isn't hyperbole. The distributed systems knowledge that took me a semester to acquire in 2014 is now something an agent can synthesize and apply in minutes. The execution work that took weeks of implementation is now something agents do while I describe the next feature. The compound effect of faster knowledge plus faster execution plus parallelism isn't additive. It's a phase change.
+For most of my career, the bottleneck was simply knowledge. You learned by reading papers, studying source code, and accumulating experience through years of trial and error. In 2014 I spent a semester just trying to understand Raft consensus -- one paper a week, re-reading sections until the mental model held. Getting good at something meant putting in the time, and the gap between a junior and a senior was measured in calendar time, not talent.
 
-The bottleneck has shifted again. It's no longer about what you know or how fast you can type. It's about orchestrating context -- defining clear boundaries, writing precise specs, and structuring work so that agents can execute independently. The person who can decompose a vague goal into well-scoped, context-rich work units will out-build a team of people who can't, regardless of how many years of experience that team carries. The skill that matters most is the one that's hardest to automate: knowing what to build and why.
+Then, around 2023, chatbots loosened the acquisition cost. You could ask a synthesized question and get a useful answer in seconds instead of hours of deep-diving through documentation. Learning got faster, but the execution model didn't change -- you still wrote the code, ran the tests, debugged the failures. The bottleneck had moved from "I don't know how" to "I know how but haven't done it yet." A faster reference manual, but the work was still yours to do.
 
-This means the gap between builders is about to compress dramatically. The decade of accumulated experience that separated a junior from a senior? It still matters for judgment and taste, but it no longer gates execution capacity. Anyone who can clearly articulate what they want -- and structure the context for an agent to deliver it -- can ship at a pace that was previously reserved for large teams. The scarce resource is no longer engineering hours. It's clarity of intent.
-
-We went from decades of study to days of building. The interesting question isn't whether this trend continues. It's what you choose to build now that the bottleneck is no longer your typing speed.
+Now the bottleneck has shifted upstream of both knowledge and execution. It's about orchestrating context -- defining clear boundaries, writing precise specs, and structuring work so that agents can execute independently. The scarce resource is no longer engineering hours. It's clarity of intent.
