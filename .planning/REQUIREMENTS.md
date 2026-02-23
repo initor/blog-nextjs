@@ -61,28 +61,28 @@ Requirements for the Agentic Workflow Post Revision milestone. Each maps to road
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| HACK-01 | TBD | Pending |
-| HACK-02 | TBD | Pending |
-| HACK-03 | TBD | Pending |
-| HACK-04 | TBD | Pending |
-| CTX-01 | TBD | Pending |
-| CTX-02 | TBD | Pending |
-| CTX-03 | TBD | Pending |
-| CTX-04 | TBD | Pending |
-| CTX-05 | TBD | Pending |
-| STRC-01 | TBD | Pending |
-| STRC-02 | TBD | Pending |
-| STRC-03 | TBD | Pending |
-| VIZ-01 | TBD | Pending |
-| VIZ-02 | TBD | Pending |
-| QUAL-01 | TBD | Pending |
-| QUAL-02 | TBD | Pending |
+| HACK-01 | Phase 13 | Pending |
+| HACK-02 | Phase 13 | Pending |
+| HACK-03 | Phase 13 | Pending |
+| HACK-04 | Phase 13 | Pending |
+| CTX-01 | Phase 14 | Pending |
+| CTX-02 | Phase 14 | Pending |
+| CTX-03 | Phase 14 | Pending |
+| CTX-04 | Phase 14 | Pending |
+| CTX-05 | Phase 14 | Pending |
+| STRC-01 | Phase 15 | Pending |
+| STRC-02 | Phase 15 | Pending |
+| STRC-03 | Phase 12 | Pending |
+| VIZ-01 | Phase 11 | Pending |
+| VIZ-02 | Phase 12 | Pending |
+| QUAL-01 | Phase 15 | Pending |
+| QUAL-02 | Phase 15 | Pending |
 
 **Coverage:**
 - v1.5 requirements: 16 total
-- Mapped to phases: 0
-- Unmapped: 16 (pending roadmap creation)
+- Mapped to phases: 16
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-22*
-*Last updated: 2026-02-22 after initial definition*
+*Last updated: 2026-02-22 after roadmap creation — traceability complete*
