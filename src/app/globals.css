@@ -1213,7 +1213,7 @@ html {
     }
   }
 
-  /* Workspace Layout — interactive card-based file tree */
+  /* Workspace Layout — static directory tree illustration */
   .wl {
     margin: 1.5em 0;
     padding: 0;
@@ -1261,17 +1261,8 @@ html {
     color: var(--code-comment);
     text-transform: lowercase;
     letter-spacing: 0.03em;
-    background: none;
-    border: none;
-    cursor: pointer;
     padding: 0.3rem 0.5rem;
     border-radius: 0.35rem;
-    transition: background 0.15s, color 0.15s;
-  }
-
-  .wl-category-label:hover {
-    background: color-mix(in srgb, var(--code-border) 40%, transparent);
-    color: var(--code-fg);
   }
 
   .wl-category-expanded {
@@ -1299,22 +1290,9 @@ html {
     border-radius: 0.4rem;
     border: 1.5px solid var(--code-border);
     background: transparent;
-    cursor: pointer;
-    transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
     font-family: inherit;
     font-size: inherit;
     color: inherit;
-  }
-
-  .wl-card:hover {
-    background: color-mix(in srgb, var(--code-border) 30%, transparent);
-    border-color: var(--mermaid-node-border);
-    box-shadow: 0 1px 3px color-mix(in srgb, var(--code-border) 40%, transparent);
-  }
-
-  .wl-card-active {
-    border-color: var(--mermaid-primary);
-    background: color-mix(in srgb, var(--mermaid-primary) 6%, transparent);
   }
 
   .wl-card-name {
@@ -1332,22 +1310,14 @@ html {
   }
 
   .wl-detail {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.2s ease;
-    overflow: hidden;
+    display: none;
   }
 
   .wl-detail-open {
-    grid-template-rows: 1fr;
+    display: block;
   }
 
   .wl-detail-inner {
-    min-height: 0;
-    overflow: hidden;
-  }
-
-  .wl-detail-open .wl-detail-inner {
     padding: 0.45rem 0.7rem 0.35rem;
     border: 1px solid color-mix(in srgb, var(--code-border) 60%, transparent);
     border-top: none;
@@ -1399,19 +1369,15 @@ html {
   }
 
   .wl-children {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.2s ease;
-    overflow: hidden;
+    display: none;
   }
 
   .wl-children-open {
-    grid-template-rows: 1fr;
+    display: block;
   }
 
   .wl-children > .wl-grid {
     min-height: 0;
-    overflow: hidden;
   }
 
   @media (max-width: 480px) {
@@ -1420,17 +1386,219 @@ html {
     }
   }
 
-  /* Workspace Layout dark mode */
-  html.dark .wl-card:hover {
+  /* ── AgentSessionFlow — merged workflow + context flow visualization ── */
+
+  .af {
+    margin: 1.5em 0;
+    padding: 0;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(0,0,0,0.08);
+    background: #fafafa;
+    overflow: hidden;
+  }
+
+  .af-header {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .af-title {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--code-fg);
+  }
+
+  .af-body {
+    padding: 0.75rem 1rem;
+  }
+
+  .af-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Session column label above */
+  .af-session-label {
+    font-family: var(--font-diagram), system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    fill: var(--code-fg);
+  }
+
+  /* Session column background */
+  .af-session-bg {
+    fill: rgba(0,0,0,0.02);
+    stroke: rgba(0,0,0,0.08);
+    stroke-width: 1;
+  }
+
+  /* Agent name label inside session column */
+  .af-agent-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.42rem;
+    font-weight: 500;
+    fill: var(--code-comment);
+  }
+
+  /* Task bar labels */
+  .af-task-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.42rem;
+    font-weight: 500;
+  }
+
+  /* Context band labels */
+  .af-band-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.4rem;
+    font-weight: 500;
+    fill: var(--code-fg);
+    opacity: 0.75;
+  }
+
+  /* Orchestrator bar background */
+  .af-orch-bg {
+    fill: rgba(0,0,0,0.04);
+    stroke: rgba(0,0,0,0.06);
+    stroke-width: 0.5;
+  }
+
+  /* Orchestrator bar fill */
+  .af-orch-fill {
+    fill: rgba(0,0,0,0.06);
+  }
+
+  /* Orchestrator phase labels */
+  .af-orch-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.45rem;
+    font-weight: 500;
+    fill: var(--code-comment);
+    opacity: 0.5;
+  }
+
+  .af-orch-label-active {
+    opacity: 1;
+    fill: var(--code-fg);
+    font-weight: 600;
+  }
+
+  .af-orch-label-done {
+    opacity: 0.7;
+    fill: var(--mermaid-success);
+  }
+
+  /* Flow paths between sessions */
+  .af-flow {
+    transition: opacity 0.15s;
+  }
+
+  .af-flow-pruned {
+    stroke-dasharray: 4 3;
+  }
+
+  .af-flow-summarized {
+    /* Narrowing is geometric, not CSS */
+  }
+
+  /* Legend text */
+  .af-legend-text {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.4rem;
+    fill: var(--code-comment);
+    opacity: 0.6;
+  }
+
+  /* Footer with replay button */
+  .af-footer {
+    padding: 0.5rem 1.25rem;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    justify-content: center;
+  }
+
+  .af-replay {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: 0.35rem;
+    border: 1px solid rgba(0,0,0,0.08);
+    background: transparent;
+    color: var(--code-fg);
+    font-family: var(--font-diagram), system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .af-replay:hover {
+    background: rgba(0,0,0,0.04);
+    border-color: rgba(0,0,0,0.15);
+  }
+
+  @media (max-width: 640px) {
+    .af-session-label {
+      font-size: 0.62rem;
+    }
+
+    .af-band-label {
+      font-size: 0.35rem;
+    }
+
+    .af-body {
+      padding: 0.5rem 0.5rem;
+    }
+
+    .af-agent-label {
+      font-size: 0.38rem;
+    }
+
+    .af-task-label {
+      font-size: 0.38rem;
+    }
+  }
+
+  /* AgentSessionFlow dark mode */
+  html.dark .af {
+    background: color-mix(in srgb, var(--code-bg) 100%, transparent);
+    border-color: var(--code-border);
+  }
+
+  html.dark .af-header {
+    border-bottom-color: var(--code-border);
+  }
+
+  html.dark .af-session-bg {
+    fill: color-mix(in srgb, var(--code-border) 15%, transparent);
+    stroke: var(--code-border);
+  }
+
+  html.dark .af-orch-bg {
+    fill: color-mix(in srgb, var(--code-border) 20%, transparent);
+    stroke: var(--code-border);
+  }
+
+  html.dark .af-orch-fill {
+    fill: color-mix(in srgb, var(--mermaid-node-border) 25%, transparent);
+  }
+
+  html.dark .af-footer {
+    border-top-color: var(--code-border);
+  }
+
+  html.dark .af-replay {
+    border-color: var(--code-border);
+  }
+
+  html.dark .af-replay:hover {
     background: color-mix(in srgb, var(--code-border) 50%, transparent);
-  }
-
-  html.dark .wl-card-active {
-    background: color-mix(in srgb, var(--mermaid-primary) 10%, transparent);
-  }
-
-  html.dark .wl-detail-open .wl-detail-inner {
-    background: color-mix(in srgb, var(--code-bg) 80%, transparent);
   }
 
   /* Workflow Orchestration — parallelized agent session animation */
