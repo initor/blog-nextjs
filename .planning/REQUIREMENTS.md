@@ -26,7 +26,7 @@ Requirements for the Agentic Workflow Post Revision milestone. Each maps to road
 
 - [ ] **STRC-01**: Closing section revised to reflect context-management thesis (not generic "orchestrating context")
 - [ ] **STRC-02**: Study and Chat era sections reviewed for tone -- minor touch-ups only, repositioned as reflective closing
-- [ ] **STRC-03**: Restructure post to lead with Agentic development journey; Study/Chat era reflections moved to closing section
+- [x] **STRC-03**: Restructure post to lead with Agentic development journey; Study/Chat era reflections moved to closing section
 
 ### Visualization
 
@@ -72,7 +72,7 @@ Requirements for the Agentic Workflow Post Revision milestone. Each maps to road
 | CTX-05 | Phase 14 | Pending |
 | STRC-01 | Phase 15 | Pending |
 | STRC-02 | Phase 15 | Pending |
-| STRC-03 | Phase 12 | Pending |
+| STRC-03 | Phase 12 | Complete |
 | VIZ-01 | Phase 11 | Complete |
 | VIZ-02 | Phase 12 | Complete |
 | QUAL-01 | Phase 15 | Pending |

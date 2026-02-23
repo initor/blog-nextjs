@@ -70,7 +70,7 @@ See: `.planning/milestones/v1.4-ROADMAP.md` for full details.
 **Milestone Goal:** Revise the "Decades to Days" preview post to ground the Agentic section in the real story -- Kubernetes platform operational toil, the ChatGPT-designed multi-session workflow, and the context-management-across-sessions insight -- plus build a new interactive visualization showing how context flows across sessions.
 
 - [x] **Phase 11: Session Context Visualization** - Build the new session timeline + context funnel interactive component (completed 2026-02-23)
-- [ ] **Phase 12: Post Restructure** - Invert post structure to lead with Agentic journey and evaluate existing visualizations
+- [x] **Phase 12: Post Restructure** - Invert post structure to lead with Agentic journey and evaluate existing visualizations (completed 2026-02-23)
 - [ ] **Phase 13: Hackathon Rewrite** - Rewrite hackathon section grounded in real motivation and prior failed attempts
 - [ ] **Phase 14: Context Management Section** - Write the main payload on session architecture, state externalization, and context inheritance
 - [ ] **Phase 15: Closing and Polish** - Revise closing section, touch up Study/Chat eras, verify voice and preview status
@@ -167,7 +167,7 @@ Plans:
 | 9. Visualization Components | v1.4 | 2/2 | Complete | 2026-02-19 |
 | 10. Agentic Workflow Post | v1.4 | 2/2 | Complete | 2026-02-19 |
 | 11. Session Context Visualization | v1.5 | Complete    | 2026-02-23 | 2026-02-22 |
-| 12. Post Restructure | 1/2 | In Progress|  | - |
+| 12. Post Restructure | 2/2 | Complete   | 2026-02-23 | - |
 | 13. Hackathon Rewrite | v1.5 | 0/? | Not started | - |
 | 14. Context Management Section | v1.5 | 0/? | Not started | - |
 | 15. Closing and Polish | v1.5 | 0/? | Not started | - |

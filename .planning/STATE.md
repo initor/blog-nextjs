@@ -10,16 +10,16 @@ See: .planning/PROJECT.md (updated 2026-02-22)
 ## Current Position
 
 Phase: 12 of 15 (Post Restructure)
-Plan: 1/2 complete
-Status: Phase 12 plan 01 complete -- visualization components revised
-Last activity: 2026-02-23 -- Phase 12 plan 01 executed
+Plan: 2/2 complete
+Status: Phase 12 complete -- post restructured with Agentic-first narrative
+Last activity: 2026-02-23 -- Phase 12 plan 02 executed
 
-Progress: [####░░░░░░] 40% (2/5 phases in v1.5)
+Progress: [######░░░░] 60% (3/5 phases in v1.5)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 18 (7 v1.0 + 4 v1.1 + 4 v1.4 + 3 v1.5) + v1.2 ad-hoc (2 PRs) + v1.3 ad-hoc (4 PRs)
+- Total plans completed: 19 (7 v1.0 + 4 v1.1 + 4 v1.4 + 4 v1.5) + v1.2 ad-hoc (2 PRs) + v1.3 ad-hoc (4 PRs)
 
 **By Phase:**
 
@@ -36,7 +36,7 @@ Progress: [####░░░░░░] 40% (2/5 phases in v1.5)
 | 9. Visualization Components | 2/2 | 4min | 2min |
 | 10. Agentic Workflow Post | 2/2 | 4min | 2min |
 | 11. Session Context Viz | 2/2 | 5min | 2.5min |
-| 12. Post Restructure | 1/2 | 4min | 4min |
+| 12. Post Restructure | 2/2 | 6min | 3min |
 
 ## Accumulated Context
 
@@ -51,6 +51,9 @@ All decisions logged in PROJECT.md Key Decisions table with outcomes.
 - Phase 12-01: Sessions as primary horizontal axis with tasks inside columns and context bands below
 - Phase 12-01: Light #fafafa palette for AgentSessionFlow instead of code-bg for airy feel
 - Phase 12-01: WorkspaceLayout converted to static server component (no client-side JS)
+- Phase 12-02: Title "The Weekend Everything Shifted" chosen from 5 candidates as strongest hook
+- Phase 12-02: Study/Chat eras merged into single unified coda (not two separate sections)
+- Phase 12-02: Core "bottleneck shifted to context orchestration" insight preserved in coda closing
 
 ### Pending Todos
 
@@ -63,5 +66,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-23
-Stopped at: Completed 12-01-PLAN.md
-Resume file: .planning/phases/12-post-restructure/12-01-SUMMARY.md
+Stopped at: Completed 12-02-PLAN.md (Phase 12 complete)
+Resume file: .planning/phases/12-post-restructure/12-02-SUMMARY.md
