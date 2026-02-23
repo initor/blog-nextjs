@@ -10,6 +10,7 @@ import ReconcilePipeline from './ReconcilePipeline';
 import TimelineCompare from './TimelineCompare';
 import WorkspaceLayout from './WorkspaceLayout';
 import WorkflowOrchestration from './WorkflowOrchestration';
+import SessionContextFlow from './SessionContextFlow';
 
 const MDXComponents = {
   // Custom link component
@@ -86,6 +87,7 @@ const MDXComponents = {
   TimelineCompare,
   WorkspaceLayout,
   WorkflowOrchestration,
+  SessionContextFlow,
 
   // Custom pre component to handle mermaid code blocks
   pre: ({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) => {

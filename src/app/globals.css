@@ -1731,6 +1731,153 @@ html {
   html.dark .wo-task-pending {
     opacity: 0.4;
   }
+
+  /* ── SessionContextFlow ──────────────────────────────────── */
+
+  .cf {
+    margin: 1.5em 0;
+    padding: 0;
+    border-radius: 0.75rem;
+    border: 1px solid var(--code-border);
+    background: var(--code-bg);
+    overflow: hidden;
+  }
+
+  .cf-header {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--code-border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .cf-title {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--code-fg);
+  }
+
+  .cf-body {
+    padding: 0.75rem 1rem;
+  }
+
+  .cf-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .cf-footer {
+    padding: 0.5rem 1.25rem;
+    border-top: 1px solid var(--code-border);
+    display: flex;
+    justify-content: center;
+  }
+
+  .cf-replay {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: 0.35rem;
+    border: 1px solid var(--code-border);
+    background: transparent;
+    color: var(--code-fg);
+    font-family: var(--font-diagram), system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .cf-replay:hover {
+    background: var(--mermaid-node-bg);
+    border-color: var(--mermaid-node-border);
+  }
+
+  /* Session labels above blocks */
+  .cf-session-label {
+    font-family: var(--font-diagram), system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    fill: var(--code-fg);
+  }
+
+  /* Band labels within session blocks */
+  .cf-band-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.52rem;
+    font-weight: 500;
+    fill: var(--code-fg);
+    opacity: 0.85;
+  }
+
+  /* Band color variants — fills and strokes from mermaid palette */
+  .cf-band-blue {
+    fill: var(--mermaid-primary-fill);
+    stroke: var(--mermaid-primary);
+    stroke-width: 0.5;
+  }
+
+  .cf-band-green {
+    fill: var(--mermaid-success-fill);
+    stroke: var(--mermaid-success);
+    stroke-width: 0.5;
+  }
+
+  .cf-band-purple {
+    fill: var(--mermaid-secondary-fill);
+    stroke: var(--mermaid-secondary);
+    stroke-width: 0.5;
+  }
+
+  /* Flow paths between sessions */
+  .cf-flow {
+    transition: opacity 0.15s;
+  }
+
+  .cf-flow-pruned {
+    stroke-dasharray: 4 3;
+  }
+
+  .cf-flow-summarized {
+    /* Summarized flows render normally — narrowing is geometric, not CSS. */
+  }
+
+  /* Session block background */
+  .cf-session {
+    fill: color-mix(in srgb, var(--code-border) 20%, transparent);
+    stroke: var(--code-border);
+    stroke-width: 1;
+  }
+
+  /* Pinch-point dashed lines between sessions */
+  .cf-pinch {
+    stroke: var(--code-comment);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+    opacity: 0.35;
+  }
+
+  @media (max-width: 640px) {
+    .cf-session-label {
+      font-size: 0.62rem;
+    }
+
+    .cf-band-label {
+      font-size: 0.45rem;
+    }
+
+    .cf-body {
+      padding: 0.5rem 0.5rem;
+    }
+  }
+
+  /* SessionContextFlow dark mode */
+  html.dark .cf-replay:hover {
+    background: color-mix(in srgb, var(--code-border) 50%, transparent);
+  }
 }
 
 /* Bold in prose: outside @layer to override Tailwind typography defaults */
