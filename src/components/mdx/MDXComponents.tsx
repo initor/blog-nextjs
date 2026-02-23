@@ -11,6 +11,7 @@ import TimelineCompare from './TimelineCompare';
 import WorkspaceLayout from './WorkspaceLayout';
 import WorkflowOrchestration from './WorkflowOrchestration';
 import SessionContextFlow from './SessionContextFlow';
+import AgentSessionFlow from './AgentSessionFlow';
 
 const MDXComponents = {
   // Custom link component
@@ -88,6 +89,7 @@ const MDXComponents = {
   WorkspaceLayout,
   WorkflowOrchestration,
   SessionContextFlow,
+  AgentSessionFlow,
 
   // Custom pre component to handle mermaid code blocks
   pre: ({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) => {

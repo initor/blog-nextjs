@@ -1,7 +1,3 @@
-'use client';
-
-import { useState, useMemo, useCallback } from 'react';
-
 interface DirectoryNode {
   name: string;
   category?: string;
@@ -67,85 +63,30 @@ function parseDirectories(directories: string | DirectoryNode[]): DirectoryNode[
   return Array.isArray(directories) ? directories : [];
 }
 
-/** Build the set of paths that should be expanded by default (top-level categories). */
-function defaultExpanded(nodes: DirectoryNode[], parentPath = ''): Set<string> {
-  const paths = new Set<string>();
-  for (const node of nodes) {
-    const path = parentPath ? `${parentPath}/${node.name}` : node.name;
-    if (node.children && node.children.length > 0) {
-      // Expand top-level categories (depth 0) so their children are visible
-      if (!parentPath) {
-        paths.add(path);
-      }
-    }
-  }
-  return paths;
-}
-
 const statusClass: Record<string, string> = {
   active: 'wl-status-active',
   paused: 'wl-status-paused',
   exploring: 'wl-status-exploring',
 };
 
-function DirectoryCard({
-  node,
-  path,
-  depth,
-  expanded,
-  activeDetail,
-  onToggleExpand,
-  onToggleDetail,
-}: {
-  node: DirectoryNode;
-  path: string;
-  depth: number;
-  expanded: Set<string>;
-  activeDetail: string | null;
-  onToggleExpand: (path: string) => void;
-  onToggleDetail: (path: string) => void;
-}) {
+function StaticDirectoryCard({ node }: { node: DirectoryNode }) {
   const hasChildren = node.children && node.children.length > 0;
-  const isExpanded = expanded.has(path);
-  const isDetailOpen = activeDetail === path;
   const hasAnnotation = node.agent || node.purpose || node.status;
   const isCategory = node.category != null;
 
   if (isCategory) {
     return (
       <div className="wl-category">
-        <button
-          className={`wl-category-label${isExpanded ? ' wl-category-expanded' : ''}`}
-          onClick={() => onToggleExpand(path)}
-          aria-expanded={isExpanded}
-          aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${node.name}`}
-        >
-          <span className="wl-card-expand">{isExpanded ? '\u25BC' : '\u25B6'}</span>
+        <div className="wl-category-label wl-category-expanded">
+          <span className="wl-card-expand">{'\u25BC'}</span>
           <span>{node.name}/</span>
-        </button>
-        <div
-          className={`wl-children${isExpanded ? ' wl-children-open' : ''}`}
-          aria-hidden={!isExpanded}
-        >
-          {isExpanded && (
-            <div className="wl-grid">
-              {node.children?.map((child) => {
-                const childPath = `${path}/${child.name}`;
-                return (
-                  <DirectoryCard
-                    key={childPath}
-                    node={child}
-                    path={childPath}
-                    depth={depth + 1}
-                    expanded={expanded}
-                    activeDetail={activeDetail}
-                    onToggleExpand={onToggleExpand}
-                    onToggleDetail={onToggleDetail}
-                  />
-                );
-              })}
-            </div>
-          )}
+        </div>
+        <div className="wl-children wl-children-open">
+          <div className="wl-grid">
+            {node.children?.map((child) => (
+              <StaticDirectoryCard key={child.name} node={child} />
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -153,25 +94,11 @@ function DirectoryCard({
 
   return (
     <div className="wl-card-wrapper">
-      <button
-        className={`wl-card${isDetailOpen ? ' wl-card-active' : ''}${hasChildren ? ' wl-card-branch' : ''}`}
-        onClick={() => {
-          if (hasAnnotation) onToggleDetail(path);
-          if (hasChildren) onToggleExpand(path);
-        }}
-        aria-expanded={hasChildren ? isExpanded : undefined}
-        aria-label={node.name}
-      >
+      <div className="wl-card">
         <span className="wl-card-name">{node.name}</span>
-        {hasChildren && (
-          <span className="wl-card-expand">{isExpanded ? '\u25BC' : '\u25B6'}</span>
-        )}
-      </button>
+      </div>
       {hasAnnotation && (
-        <div
-          className={`wl-detail${isDetailOpen ? ' wl-detail-open' : ''}`}
-          aria-hidden={!isDetailOpen}
-        >
+        <div className="wl-detail wl-detail-open">
           <div className="wl-detail-inner">
             {node.agent && (
               <div className="wl-detail-row">
@@ -196,24 +123,12 @@ function DirectoryCard({
           </div>
         </div>
       )}
-      {hasChildren && isExpanded && (
+      {hasChildren && (
         <div className="wl-children wl-children-open">
           <div className="wl-grid">
-            {node.children?.map((child) => {
-              const childPath = `${path}/${child.name}`;
-              return (
-                <DirectoryCard
-                  key={childPath}
-                  node={child}
-                  path={childPath}
-                  depth={depth + 1}
-                  expanded={expanded}
-                  activeDetail={activeDetail}
-                  onToggleExpand={onToggleExpand}
-                  onToggleDetail={onToggleDetail}
-                />
-              );
-            })}
+            {node.children?.map((child) => (
+              <StaticDirectoryCard key={child.name} node={child} />
+            ))}
           </div>
         </div>
       )}
@@ -230,30 +145,7 @@ export default function WorkspaceLayout({
   directories,
   title = 'Workspace Layout',
 }: WorkspaceLayoutProps) {
-  const nodes = useMemo(
-    () => (directories ? parseDirectories(directories) : DEFAULT_DATA),
-    [directories],
-  );
-
-  const initialExpanded = useMemo(() => defaultExpanded(nodes), [nodes]);
-  const [expanded, setExpanded] = useState<Set<string>>(initialExpanded);
-  const [activeDetail, setActiveDetail] = useState<string | null>(null);
-
-  const onToggleExpand = useCallback((path: string) => {
-    setExpanded((prev) => {
-      const next = new Set(prev);
-      if (next.has(path)) {
-        next.delete(path);
-      } else {
-        next.add(path);
-      }
-      return next;
-    });
-  }, []);
-
-  const onToggleDetail = useCallback((path: string) => {
-    setActiveDetail((prev) => (prev === path ? null : path));
-  }, []);
+  const nodes = directories ? parseDirectories(directories) : DEFAULT_DATA;
 
   return (
     <figure className="wl not-prose" role="figure" aria-label={title}>
@@ -261,21 +153,9 @@ export default function WorkspaceLayout({
         <span className="wl-title">{title}</span>
       </div>
       <div className="wl-tree">
-        {nodes.map((node) => {
-          const path = node.name;
-          return (
-            <DirectoryCard
-              key={path}
-              node={node}
-              path={path}
-              depth={0}
-              expanded={expanded}
-              activeDetail={activeDetail}
-              onToggleExpand={onToggleExpand}
-              onToggleDetail={onToggleDetail}
-            />
-          );
-        })}
+        {nodes.map((node) => (
+          <StaticDirectoryCard key={node.name} node={node} />
+        ))}
       </div>
     </figure>
   );
