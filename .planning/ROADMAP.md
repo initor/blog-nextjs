@@ -86,10 +86,11 @@ See: `.planning/milestones/v1.4-ROADMAP.md` for full details.
   2. The visualization communicates the concept of context accumulation -- each session inherits summarized context from prior sessions
   3. The component follows established patterns (client-side, JSON string props, CSS-prefixed styles, IntersectionObserver or step-through interaction)
   4. The component renders without errors in the preview post at /preview/decades-to-days
-**Plans**: 1 plan
+**Plans**: 2 plans
 
 Plans:
-- [ ] 11-01-PLAN.md — Build SessionContextFlow Sankey visualization component with SVG rendering, IntersectionObserver animation, and cf-* CSS styles
+- [x] 11-01-PLAN.md — Build SessionContextFlow Sankey visualization component with SVG rendering, IntersectionObserver animation, and cf-* CSS styles
+- [ ] 11-02-PLAN.md — Embed SessionContextFlow in the preview post (gap closure)
 
 ### Phase 12: Post Restructure
 **Goal**: The post skeleton is inverted so the Agentic development journey leads and Study/Chat eras move to closing
@@ -164,7 +165,7 @@ Plans:
 | (ad-hoc) Interactive Visualizations | v1.3 | 4 PRs | Complete | 2026-02-18 |
 | 9. Visualization Components | v1.4 | 2/2 | Complete | 2026-02-19 |
 | 10. Agentic Workflow Post | v1.4 | 2/2 | Complete | 2026-02-19 |
-| 11. Session Context Visualization | 1/1 | Complete   | 2026-02-23 | - |
+| 11. Session Context Visualization | v1.5 | 1/2 | Gap closure | - |
 | 12. Post Restructure | v1.5 | 0/? | Not started | - |
 | 13. Hackathon Rewrite | v1.5 | 0/? | Not started | - |
 | 14. Context Management Section | v1.5 | 0/? | Not started | - |
@@ -172,4 +173,4 @@ Plans:
 
 ---
 *Roadmap created: 2026-02-08*
-*Last updated: 2026-02-22 — v1.5 milestone roadmap created*
+*Last updated: 2026-02-22 — Phase 11 gap closure plan added*
