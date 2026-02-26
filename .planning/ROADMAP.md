@@ -71,7 +71,7 @@ See: `.planning/milestones/v1.4-ROADMAP.md` for full details.
 
 - [x] **Phase 11: Session Context Visualization** - Build the new session timeline + context funnel interactive component (completed 2026-02-23)
 - [x] **Phase 12: Post Restructure** - Invert post structure to lead with Agentic journey and evaluate existing visualizations (completed 2026-02-23)
-- [ ] **Phase 13: Hackathon Rewrite** - Rewrite hackathon section grounded in real motivation and prior failed attempts
+- [x] **Phase 13: Hackathon Rewrite** - Rewrite hackathon section grounded in real motivation and prior failed attempts (completed 2026-02-24)
 - [ ] **Phase 14: Context Management Section** - Write the main payload on session architecture, state externalization, and context inheritance
 - [ ] **Phase 15: Closing and Polish** - Revise closing section, touch up Study/Chat eras, verify voice and preview status
 
@@ -119,7 +119,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 13-01-PLAN.md — Rewrite hackathon section with operational toil motivation, prior attempts pattern, ChatGPT workflow breakthrough, and skills outcome
+- [x] 13-01-PLAN.md — Rewrite hackathon section with operational toil motivation, prior attempts pattern, ChatGPT workflow breakthrough, and skills outcome
 
 ### Phase 14: Context Management Section
 **Goal**: Readers grasp the core insight -- that managing context across agent sessions is the central challenge and design pattern of agentic development
@@ -131,10 +131,10 @@ Plans:
   3. Context inheritance across phases is described -- each phase carries forward summarized context from previous sessions
   4. The pattern generalizes beyond coding -- doc review, doc authoring, prototyping all use the working-directory-as-context-boundary approach
   5. The evolution from manual stop/resume/summarize to GSD automation is traced
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 14-01: TBD
+- [ ] 14-01-PLAN.md — Rewrite "The Journey" section as context management narrative with repositioned visualizations
 
 ### Phase 15: Closing and Polish
 **Goal**: The complete revised post reads as a cohesive essay with consistent voice, a context-management thesis, and proper preview status
@@ -168,7 +168,7 @@ Plans:
 | 10. Agentic Workflow Post | v1.4 | 2/2 | Complete | 2026-02-19 |
 | 11. Session Context Visualization | v1.5 | Complete    | 2026-02-23 | 2026-02-22 |
 | 12. Post Restructure | 2/2 | Complete    | 2026-02-23 | - |
-| 13. Hackathon Rewrite | v1.5 | 0/? | Not started | - |
+| 13. Hackathon Rewrite | v1.5 | 1/1 | Complete | 2026-02-24 |
 | 14. Context Management Section | v1.5 | 0/? | Not started | - |
 | 15. Closing and Polish | v1.5 | 0/? | Not started | - |
 
