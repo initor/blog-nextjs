@@ -72,7 +72,7 @@ See: `.planning/milestones/v1.4-ROADMAP.md` for full details.
 - [x] **Phase 11: Session Context Visualization** - Build the new session timeline + context funnel interactive component (completed 2026-02-23)
 - [x] **Phase 12: Post Restructure** - Invert post structure to lead with Agentic journey and evaluate existing visualizations (completed 2026-02-23)
 - [x] **Phase 13: Hackathon Rewrite** - Rewrite hackathon section grounded in real motivation and prior failed attempts (completed 2026-02-24)
-- [ ] **Phase 14: Context Management Section** - Write the main payload on session architecture, state externalization, and context inheritance
+- [x] **Phase 14: Context Management Section** - Write the main payload on session architecture, state externalization, and context inheritance (completed 2026-02-25)
 - [ ] **Phase 15: Closing and Polish** - Revise closing section, touch up Study/Chat eras, verify voice and preview status
 
 ## Phase Details
@@ -134,7 +134,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 14-01-PLAN.md — Rewrite "The Journey" section as context management narrative with repositioned visualizations
+- [x] 14-01-PLAN.md — Rewrite "The Journey" section as context management narrative with repositioned visualizations
 
 ### Phase 15: Closing and Polish
 **Goal**: The complete revised post reads as a cohesive essay with consistent voice, a context-management thesis, and proper preview status
@@ -169,7 +169,7 @@ Plans:
 | 11. Session Context Visualization | v1.5 | Complete    | 2026-02-23 | 2026-02-22 |
 | 12. Post Restructure | 2/2 | Complete    | 2026-02-23 | - |
 | 13. Hackathon Rewrite | v1.5 | 1/1 | Complete | 2026-02-24 |
-| 14. Context Management Section | v1.5 | 0/? | Not started | - |
+| 14. Context Management Section | v1.5 | 1/1 | Complete | 2026-02-25 |
 | 15. Closing and Polish | v1.5 | 0/? | Not started | - |
 
 ---

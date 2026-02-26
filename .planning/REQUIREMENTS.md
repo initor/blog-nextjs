@@ -16,11 +16,11 @@ Requirements for the Agentic Workflow Post Revision milestone. Each maps to road
 
 ### Context Management
 
-- [ ] **CTX-01**: Session architecture section -- stop/resume protocol, how context is preserved across sessions
-- [ ] **CTX-02**: State externalization -- planning docs, summaries, decisions as files that any session can load
-- [ ] **CTX-03**: Context inheritance across phases -- how each phase carries forward summarized context from previous sessions
-- [ ] **CTX-04**: Generalization to non-coding work -- doc review, doc authoring, prototyping all using working-directory-as-context-boundary pattern
-- [ ] **CTX-05**: GSD automation -- how the manual stop/resume/summarize cycle matured into tooling
+- [x] **CTX-01**: Session architecture section -- stop/resume protocol, how context is preserved across sessions
+- [x] **CTX-02**: State externalization -- planning docs, summaries, decisions as files that any session can load
+- [x] **CTX-03**: Context inheritance across phases -- how each phase carries forward summarized context from previous sessions
+- [x] **CTX-04**: Generalization to non-coding work -- doc review, doc authoring, prototyping all using working-directory-as-context-boundary pattern
+- [x] **CTX-05**: GSD automation -- how the manual stop/resume/summarize cycle matured into tooling
 
 ### Structure
 
@@ -65,11 +65,11 @@ Requirements for the Agentic Workflow Post Revision milestone. Each maps to road
 | HACK-02 | Phase 13 | Pending |
 | HACK-03 | Phase 13 | Pending |
 | HACK-04 | Phase 13 | Pending |
-| CTX-01 | Phase 14 | Pending |
-| CTX-02 | Phase 14 | Pending |
-| CTX-03 | Phase 14 | Pending |
-| CTX-04 | Phase 14 | Pending |
-| CTX-05 | Phase 14 | Pending |
+| CTX-01 | Phase 14 | Complete |
+| CTX-02 | Phase 14 | Complete |
+| CTX-03 | Phase 14 | Complete |
+| CTX-04 | Phase 14 | Complete |
+| CTX-05 | Phase 14 | Complete |
 | STRC-01 | Phase 15 | Pending |
 | STRC-02 | Phase 15 | Pending |
 | STRC-03 | Phase 12 | Complete |
