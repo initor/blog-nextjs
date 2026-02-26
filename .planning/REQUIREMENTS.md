@@ -9,10 +9,10 @@ Requirements for the Agentic Workflow Post Revision milestone. Each maps to road
 
 ### Hackathon Rewrite
 
-- [ ] **HACK-01**: Hackathon section grounded in real motivation -- workload platform operational toil (not Kubernetes-specific, framed as inherent to platform ownership at scale)
-- [ ] **HACK-02**: Prior failed attempts described -- Slackbot, chatbot wrapper, MCP server -- and why they fell short (limited tool chains, poor exploration, inadequate answer quality)
-- [ ] **HACK-03**: ChatGPT-designed multi-session workflow described -- using one AI to design the stop/resume protocol for another (ChatGPT named explicitly)
-- [ ] **HACK-04**: ~10 Claude Code skills as hackathon outcome, built using the ChatGPT-generated markdown scaffold
+- [x] **HACK-01**: Hackathon section grounded in real motivation -- workload platform operational toil (not Kubernetes-specific, framed as inherent to platform ownership at scale)
+- [x] **HACK-02**: Prior failed attempts described -- Slackbot, chatbot wrapper, MCP server -- and why they fell short (limited tool chains, poor exploration, inadequate answer quality)
+- [x] **HACK-03**: ChatGPT-designed multi-session workflow described -- using one AI to design the stop/resume protocol for another (ChatGPT named explicitly)
+- [x] **HACK-04**: ~10 Claude Code skills as hackathon outcome, built using the ChatGPT-generated markdown scaffold
 
 ### Context Management
 
@@ -61,10 +61,10 @@ Requirements for the Agentic Workflow Post Revision milestone. Each maps to road
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| HACK-01 | Phase 13 | Pending |
-| HACK-02 | Phase 13 | Pending |
-| HACK-03 | Phase 13 | Pending |
-| HACK-04 | Phase 13 | Pending |
+| HACK-01 | Phase 13 | Complete |
+| HACK-02 | Phase 13 | Complete |
+| HACK-03 | Phase 13 | Complete |
+| HACK-04 | Phase 13 | Complete |
 | CTX-01 | Phase 14 | Complete |
 | CTX-02 | Phase 14 | Complete |
 | CTX-03 | Phase 14 | Complete |
