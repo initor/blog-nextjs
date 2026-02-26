@@ -19,23 +19,33 @@ The fourth attempt changed the approach entirely. Before the hackathon, I used C
 
 Three days, four engineers, ten skills. The skills covered workload scheduling failures, data-plane runtime failures, planned disruptions, application log retrieval, and pool capacity analysis. The speed made the breadth possible: because each skill took hours rather than weeks, ten operational domains could be covered in a single weekend. The agent read each structured specification, built the implementation, wrote the tests, committed the result. The human described what was needed; the agent implemented it. That inversion of the traditional relationship, from writing code to writing specifications, worked. But it also created a new problem: managing context across sessions, so that work spanning days or weeks could stop and resume without losing its place.
 
-## The Journey
+## The Session Problem
 
-After the hackathon, I continued with personal agentic development, not limited to coding. Engineering doc authoring, doc reviewing, prototyping ideas. These are all projects that span days or weeks. No single LLM session can finish them. I needed systematic context summarization and pruning between sessions: base context setup, phase and milestone planning, completion verification, progress tracking so you can stop and resume without losing your place.
+The hackathon worked. But it also surfaced a problem I had not anticipated.
+
+When you close an agent session and open a new one, everything is gone. The context window is ephemeral. Whatever the previous session learned, whatever it decided, whatever it built, all of it is invisible to the next session. During the hackathon this was manageable because each skill fit inside a single session. But any project that spans days or weeks, and most real projects do, requires multiple sessions. The first session makes progress. The second session starts from scratch.
+
+This is not a minor inconvenience. It is a structural limitation. An agent with no memory of prior sessions is not a collaborator; it is a stranger you have to re-brief every morning. The context that makes collaboration productive, the shared understanding of what has been tried, what has been decided, what comes next, vanishes the moment you hit "new session." I realized that the bottleneck had shifted. The hackathon proved that agents could execute. The question now was whether they could sustain execution across time.
+
+The solution, when it emerged, was almost embarrassingly simple. If the context window is ephemeral, externalize the state into files that persist. Not documentation written for humans, but memory written for agents. A ROADMAP.md that tracks milestones and phases. A STATE.md that records the current position: which phase, which plan, what was last accomplished. A CONTEXT.md that captures decisions and their rationale. A PLAN.md that breaks the current phase into concrete tasks. A SUMMARY.md that distills what each session accomplished and what comes next. These files are not bureaucratic overhead. They are the mechanism by which one session hands off to the next. The agent writes a summary of what it accomplished and what remains; the next session reads that summary and picks up exactly where the previous one left off.
+
+What surprised me was how quickly this compounded. By the fifth phase of a project, the agent already knew decisions from phases one through four. Not because it remembered them, since each session's context window started empty, but because the planning files carried forward a distilled version of everything that mattered. Irrelevant details were pruned. Dead-end explorations were dropped. Key decisions and their reasoning were preserved. Each new session inherited not the full history, but the right history: the subset that enabled it to continue with full situational awareness.
 
 <AgentSessionFlow />
 
-*Context narrows between sessions: threads pruned, others summarized, each new session inheriting a distilled starting point.*
+*Each session starts with a narrower, more precise context than the last. Threads that led nowhere are pruned. Threads that matter are summarized. The agent does not remember prior sessions; it reads their distilled output and picks up with the decisions already made.*
 
-I started using ChatGPT to set up the markdown files: project goals, base context, milestone and phase tracking, pause and resume protocols. This was human-in-the-loop; I still had to repetitively prompt for each new project. Then I discovered [GSD (get-shit-done)](https://github.com/gsd-build/get-shit-done), a Claude Code plugin that automated the bootstrap entirely.
+This pattern of distilling what matters between sessions changed how I thought about multi-session work. The agent was not starting over each time. It was starting ahead, with the accumulated judgment of every prior session compressed into a few files it could load in seconds. The context boundary was not the conversation window. It was the working directory.
 
-Previously, my working directory was always a code repository. Now it's the working directory for any project: doc authoring, doc reviewing, prototyping. I initialize GSD in every directory that is a project root. Everything is tracked by version control: artifacts plus progress status in structured markdown files. Each directory is a self-contained context boundary.
+That insight unlocked something I had not planned for. After the hackathon, I kept using the same pattern for projects that had nothing to do with coding. Engineering design documents that took a week of research and drafting. Document reviews where I needed to track feedback across multiple revision cycles. Prototyping sessions where ideas evolved over days. Every one of these projects had the same structural requirement: work that spanned multiple sessions, where continuity between sessions determined quality. The working directory became the universal context boundary. Any directory could be a project, and any project could carry its own planning files, its own state, its own accumulated decisions.
 
 <WorkspaceLayout />
 
-*Each project carries its own context boundary: planning, state, and instructions scoped to a single directory.*
+*Each project directory carries its own context boundary. Planning, state, and instructions are scoped to a single directory, whether the project is a codebase, a design document, or a prototype. The pattern is the same; only the artifacts differ.*
 
-Getting the human out of the loop, one step at a time.
+The manual version of this workflow was effective but tedious. During the hackathon, ChatGPT had helped me design the protocols for structuring each skill specification. Afterward, I applied the same approach to context management: using ChatGPT to draft the markdown files, the project goals, the milestone tracking, the pause and resume protocols. It worked, but I was still the human in the loop, repetitively prompting for each new project, copying templates, initializing the same file structures by hand. The insight had become a pattern, but the pattern had not yet become infrastructure.
+
+Then I found [GSD (get-shit-done)](https://github.com/gsd-build/get-shit-done), a Claude Code plugin that automated the entire lifecycle. What I had been doing manually, bootstrapping a project directory with planning files, breaking work into phases, tracking progress across sessions, verifying completion, GSD handled automatically. The evolution was clean: manual context management during the hackathon, semi-automated protocols designed with ChatGPT's help for the projects that followed, and finally a fully automated plugin that turned the pattern into a single command. The insight from the hackathon, that agents need externalized state to work across sessions, had become infrastructure that any project could use from the first minute.
 
 ## Conclusion
 
