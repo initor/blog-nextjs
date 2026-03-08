@@ -47,15 +47,15 @@ The agent was not starting over each time. It was starting ahead, with the accum
 
 The context boundary was not the conversation window. It was the working directory.
 
-That insight unlocked something I had not planned for. After the hackathon, I kept using the same pattern for projects that had nothing to do with coding. Engineering design documents that took a week of research and drafting. Document reviews where I needed to track feedback across multiple revision cycles. Prototyping sessions where ideas evolved over days. Every one of these projects had the same structural requirement: work that spanned multiple sessions, where continuity between sessions determined quality. The working directory became the universal context boundary. Any directory could be a project, and any project could carry its own planning files, its own state, its own accumulated decisions.
+That insight extended beyond code. Design documents, document reviews, prototyping sessions: every multi-session project had the same structural requirement. The working directory became the universal context boundary, and any directory could carry its own planning files, state, and accumulated decisions.
 
 <WorkspaceLayout />
 
 *Each project directory carries its own context boundary. Planning, state, and instructions are scoped to a single directory, whether the project is a codebase, a design document, or a prototype. The pattern is the same; only the artifacts differ.*
 
-The manual version of this workflow was effective but tedious. During the hackathon, ChatGPT had helped me design the protocols for structuring each skill specification. Afterward, I applied the same approach to context management: using ChatGPT to draft the markdown files, the project goals, the milestone tracking, the pause and resume protocols. It worked, but I was still the human in the loop, repetitively prompting for each new project, copying templates, initializing the same file structures by hand. The insight had become a pattern, but the pattern had not yet become infrastructure.
+The manual version of this workflow was effective but tedious. I was still the human in the loop, copying templates and initializing file structures by hand for every new project. The insight had become a pattern, but not yet infrastructure.
 
-Then I found [GSD (get-shit-done)](https://github.com/gsd-build/get-shit-done), a Claude Code plugin that automated the entire lifecycle. What I had been doing manually, bootstrapping a project directory with planning files, breaking work into phases, tracking progress across sessions, verifying completion, GSD handled automatically. The evolution was clean: manual context management during the hackathon, semi-automated protocols designed with ChatGPT's help for the projects that followed, and finally a fully automated plugin that turned the pattern into a single command. The insight from the hackathon, that agents need externalized state to work across sessions, had become infrastructure that any project could use from the first minute.
+Then I found [GSD (get-shit-done)](https://github.com/gsd-build/get-shit-done), a Claude Code plugin that automated the entire lifecycle: bootstrapping planning files, breaking work into phases, tracking progress, verifying completion. The insight from the hackathon, that agents need externalized state to work across sessions, had become infrastructure that any project could use from the first minute.
 
 ## Conclusion
 
