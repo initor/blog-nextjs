@@ -290,6 +290,11 @@ This document provides paragraph-level directives for every section of the curre
 
 **Key observation:** The spine is strongest in Session Problem paragraphs 1-6 and weakest in paragraphs 7-9 (the manual/GSD evolution). Compressing those paragraphs will prevent the spine from going slack. Adding NEW-01 after the visual will restore momentum before the conclusion.
 
+### Overall Quality Notes
+
+- **COMP-04** (tighter overall, stronger punchlines and transitions): The COMPRESS and REWRITE directives above collectively serve COMP-04. Each section ending should be checked for trailing filler after the strong line. Phase 20 owns the final polish pass.
+- **QUAL-03** (post remains at src/content/preview/decades-to-days.mdx): All edits must be made to the existing file at this path. No file moves, no renames, no new MDX files.
+
 ---
 *Generated: 2026-03-08*
 *Supports: Phases 17-20 execution*

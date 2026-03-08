@@ -77,8 +77,8 @@ Key structural changes within this section:
 
 ### Section 8: Conclusion (existing, modified)
 **What it accomplishes:** Three-era spine (knowledge, chatbots, session architecture). Ends on the compounding metaphor: a weekend of building becomes a month of building. Grounded in human judgment and constraints, not hype.
-**Requirement IDs:** CLOS-01, CLOS-02, QUAL-01, QUAL-02
-**Status:** Existing (modified). Phase 15 already revised this section. Minimal changes expected; mainly ensuring the new sections above flow naturally into the closing.
+**Requirement IDs:** CLOS-01, CLOS-02, QUAL-01, QUAL-02, COMP-04, QUAL-03
+**Status:** Existing (modified). Phase 15 already revised this section. Minimal changes expected; mainly ensuring the new sections above flow naturally into the closing. Overall punchline and transition quality (COMP-04) verified here. Post must remain at src/content/preview/decades-to-days.mdx throughout all phases (QUAL-03).
 
 ## New Section Slots
 
