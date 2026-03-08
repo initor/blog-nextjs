@@ -83,7 +83,7 @@ See: `.planning/milestones/v1.5-ROADMAP.md` for full details.
 
 **Milestone Goal:** Sharpen the "Decades to Days" essay so the session-architecture thesis is unmistakable by paragraph 2, compress list-heavy prose, replace the second visual with a session-handoff concept, add sections on workflow changes and failure modes, and polish for punchlines and readability.
 
-- [ ] **Phase 16: Outline and Cut Map** - Review current structure, identify center of gravity, produce revised outline and cut/compress/move directives
+- [x] **Phase 16: Outline and Cut Map** - Review current structure, identify center of gravity, produce revised outline and cut/compress/move directives (completed 2026-03-08)
 - [ ] **Phase 17: Thesis and Prose Rewrite** - Rewrite intro through middle so thesis lands by paragraph 2 and The Session Problem becomes the spine, with compressed prose throughout
 - [ ] **Phase 18: Visual Overhaul** - Replace WorkspaceLayout with session-handoff concept visual and improve AgentSessionFlow for hierarchy and clarity
 - [ ] **Phase 19: Closing and New Sections** - Rewrite ending grounded in judgment, add workflow-changes section and failure-modes paragraph
@@ -169,7 +169,7 @@ Plans:
 | 13. Hackathon Rewrite | v1.5 | 1/1 | Complete | 2026-02-24 |
 | 14. Context Management Section | v1.5 | 1/1 | Complete | 2026-02-25 |
 | 15. Closing and Polish | v1.5 | 1/1 | Complete | 2026-03-08 |
-| 16. Outline and Cut Map | v1.6 | 0/1 | Not started | - |
+| 16. Outline and Cut Map | 1/1 | Complete   | 2026-03-08 | - |
 | 17. Thesis and Prose Rewrite | v1.6 | 0/? | Not started | - |
 | 18. Visual Overhaul | v1.6 | 0/? | Not started | - |
 | 19. Closing and New Sections | v1.6 | 0/? | Not started | - |
