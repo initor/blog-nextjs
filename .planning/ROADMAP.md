@@ -114,7 +114,10 @@ Plans:
   3. "The context boundary was not the conversation window. It was the working directory." appears with structural emphasis
   4. The Session Problem functions as the spine: every section either sets it up, develops it, or resolves it
   5. Hackathon details, planning-file explanations, and domain/file-name lists are noticeably shorter than before, with COMP-02 rendered as a compact scannable artifact
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 17-01-PLAN.md — Rewrite opening with thesis pivot and compress Hackathon section
+- [ ] 17-02-PLAN.md — Structural emphasis for THES-02/THES-03, planning-file artifact, compress Session Problem tail
 
 ### Phase 18: Visual Overhaul
 **Goal**: The post contains exactly two visuals, both deepening the session-architecture thesis, with the second visual replaced and the first improved
@@ -169,12 +172,12 @@ Plans:
 | 13. Hackathon Rewrite | v1.5 | 1/1 | Complete | 2026-02-24 |
 | 14. Context Management Section | v1.5 | 1/1 | Complete | 2026-02-25 |
 | 15. Closing and Polish | v1.5 | 1/1 | Complete | 2026-03-08 |
-| 16. Outline and Cut Map | 1/1 | Complete   | 2026-03-08 | - |
-| 17. Thesis and Prose Rewrite | v1.6 | 0/? | Not started | - |
+| 16. Outline and Cut Map | 1/1 | Complete    | 2026-03-08 | - |
+| 17. Thesis and Prose Rewrite | v1.6 | 0/2 | Not started | - |
 | 18. Visual Overhaul | v1.6 | 0/? | Not started | - |
 | 19. Closing and New Sections | v1.6 | 0/? | Not started | - |
 | 20. Final Polish | v1.6 | 0/? | Not started | - |
 
 ---
 *Roadmap created: 2026-02-08*
-*Last updated: 2026-03-08 -- Phase 16 planned (1 plan)*
+*Last updated: 2026-03-08 -- Phase 17 planned (2 plans)*
