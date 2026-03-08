@@ -104,8 +104,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 12-01-PLAN.md — Revise visualization components: static WorkspaceLayout + merged AgentSessionFlow
-- [ ] 12-02-PLAN.md — Restructure post to lead with Agentic journey, compress Study/Chat to coda
+- [x] 12-01-PLAN.md — Revise visualization components: static WorkspaceLayout + merged AgentSessionFlow
+- [x] 12-02-PLAN.md — Restructure post to lead with Agentic journey, compress Study/Chat to coda
 
 ### Phase 13: Hackathon Rewrite
 **Goal**: Readers understand the real motivation behind the hackathon -- platform operational toil, prior failed attempts, and the ChatGPT-designed workflow breakthrough
@@ -145,10 +145,10 @@ Plans:
   2. Study and Chat era sections have minor tone touch-ups to work as reflective closing material
   3. Paul Graham essay voice is consistent throughout all revised and new sections (conversational authority, thesis-driven, no bullet lists in prose)
   4. The post remains at src/content/preview/decades-to-days.mdx and is accessible at /preview/decades-to-days
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 15-01: TBD
+- [ ] 15-01-PLAN.md — Revise closing to land context-management thesis, polish Study/Chat coda, voice consistency pass
 
 ## Progress
 
@@ -170,8 +170,8 @@ Plans:
 | 12. Post Restructure | 2/2 | Complete    | 2026-02-23 | - |
 | 13. Hackathon Rewrite | v1.5 | 1/1 | Complete | 2026-02-24 |
 | 14. Context Management Section | v1.5 | Complete    | 2026-02-26 | 2026-02-25 |
-| 15. Closing and Polish | v1.5 | 0/? | Not started | - |
+| 15. Closing and Polish | v1.5 | 0/1 | Not started | - |
 
 ---
 *Roadmap created: 2026-02-08*
-*Last updated: 2026-02-22 — Phase 12 planned (2 plans in 2 waves)*
+*Last updated: 2026-03-07 — Phase 15 planned (1 plan in 1 wave)*
