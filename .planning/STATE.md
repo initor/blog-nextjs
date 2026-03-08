@@ -1,61 +1,34 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.5
-milestone_name: Agentic Workflow Post Revision
-status: completed
-stopped_at: Completed 15-01-PLAN.md (v1.5 milestone complete)
-last_updated: "2026-03-08T08:54:47.940Z"
-last_activity: 2026-03-08 -- Phase 15 plan 01 completed
+milestone: v1.6
+milestone_name: Editorial Sharpening
+status: active
+stopped_at: Defining requirements
+last_updated: "2026-03-08"
+last_activity: 2026-03-08 -- Milestone v1.6 started
 progress:
-  total_phases: 5
-  completed_phases: 5
-  total_plans: 7
-  completed_plans: 7
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-02-22)
+See: .planning/PROJECT.md (updated 2026-03-08)
 
 **Core value:** Blog renders every page identically -- same look, same feel, same URLs.
-**Current focus:** v1.5 Agentic Workflow Post Revision — Phase 15: Closing and Polish
+**Current focus:** v1.6 Editorial Sharpening -- Defining requirements
 
 ## Current Position
 
-Phase: 15 of 15 (Closing and Polish)
-Plan: 1/1 (complete)
-Status: Phase 15 complete, v1.5 milestone complete
-Last activity: 2026-03-08 -- Phase 15 plan 01 completed
-
-Progress: [##########] 100% (5/5 phases in v1.5)
-
-## Performance Metrics
-
-**Velocity:**
-- Total plans completed: 21 (7 v1.0 + 4 v1.1 + 4 v1.4 + 6 v1.5) + v1.2 ad-hoc (2 PRs) + v1.3 ad-hoc (4 PRs)
-
-**By Phase:**
-
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| 1. DRY Refactoring | 1 | -- | -- |
-| 2. Type-Safe Validation | 2 | -- | -- |
-| 3. Testing Infrastructure | 2 | -- | -- |
-| 4. Security Hardening | 2 | -- | -- |
-| 5. Crawler Foundation | 1 | 2min | 2min |
-| 6. Layout Metadata | 1 | 1min | 1min |
-| 7. Structured Data | 1 | 3min | 3min |
-| 8. Atom Feed | 1 | 2min | 2min |
-| 9. Visualization Components | 2/2 | 4min | 2min |
-| 10. Agentic Workflow Post | 2/2 | 4min | 2min |
-| 11. Session Context Viz | 2/2 | 5min | 2.5min |
-| 12. Post Restructure | 2/2 | 6min | 3min |
-| 13. Hackathon Rewrite | 1/1 | 6min | 6min |
-| 14. Context Management | 1/1 | 6min | 6min |
-| 15. Closing and Polish | 1/1 | 52min | 52min |
+Phase: Not started (defining requirements)
+Plan: --
+Status: Defining requirements
+Last activity: 2026-03-08 -- Milestone v1.6 started
 
 ## Accumulated Context
 
@@ -97,5 +70,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-08
-Stopped at: Completed 15-01-PLAN.md (v1.5 milestone complete)
-Resume file: .planning/phases/15-closing-and-polish/15-01-SUMMARY.md
+Stopped at: Milestone v1.6 started, defining requirements
+Resume file: --
