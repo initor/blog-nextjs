@@ -21,11 +21,21 @@ Three days, four engineers, ten skills. The agent read each structured specifica
 
 The hackathon worked. But it also surfaced a problem I had not anticipated.
 
-When you close an agent session and open a new one, everything is gone. The context window is ephemeral. Whatever the previous session learned, whatever it decided, whatever it built, all of it is invisible to the next session. During the hackathon this was manageable because each skill fit inside a single session. But any project that spans days or weeks, and most real projects do, requires multiple sessions. The first session makes progress. The second session starts from scratch.
+When you close an agent session and open a new one, everything is gone. The context window is ephemeral: whatever the previous session learned, decided, or built is invisible to the next. During the hackathon this was manageable because each skill fit inside a single session. But real projects span days or weeks. The first session makes progress. The second starts from scratch.
 
-This is not a minor inconvenience. It is a structural limitation. An agent with no memory of prior sessions is not a collaborator; it is a stranger you have to re-brief every morning. The context that makes collaboration productive, the shared understanding of what has been tried, what has been decided, what comes next, vanishes the moment you hit "new session." I realized that the bottleneck had shifted. The hackathon proved that agents could execute. The question now was whether they could sustain execution across time.
+An agent with no memory is not a collaborator. It is a stranger you have to re-brief every morning.
 
-The solution, when it emerged, was almost embarrassingly simple. If the context window is ephemeral, externalize the state into files that persist. Not documentation written for humans, but memory written for agents. A ROADMAP.md that tracks milestones and phases. A STATE.md that records the current position: which phase, which plan, what was last accomplished. A CONTEXT.md that captures decisions and their rationale. A PLAN.md that breaks the current phase into concrete tasks. A SUMMARY.md that distills what each session accomplished and what comes next. These files are not bureaucratic overhead. They are the mechanism by which one session hands off to the next. The agent writes a summary of what it accomplished and what remains; the next session reads that summary and picks up exactly where the previous one left off.
+The shared understanding of what has been tried, what has been decided, what comes next: all of it vanishes the moment you hit "new session." The hackathon proved that agents could execute. The question now was whether they could sustain execution across time.
+
+The solution, when it emerged, was almost embarrassingly simple. If the context window is ephemeral, externalize the state into files that persist. Not documentation written for humans, but memory written for agents:
+
+- **ROADMAP.md** tracks milestones and phases
+- **STATE.md** records the current position: which phase, which plan, what was last accomplished
+- **CONTEXT.md** captures decisions and their rationale
+- **PLAN.md** breaks the current phase into concrete tasks
+- **SUMMARY.md** distills what each session accomplished and what comes next
+
+These files are not bureaucratic overhead. They are the mechanism by which one session hands off to the next. The agent writes a summary of what it accomplished and what remains; the next session reads that summary and picks up exactly where the previous one left off.
 
 What surprised me was how quickly this compounded. By the fifth phase of a project, the agent already knew decisions from phases one through four. Not because it remembered them, since each session's context window started empty, but because the planning files carried forward a distilled version of everything that mattered. Irrelevant details were pruned. Dead-end explorations were dropped. Key decisions and their reasoning were preserved. Each new session inherited not the full history, but the right history: the subset that enabled it to continue with full situational awareness.
 
@@ -33,7 +43,9 @@ What surprised me was how quickly this compounded. By the fifth phase of a proje
 
 *Each session starts with a narrower, more precise context than the last. Threads that led nowhere are pruned. Threads that matter are summarized. The agent does not remember prior sessions; it reads their distilled output and picks up with the decisions already made.*
 
-This pattern of distilling what matters between sessions changed how I thought about multi-session work. The agent was not starting over each time. It was starting ahead, with the accumulated judgment of every prior session compressed into a few files it could load in seconds. The context boundary was not the conversation window. It was the working directory.
+The agent was not starting over each time. It was starting ahead, with the accumulated judgment of every prior session compressed into a few files it could load in seconds.
+
+The context boundary was not the conversation window. It was the working directory.
 
 That insight unlocked something I had not planned for. After the hackathon, I kept using the same pattern for projects that had nothing to do with coding. Engineering design documents that took a week of research and drafting. Document reviews where I needed to track feedback across multiple revision cycles. Prototyping sessions where ideas evolved over days. Every one of these projects had the same structural requirement: work that spanned multiple sessions, where continuity between sessions determined quality. The working directory became the universal context boundary. Any directory could be a project, and any project could carry its own planning files, its own state, its own accumulated decisions.
 
