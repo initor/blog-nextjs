@@ -100,7 +100,9 @@ See: `.planning/milestones/v1.5-ROADMAP.md` for full details.
   2. A cut/compress/move map identifies every paragraph or section to cut, compress, move, or rewrite
   3. The outline marks where NEW-01 (workflow changes) and NEW-02 (failure modes) will land
   4. The center of gravity is identified: which single idea the post orbits
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 16-01-PLAN.md — Revised outline with thesis placement and paragraph-level cut/compress/move map
 
 ### Phase 17: Thesis and Prose Rewrite
 **Goal**: Readers encounter the session-architecture thesis by paragraph 2, The Session Problem is the spine connecting every section, and list-heavy prose is compressed throughout
@@ -167,7 +169,7 @@ See: `.planning/milestones/v1.5-ROADMAP.md` for full details.
 | 13. Hackathon Rewrite | v1.5 | 1/1 | Complete | 2026-02-24 |
 | 14. Context Management Section | v1.5 | 1/1 | Complete | 2026-02-25 |
 | 15. Closing and Polish | v1.5 | 1/1 | Complete | 2026-03-08 |
-| 16. Outline and Cut Map | v1.6 | 0/? | Not started | - |
+| 16. Outline and Cut Map | v1.6 | 0/1 | Not started | - |
 | 17. Thesis and Prose Rewrite | v1.6 | 0/? | Not started | - |
 | 18. Visual Overhaul | v1.6 | 0/? | Not started | - |
 | 19. Closing and New Sections | v1.6 | 0/? | Not started | - |
@@ -175,4 +177,4 @@ See: `.planning/milestones/v1.5-ROADMAP.md` for full details.
 
 ---
 *Roadmap created: 2026-02-08*
-*Last updated: 2026-03-08 -- v1.6 Editorial Sharpening roadmap created, phases 16-20*
+*Last updated: 2026-03-08 -- Phase 16 planned (1 plan)*
