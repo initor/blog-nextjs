@@ -8,6 +8,7 @@
 - ✅ **v1.3 Interactive Visualizations** — ad-hoc, PRs #33-#36 (shipped 2026-02-18)
 - ✅ **v1.4 Agentic Workflow Post** — Phases 9-10 (shipped 2026-02-19)
 - ✅ **v1.5 Agentic Workflow Post Revision** — Phases 11-15 (shipped 2026-03-08)
+- **v1.6 Editorial Sharpening** — Phases 16-20 (in progress)
 
 ## Phases
 
@@ -65,90 +66,85 @@ See: `.planning/milestones/v1.4-ROADMAP.md` for full details.
 
 </details>
 
-### v1.5 Agentic Workflow Post Revision (In Progress)
+<details>
+<summary>✅ v1.5 Agentic Workflow Post Revision (Phases 11-15) — SHIPPED 2026-03-08</summary>
 
-**Milestone Goal:** Revise the "Decades to Days" preview post to ground the Agentic section in the real story -- Kubernetes platform operational toil, the ChatGPT-designed multi-session workflow, and the context-management-across-sessions insight -- plus build a new interactive visualization showing how context flows across sessions.
+- [x] Phase 11: Session Context Visualization (2/2 plans) — completed 2026-02-23
+- [x] Phase 12: Post Restructure (2/2 plans) — completed 2026-02-23
+- [x] Phase 13: Hackathon Rewrite (1/1 plans) — completed 2026-02-24
+- [x] Phase 14: Context Management Section (1/1 plans) — completed 2026-02-25
+- [x] Phase 15: Closing and Polish (1/1 plans) — completed 2026-03-08
 
-- [x] **Phase 11: Session Context Visualization** - Build the new session timeline + context funnel interactive component (completed 2026-02-23)
-- [x] **Phase 12: Post Restructure** - Invert post structure to lead with Agentic journey and evaluate existing visualizations (completed 2026-02-23)
-- [x] **Phase 13: Hackathon Rewrite** - Rewrite hackathon section grounded in real motivation and prior failed attempts (completed 2026-02-24)
-- [x] **Phase 14: Context Management Section** - Write the main payload on session architecture, state externalization, and context inheritance (completed 2026-02-25)
-- [x] **Phase 15: Closing and Polish** - Revise closing section, touch up Study/Chat eras, verify voice and preview status (completed 2026-03-08)
+See: `.planning/milestones/v1.5-ROADMAP.md` for full details.
+
+</details>
+
+### v1.6 Editorial Sharpening (In Progress)
+
+**Milestone Goal:** Sharpen the "Decades to Days" essay so the session-architecture thesis is unmistakable by paragraph 2, compress list-heavy prose, replace the second visual with a session-handoff concept, add sections on workflow changes and failure modes, and polish for punchlines and readability.
+
+- [ ] **Phase 16: Outline and Cut Map** - Review current structure, identify center of gravity, produce revised outline and cut/compress/move directives
+- [ ] **Phase 17: Thesis and Prose Rewrite** - Rewrite intro through middle so thesis lands by paragraph 2 and The Session Problem becomes the spine, with compressed prose throughout
+- [ ] **Phase 18: Visual Overhaul** - Replace WorkspaceLayout with session-handoff concept visual and improve AgentSessionFlow for hierarchy and clarity
+- [ ] **Phase 19: Closing and New Sections** - Rewrite ending grounded in judgment, add workflow-changes section and failure-modes paragraph
+- [ ] **Phase 20: Final Polish** - Punchlines, transitions, readability, tone consistency, and quality verification
 
 ## Phase Details
 
-### Phase 11: Session Context Visualization
-**Goal**: Readers can interact with a visualization that shows how context flows and accumulates across agent sessions
-**Depends on**: Nothing (viz-first pattern -- build component before content that embeds it)
-**Requirements**: VIZ-01
+### Phase 16: Outline and Cut Map
+**Goal**: A concrete editorial plan exists: revised outline showing where the thesis lands, and a cut/compress/move map identifying every section that changes
+**Depends on**: Nothing (planning phase)
+**Requirements**: (none directly; this phase produces the editorial blueprint consumed by phases 17-20)
 **Success Criteria** (what must be TRUE):
-  1. A new interactive component renders in MDX showing sessions as a timeline with context flowing between them
-  2. The visualization communicates the concept of context accumulation -- each session inherits summarized context from prior sessions
-  3. The component follows established patterns (client-side, JSON string props, CSS-prefixed styles, IntersectionObserver or step-through interaction)
-  4. The component renders without errors in the preview post at /preview/decades-to-days
-**Plans**: 2 plans
+  1. A revised outline shows the post's section order with the thesis visible before 25% of the article
+  2. A cut/compress/move map identifies every paragraph or section to cut, compress, move, or rewrite
+  3. The outline marks where NEW-01 (workflow changes) and NEW-02 (failure modes) will land
+  4. The center of gravity is identified: which single idea the post orbits
+**Plans**: TBD
 
-Plans:
-- [x] 11-01-PLAN.md — Build SessionContextFlow Sankey visualization component with SVG rendering, IntersectionObserver animation, and cf-* CSS styles
-- [x] 11-02-PLAN.md — Embed SessionContextFlow in the preview post (gap closure)
-
-### Phase 12: Post Restructure
-**Goal**: The post skeleton is inverted so the Agentic development journey leads and Study/Chat eras move to closing
-**Depends on**: Phase 11
-**Requirements**: STRC-03, VIZ-02
+### Phase 17: Thesis and Prose Rewrite
+**Goal**: Readers encounter the session-architecture thesis by paragraph 2, The Session Problem is the spine connecting every section, and list-heavy prose is compressed throughout
+**Depends on**: Phase 16
+**Requirements**: THES-01, THES-02, THES-03, THES-04, COMP-01, COMP-02, COMP-03
 **Success Criteria** (what must be TRUE):
-  1. The post opens with the Agentic era narrative (not chronological Study-first order)
-  2. Study and Chat era sections are repositioned as reflective closing material
-  3. Existing visualizations (WorkspaceLayout, WorkflowOrchestration) are evaluated and either repositioned meaningfully within the restructured Agentic section or removed
-  4. The post renders without broken imports or missing components after restructure
-**Plans**: 2 plans
+  1. The core thesis (agents cannot sustain execution without externalized state) is stated or strongly implied before 25% of the article
+  2. "An agent with no memory is not a collaborator" appears with structural emphasis (pull quote, section opener, or standalone paragraph)
+  3. "The context boundary was not the conversation window. It was the working directory." appears with structural emphasis
+  4. The Session Problem functions as the spine: every section either sets it up, develops it, or resolves it
+  5. Hackathon details, planning-file explanations, and domain/file-name lists are noticeably shorter than before, with COMP-02 rendered as a compact scannable artifact
+**Plans**: TBD
 
-Plans:
-- [x] 12-01-PLAN.md — Revise visualization components: static WorkspaceLayout + merged AgentSessionFlow
-- [x] 12-02-PLAN.md — Restructure post to lead with Agentic journey, compress Study/Chat to coda
-
-### Phase 13: Hackathon Rewrite
-**Goal**: Readers understand the real motivation behind the hackathon -- platform operational toil, prior failed attempts, and the ChatGPT-designed workflow breakthrough
-**Depends on**: Phase 12
-**Requirements**: HACK-01, HACK-02, HACK-03, HACK-04
+### Phase 18: Visual Overhaul
+**Goal**: The post contains exactly two visuals, both deepening the session-architecture thesis, with the second visual replaced and the first improved
+**Depends on**: Phase 17 (needs final prose context to position visuals correctly)
+**Requirements**: VIS-01, VIS-02, VIS-03
 **Success Criteria** (what must be TRUE):
-  1. The hackathon section is grounded in workload platform operational toil as the motivating problem (not generic Kubernetes framing)
-  2. Prior failed attempts (Slackbot, chatbot wrapper, MCP server) are named with clear reasons each fell short
-  3. The ChatGPT-designed multi-session workflow is described as the key breakthrough (one AI designing the protocol for another)
-  4. The ~10 Claude Code skills are presented as the hackathon outcome, built on the ChatGPT-generated scaffold
-**Plans**: 1 plan
+  1. WorkspaceLayout is replaced with a new concept visual centered on session handoff, persistent state, or distilled memory
+  2. AgentSessionFlow has improved hierarchy (one dominant visual idea), better contrast, and clearer labels or flow
+  3. The post contains at most 2 visuals total, and both earn their place by directly reinforcing the thesis
+**Plans**: TBD
 
-Plans:
-- [x] 13-01-PLAN.md — Rewrite hackathon section with operational toil motivation, prior attempts pattern, ChatGPT workflow breakthrough, and skills outcome
-
-### Phase 14: Context Management Section
-**Goal**: Readers grasp the core insight -- that managing context across agent sessions is the central challenge and design pattern of agentic development
-**Depends on**: Phase 13
-**Requirements**: CTX-01, CTX-02, CTX-03, CTX-04, CTX-05
+### Phase 19: Closing and New Sections
+**Goal**: The essay ends on human judgment rather than hype, and two new content additions (workflow changes, failure modes) land in the right places
+**Depends on**: Phase 17 (needs rewritten prose to position new content), Phase 18 (visuals should be settled before final section work)
+**Requirements**: NEW-01, NEW-02, CLOS-01, CLOS-02
 **Success Criteria** (what must be TRUE):
-  1. Session architecture is explained -- stop/resume protocol, how context persists across sessions
-  2. State externalization pattern is clear -- planning docs, summaries, decisions as files any session can load
-  3. Context inheritance across phases is described -- each phase carries forward summarized context from previous sessions
-  4. The pattern generalizes beyond coding -- doc review, doc authoring, prototyping all use the working-directory-as-context-boundary approach
-  5. The evolution from manual stop/resume/summarize to GSD automation is traced
-**Plans**: 1 plan
+  1. A short "What changed in my workflow" section exists, grounded in concrete before/after examples
+  2. A paragraph on failure modes or limits of the planning-file approach exists, with specific failure scenarios
+  3. The ending is grounded in human judgment, constraints, and future direction rather than hype or generic optimism
+  4. The post feels differentiated from generic "AI changed my workflow" essays through specificity and restraint
+**Plans**: TBD
 
-Plans:
-- [x] 14-01-PLAN.md — Rewrite "The Journey" section as context management narrative with repositioned visualizations
-
-### Phase 15: Closing and Polish
-**Goal**: The complete revised post reads as a cohesive essay with consistent voice, a context-management thesis, and proper preview status
-**Depends on**: Phase 14
-**Requirements**: STRC-01, STRC-02, QUAL-01, QUAL-02
+### Phase 20: Final Polish
+**Goal**: The complete essay reads as a polished, publication-ready piece with consistent voice, tight transitions, and no rough edges
+**Depends on**: Phase 19 (all content must be in place before polish pass)
+**Requirements**: COMP-04, QUAL-01, QUAL-02, QUAL-03
 **Success Criteria** (what must be TRUE):
-  1. The closing section reflects the context-management thesis (not the previous generic "orchestrating context" framing)
-  2. Study and Chat era sections have minor tone touch-ups to work as reflective closing material
-  3. Paul Graham essay voice is consistent throughout all revised and new sections (conversational authority, thesis-driven, no bullet lists in prose)
-  4. The post remains at src/content/preview/decades-to-days.mdx and is accessible at /preview/decades-to-days
-**Plans**: 1 plan
-
-Plans:
-- [x] 15-01-PLAN.md — Revise closing to land context-management thesis, polish Study/Chat coda, voice consistency pass
+  1. Transitions between sections feel inevitable, not bolted-on
+  2. Punchlines land at section endings (no trailing filler after the strong line)
+  3. First-person, technically grounded, reflective, restrained tone is consistent throughout (no hype, no generic AI-blog language)
+  4. The post remains at src/content/preview/decades-to-days.mdx and renders correctly at /preview/decades-to-days
+**Plans**: TBD
 
 ## Progress
 
@@ -166,12 +162,17 @@ Plans:
 | (ad-hoc) Interactive Visualizations | v1.3 | 4 PRs | Complete | 2026-02-18 |
 | 9. Visualization Components | v1.4 | 2/2 | Complete | 2026-02-19 |
 | 10. Agentic Workflow Post | v1.4 | 2/2 | Complete | 2026-02-19 |
-| 11. Session Context Visualization | v1.5 | Complete    | 2026-02-23 | 2026-02-22 |
-| 12. Post Restructure | 2/2 | Complete    | 2026-02-23 | - |
+| 11. Session Context Visualization | v1.5 | 2/2 | Complete | 2026-02-23 |
+| 12. Post Restructure | v1.5 | 2/2 | Complete | 2026-02-23 |
 | 13. Hackathon Rewrite | v1.5 | 1/1 | Complete | 2026-02-24 |
-| 14. Context Management Section | v1.5 | Complete    | 2026-02-26 | 2026-02-25 |
-| 15. Closing and Polish | v1.5 | Complete    | 2026-03-08 | 2026-03-08 |
+| 14. Context Management Section | v1.5 | 1/1 | Complete | 2026-02-25 |
+| 15. Closing and Polish | v1.5 | 1/1 | Complete | 2026-03-08 |
+| 16. Outline and Cut Map | v1.6 | 0/? | Not started | - |
+| 17. Thesis and Prose Rewrite | v1.6 | 0/? | Not started | - |
+| 18. Visual Overhaul | v1.6 | 0/? | Not started | - |
+| 19. Closing and New Sections | v1.6 | 0/? | Not started | - |
+| 20. Final Polish | v1.6 | 0/? | Not started | - |
 
 ---
 *Roadmap created: 2026-02-08*
-*Last updated: 2026-03-08 — Phase 15 complete, v1.5 milestone shipped*
+*Last updated: 2026-03-08 -- v1.6 Editorial Sharpening roadmap created, phases 16-20*

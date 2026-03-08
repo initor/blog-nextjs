@@ -67,30 +67,30 @@ Requirements for the Editorial Sharpening milestone. Each maps to roadmap phases
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| THES-01 | -- | Pending |
-| THES-02 | -- | Pending |
-| THES-03 | -- | Pending |
-| THES-04 | -- | Pending |
-| COMP-01 | -- | Pending |
-| COMP-02 | -- | Pending |
-| COMP-03 | -- | Pending |
-| COMP-04 | -- | Pending |
-| VIS-01 | -- | Pending |
-| VIS-02 | -- | Pending |
-| VIS-03 | -- | Pending |
-| NEW-01 | -- | Pending |
-| NEW-02 | -- | Pending |
-| CLOS-01 | -- | Pending |
-| CLOS-02 | -- | Pending |
-| QUAL-01 | -- | Pending |
-| QUAL-02 | -- | Pending |
-| QUAL-03 | -- | Pending |
+| THES-01 | Phase 17 | Pending |
+| THES-02 | Phase 17 | Pending |
+| THES-03 | Phase 17 | Pending |
+| THES-04 | Phase 17 | Pending |
+| COMP-01 | Phase 17 | Pending |
+| COMP-02 | Phase 17 | Pending |
+| COMP-03 | Phase 17 | Pending |
+| COMP-04 | Phase 20 | Pending |
+| VIS-01 | Phase 18 | Pending |
+| VIS-02 | Phase 18 | Pending |
+| VIS-03 | Phase 18 | Pending |
+| NEW-01 | Phase 19 | Pending |
+| NEW-02 | Phase 19 | Pending |
+| CLOS-01 | Phase 19 | Pending |
+| CLOS-02 | Phase 19 | Pending |
+| QUAL-01 | Phase 20 | Pending |
+| QUAL-02 | Phase 20 | Pending |
+| QUAL-03 | Phase 20 | Pending |
 
 **Coverage:**
 - v1.6 requirements: 18 total
-- Mapped to phases: 0
-- Unmapped: 18
+- Mapped to phases: 18
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-08*
-*Last updated: 2026-03-08 after initial definition*
+*Last updated: 2026-03-08 after roadmap creation (phase traceability added)*
