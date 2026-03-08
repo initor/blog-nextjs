@@ -24,8 +24,8 @@ Requirements for the Agentic Workflow Post Revision milestone. Each maps to road
 
 ### Structure
 
-- [ ] **STRC-01**: Closing section revised to reflect context-management thesis (not generic "orchestrating context")
-- [ ] **STRC-02**: Study and Chat era sections reviewed for tone -- minor touch-ups only, repositioned as reflective closing
+- [x] **STRC-01**: Closing section revised to reflect context-management thesis (not generic "orchestrating context")
+- [x] **STRC-02**: Study and Chat era sections reviewed for tone -- minor touch-ups only, repositioned as reflective closing
 - [x] **STRC-03**: Restructure post to lead with Agentic development journey; Study/Chat era reflections moved to closing section
 
 ### Visualization
@@ -35,8 +35,8 @@ Requirements for the Agentic Workflow Post Revision milestone. Each maps to road
 
 ### Quality
 
-- [ ] **QUAL-01**: Paul Graham essay voice maintained throughout all revised and new sections
-- [ ] **QUAL-02**: Post remains in preview (src/content/preview/decades-to-days.mdx), not promoted to blog
+- [x] **QUAL-01**: Paul Graham essay voice maintained throughout all revised and new sections
+- [x] **QUAL-02**: Post remains in preview (src/content/preview/decades-to-days.mdx), not promoted to blog
 
 ## Future Requirements
 
@@ -70,13 +70,13 @@ Requirements for the Agentic Workflow Post Revision milestone. Each maps to road
 | CTX-03 | Phase 14 | Complete |
 | CTX-04 | Phase 14 | Complete |
 | CTX-05 | Phase 14 | Complete |
-| STRC-01 | Phase 15 | Pending |
-| STRC-02 | Phase 15 | Pending |
+| STRC-01 | Phase 15 | Complete |
+| STRC-02 | Phase 15 | Complete |
 | STRC-03 | Phase 12 | Complete |
 | VIZ-01 | Phase 11 | Complete |
 | VIZ-02 | Phase 12 | Complete |
-| QUAL-01 | Phase 15 | Pending |
-| QUAL-02 | Phase 15 | Pending |
+| QUAL-01 | Phase 15 | Complete |
+| QUAL-02 | Phase 15 | Complete |
 
 **Coverage:**
 - v1.5 requirements: 16 total

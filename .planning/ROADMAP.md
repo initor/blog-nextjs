@@ -7,7 +7,7 @@
 - ✅ **v1.2 Content: The Phantom Pods** — ad-hoc, PRs #31-#32 (shipped 2026-02-17)
 - ✅ **v1.3 Interactive Visualizations** — ad-hoc, PRs #33-#36 (shipped 2026-02-18)
 - ✅ **v1.4 Agentic Workflow Post** — Phases 9-10 (shipped 2026-02-19)
-- 🚧 **v1.5 Agentic Workflow Post Revision** — Phases 11-15 (in progress)
+- ✅ **v1.5 Agentic Workflow Post Revision** — Phases 11-15 (shipped 2026-03-08)
 
 ## Phases
 
@@ -73,7 +73,7 @@ See: `.planning/milestones/v1.4-ROADMAP.md` for full details.
 - [x] **Phase 12: Post Restructure** - Invert post structure to lead with Agentic journey and evaluate existing visualizations (completed 2026-02-23)
 - [x] **Phase 13: Hackathon Rewrite** - Rewrite hackathon section grounded in real motivation and prior failed attempts (completed 2026-02-24)
 - [x] **Phase 14: Context Management Section** - Write the main payload on session architecture, state externalization, and context inheritance (completed 2026-02-25)
-- [ ] **Phase 15: Closing and Polish** - Revise closing section, touch up Study/Chat eras, verify voice and preview status
+- [x] **Phase 15: Closing and Polish** - Revise closing section, touch up Study/Chat eras, verify voice and preview status (completed 2026-03-08)
 
 ## Phase Details
 
@@ -148,7 +148,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 15-01-PLAN.md — Revise closing to land context-management thesis, polish Study/Chat coda, voice consistency pass
+- [x] 15-01-PLAN.md — Revise closing to land context-management thesis, polish Study/Chat coda, voice consistency pass
 
 ## Progress
 
@@ -170,8 +170,8 @@ Plans:
 | 12. Post Restructure | 2/2 | Complete    | 2026-02-23 | - |
 | 13. Hackathon Rewrite | v1.5 | 1/1 | Complete | 2026-02-24 |
 | 14. Context Management Section | v1.5 | Complete    | 2026-02-26 | 2026-02-25 |
-| 15. Closing and Polish | v1.5 | 0/1 | Not started | - |
+| 15. Closing and Polish | v1.5 | 1/1 | Complete | 2026-03-08 |
 
 ---
 *Roadmap created: 2026-02-08*
-*Last updated: 2026-03-07 — Phase 15 planned (1 plan in 1 wave)*
+*Last updated: 2026-03-08 — Phase 15 complete, v1.5 milestone shipped*
