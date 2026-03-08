@@ -1,42 +1,47 @@
 # Requirements: waynewen.com Blog
 
-**Defined:** 2026-02-22
+**Defined:** 2026-03-08
 **Core Value:** Blog renders every page identically -- same look, same feel, same URLs.
 
-## v1.5 Requirements
+## v1.6 Requirements
 
-Requirements for the Agentic Workflow Post Revision milestone. Each maps to roadmap phases.
+Requirements for the Editorial Sharpening milestone. Each maps to roadmap phases.
 
-### Hackathon Rewrite
+### Thesis & Structure
 
-- [x] **HACK-01**: Hackathon section grounded in real motivation -- workload platform operational toil (not Kubernetes-specific, framed as inherent to platform ownership at scale)
-- [x] **HACK-02**: Prior failed attempts described -- Slackbot, chatbot wrapper, MCP server -- and why they fell short (limited tool chains, poor exploration, inadequate answer quality)
-- [x] **HACK-03**: ChatGPT-designed multi-session workflow described -- using one AI to design the stop/resume protocol for another (ChatGPT named explicitly)
-- [x] **HACK-04**: ~10 Claude Code skills as hackathon outcome, built using the ChatGPT-generated markdown scaffold
+- [ ] **THES-01**: Core thesis (agents execute but cannot sustain execution without externalized state) is unmistakable before 25% of the article
+- [ ] **THES-02**: "An agent with no memory is not a collaborator" is structurally emphasized (not buried in a paragraph)
+- [ ] **THES-03**: "The context boundary was not the conversation window. It was the working directory." is structurally emphasized
+- [ ] **THES-04**: The Session Problem is the spine of the piece, not just one section among peers
 
-### Context Management
+### Prose Compression
 
-- [x] **CTX-01**: Session architecture section -- stop/resume protocol, how context is preserved across sessions
-- [x] **CTX-02**: State externalization -- planning docs, summaries, decisions as files that any session can load
-- [x] **CTX-03**: Context inheritance across phases -- how each phase carries forward summarized context from previous sessions
-- [x] **CTX-04**: Generalization to non-coding work -- doc review, doc authoring, prototyping all using working-directory-as-context-boundary pattern
-- [x] **CTX-05**: GSD automation -- how the manual stop/resume/summarize cycle matured into tooling
+- [ ] **COMP-01**: Hackathon section compressed: fewer domain lists, tighter prior-attempts summary
+- [ ] **COMP-02**: Planning-file explanation converted to compact scannable artifact (protocol box, callout, or framework)
+- [ ] **COMP-03**: Enumeration-heavy paragraphs (file-name lists, domain lists) reduced throughout
+- [ ] **COMP-04**: Post reads tighter overall with stronger punchlines and transitions
 
-### Structure
+### Visual
 
-- [x] **STRC-01**: Closing section revised to reflect context-management thesis (not generic "orchestrating context")
-- [x] **STRC-02**: Study and Chat era sections reviewed for tone -- minor touch-ups only, repositioned as reflective closing
-- [x] **STRC-03**: Restructure post to lead with Agentic development journey; Study/Chat era reflections moved to closing section
+- [ ] **VIS-01**: AgentSessionFlow improved: better hierarchy, contrast, and clarity; one dominant idea
+- [ ] **VIS-02**: WorkspaceLayout replaced with a concept visual centered on session handoff, persistent state, or distilled memory
+- [ ] **VIS-03**: At most 2 visuals total, both earning their place by deepening the thesis
 
-### Visualization
+### New Content
 
-- [x] **VIZ-01**: New interactive visualization component showing context flow across sessions (session timeline merged with context funnel concept)
-- [x] **VIZ-02**: Evaluate existing WorkspaceLayout and WorkflowOrchestration -- keep if they earn their place in restructured post, remove if redundant
+- [ ] **NEW-01**: Short section added: "What changed in my workflow"
+- [ ] **NEW-02**: Short paragraph on failure modes / limits of the planning-file approach
+
+### Closing
+
+- [ ] **CLOS-01**: Ending grounded in human judgment, constraints, and future direction (not hype)
+- [ ] **CLOS-02**: Post feels differentiated from generic "AI changed my workflow" essays
 
 ### Quality
 
-- [x] **QUAL-01**: Paul Graham essay voice maintained throughout all revised and new sections
-- [x] **QUAL-02**: Post remains in preview (src/content/preview/decades-to-days.mdx), not promoted to blog
+- [ ] **QUAL-01**: First-person, technically grounded, reflective, restrained tone throughout
+- [ ] **QUAL-02**: No hype, generic AI-blog language, or inflated claims
+- [ ] **QUAL-03**: Post remains at src/content/preview/decades-to-days.mdx
 
 ## Future Requirements
 
@@ -52,37 +57,40 @@ Requirements for the Agentic Workflow Post Revision milestone. Each maps to road
 
 | Feature | Reason |
 |---------|--------|
-| Promoting post to blog | Author decides when post is ready -- stays in preview for now |
-| New blog posts | This milestone revises the existing Decades to Days post only |
-| Visual/styling changes to site | Look and feel must remain identical |
-| Tests for visualization components | Follow existing pattern -- v1.2-v1.4 viz components have no tests |
+| Promoting post to blog | Author decides when post is ready -- stays in preview |
+| New blog posts | This milestone sharpens the existing Decades to Days post only |
+| Visual/styling changes to site | Look and feel of all other pages must remain identical |
+| Full rewrite | Brief explicitly prohibits blind full rewrite; staged editorial pass |
+| Third visual | Brief caps at 2 visuals maximum |
 
 ## Traceability
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| HACK-01 | Phase 13 | Complete |
-| HACK-02 | Phase 13 | Complete |
-| HACK-03 | Phase 13 | Complete |
-| HACK-04 | Phase 13 | Complete |
-| CTX-01 | Phase 14 | Complete |
-| CTX-02 | Phase 14 | Complete |
-| CTX-03 | Phase 14 | Complete |
-| CTX-04 | Phase 14 | Complete |
-| CTX-05 | Phase 14 | Complete |
-| STRC-01 | Phase 15 | Complete |
-| STRC-02 | Phase 15 | Complete |
-| STRC-03 | Phase 12 | Complete |
-| VIZ-01 | Phase 11 | Complete |
-| VIZ-02 | Phase 12 | Complete |
-| QUAL-01 | Phase 15 | Complete |
-| QUAL-02 | Phase 15 | Complete |
+| THES-01 | -- | Pending |
+| THES-02 | -- | Pending |
+| THES-03 | -- | Pending |
+| THES-04 | -- | Pending |
+| COMP-01 | -- | Pending |
+| COMP-02 | -- | Pending |
+| COMP-03 | -- | Pending |
+| COMP-04 | -- | Pending |
+| VIS-01 | -- | Pending |
+| VIS-02 | -- | Pending |
+| VIS-03 | -- | Pending |
+| NEW-01 | -- | Pending |
+| NEW-02 | -- | Pending |
+| CLOS-01 | -- | Pending |
+| CLOS-02 | -- | Pending |
+| QUAL-01 | -- | Pending |
+| QUAL-02 | -- | Pending |
+| QUAL-03 | -- | Pending |
 
 **Coverage:**
-- v1.5 requirements: 16 total
-- Mapped to phases: 16
-- Unmapped: 0
+- v1.6 requirements: 18 total
+- Mapped to phases: 0
+- Unmapped: 18
 
 ---
-*Requirements defined: 2026-02-22*
-*Last updated: 2026-02-22 after roadmap creation — traceability complete*
+*Requirements defined: 2026-03-08*
+*Last updated: 2026-03-08 after initial definition*
