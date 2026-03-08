@@ -1213,7 +1213,7 @@ html {
     }
   }
 
-  /* Workspace Layout — static directory tree illustration */
+  /* Session Handoff — SVG diagram showing planning files bridging sessions */
   .wl {
     margin: 1.5em 0;
     padding: 0;
@@ -1226,9 +1226,6 @@ html {
   .wl-header {
     padding: 0.75rem 1.25rem;
     border-bottom: 1px solid var(--code-border);
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
   }
 
   .wl-title {
@@ -1238,152 +1235,154 @@ html {
     color: var(--code-fg);
   }
 
-  .wl-tree {
-    padding: 1rem 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+  .wl-body {
+    padding: 0.5rem;
   }
 
-  .wl-category {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  .wl-svg {
+    display: block;
+    width: 100%;
+    height: auto;
   }
 
-  .wl-category-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 0.72rem;
+  .wl-subtitle {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 10px;
+    fill: var(--code-comment);
+    font-weight: 400;
+  }
+
+  .wl-session-box {
+    fill: none;
+    stroke: var(--code-comment);
+    stroke-width: 1.25;
+    stroke-dasharray: 6 4;
+    stroke-opacity: 0.5;
+  }
+
+  .wl-session-label {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 12px;
     font-weight: 600;
-    color: var(--code-comment);
-    text-transform: lowercase;
-    letter-spacing: 0.03em;
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.35rem;
+    fill: var(--code-fg);
   }
 
-  .wl-category-expanded {
-    color: var(--code-fg);
+  .wl-session-sub {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 9px;
+    fill: var(--code-comment);
   }
 
-  .wl-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    padding-left: 0.5rem;
+  .wl-task-box {
+    fill: var(--mermaid-primary-fill);
+    stroke: var(--mermaid-primary);
+    stroke-width: 0.75;
+    stroke-opacity: 0.4;
+    fill-opacity: 0.35;
   }
 
-  .wl-card-wrapper {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
-
-  .wl-card {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.4rem 0.7rem;
-    border-radius: 0.4rem;
-    border: 1.5px solid var(--code-border);
-    background: transparent;
-    font-family: inherit;
-    font-size: inherit;
-    color: inherit;
-  }
-
-  .wl-card-name {
-    font-family: var(--font-diagram), system-ui, sans-serif;
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: var(--code-fg);
-  }
-
-  .wl-card-expand {
-    font-size: 0.5rem;
-    color: var(--code-comment);
-    flex-shrink: 0;
-    line-height: 1;
-  }
-
-  .wl-detail {
-    display: none;
-  }
-
-  .wl-detail-open {
-    display: block;
-  }
-
-  .wl-detail-inner {
-    padding: 0.45rem 0.7rem 0.35rem;
-    border: 1px solid color-mix(in srgb, var(--code-border) 60%, transparent);
-    border-top: none;
-    border-radius: 0 0 0.4rem 0.4rem;
-    background: color-mix(in srgb, var(--code-bg) 60%, transparent);
-  }
-
-  .wl-detail-row {
-    display: flex;
-    gap: 0.4rem;
-    align-items: baseline;
-    margin-bottom: 0.2rem;
-  }
-
-  .wl-detail-row:last-child {
-    margin-bottom: 0;
-  }
-
-  .wl-detail-label {
+  .wl-task-label {
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 0.62rem;
+    font-size: 9px;
+    fill: var(--code-fg);
+  }
+
+  .wl-ephemeral-tag {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 8px;
+    fill: var(--code-comment);
+    font-style: italic;
+    opacity: 0.6;
+  }
+
+  .wl-bridge-box {
+    fill: var(--mermaid-primary-fill);
+    stroke: var(--mermaid-primary);
+    stroke-width: 1.5;
+    fill-opacity: 0.5;
+  }
+
+  .wl-bridge-header {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 700;
+    fill: var(--mermaid-primary);
+  }
+
+  .wl-file-box {
+    fill: var(--code-bg);
+    stroke: var(--mermaid-primary);
+    stroke-width: 0.75;
+    stroke-opacity: 0.5;
+  }
+
+  .wl-file-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 9px;
+    fill: var(--code-fg);
     font-weight: 500;
-    color: var(--code-comment);
-    flex-shrink: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
   }
 
-  .wl-detail-value {
-    font-family: var(--font-body), system-ui, sans-serif;
-    font-size: 0.7rem;
-    color: var(--code-fg);
-    line-height: 1.4;
+  .wl-persistent-tag {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 8px;
+    fill: var(--mermaid-primary);
+    font-weight: 600;
+    font-style: italic;
+    opacity: 0.7;
   }
 
-  .wl-status-active {
-    color: var(--mermaid-success);
+  .wl-arrow-line {
+    stroke: var(--mermaid-primary);
+    stroke-width: 1.5;
+    stroke-opacity: 0.6;
+  }
+
+  .wl-arrow-label {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 8px;
+    fill: var(--mermaid-primary);
     font-weight: 500;
+    opacity: 0.7;
   }
 
-  .wl-status-paused {
-    color: var(--mermaid-warning);
-    font-weight: 500;
+  .wl-legend-text {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 8px;
+    fill: var(--code-comment);
   }
 
-  .wl-status-exploring {
-    color: var(--mermaid-primary);
-    font-weight: 500;
-  }
-
-  .wl-children {
-    display: none;
-  }
-
-  .wl-children-open {
-    display: block;
-  }
-
-  .wl-children > .wl-grid {
-    min-height: 0;
-  }
-
-  @media (max-width: 480px) {
-    .wl-grid {
-      flex-direction: column;
+  @media (max-width: 640px) {
+    .wl-body {
+      padding: 0.25rem;
     }
+  }
+
+  /* Session Handoff dark mode */
+  html.dark .wl {
+    background: color-mix(in srgb, var(--code-bg) 100%, transparent);
+    border-color: var(--code-border);
+  }
+
+  html.dark .wl-header {
+    border-bottom-color: var(--code-border);
+  }
+
+  html.dark .wl-session-box {
+    stroke: var(--code-comment);
+    stroke-opacity: 0.4;
+  }
+
+  html.dark .wl-task-box {
+    fill-opacity: 0.2;
+  }
+
+  html.dark .wl-bridge-box {
+    fill-opacity: 0.25;
+  }
+
+  html.dark .wl-file-box {
+    fill: color-mix(in srgb, var(--code-bg) 80%, transparent);
   }
 
   /* ── AgentSessionFlow — merged workflow + context flow visualization ── */
@@ -1425,7 +1424,7 @@ html {
   /* Session column label above */
   .af-session-label {
     font-family: var(--font-diagram), system-ui, sans-serif;
-    font-size: 0.72rem;
+    font-size: 1.1rem;
     font-weight: 600;
     fill: var(--code-fg);
   }
@@ -1440,7 +1439,7 @@ html {
   /* Agent name label inside session column */
   .af-agent-label {
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 0.42rem;
+    font-size: 0.72rem;
     font-weight: 500;
     fill: var(--code-comment);
   }
@@ -1448,14 +1447,14 @@ html {
   /* Task bar labels */
   .af-task-label {
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 0.42rem;
+    font-size: 0.7rem;
     font-weight: 500;
   }
 
   /* Context band labels */
   .af-band-label {
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 0.4rem;
+    font-size: 0.65rem;
     font-weight: 500;
     fill: var(--code-fg);
     opacity: 0.75;
@@ -1476,7 +1475,7 @@ html {
   /* Orchestrator phase labels */
   .af-orch-label {
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 0.45rem;
+    font-size: 0.7rem;
     font-weight: 500;
     fill: var(--code-comment);
     opacity: 0.5;
@@ -1509,7 +1508,7 @@ html {
   /* Legend text */
   .af-legend-text {
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 0.4rem;
+    font-size: 0.6rem;
     fill: var(--code-comment);
     opacity: 0.6;
   }
@@ -1545,11 +1544,11 @@ html {
 
   @media (max-width: 640px) {
     .af-session-label {
-      font-size: 0.62rem;
+      font-size: 1.2rem;
     }
 
     .af-band-label {
-      font-size: 0.35rem;
+      font-size: 0.7rem;
     }
 
     .af-body {
@@ -1557,11 +1556,19 @@ html {
     }
 
     .af-agent-label {
-      font-size: 0.38rem;
+      font-size: 0.8rem;
     }
 
     .af-task-label {
-      font-size: 0.38rem;
+      font-size: 0.75rem;
+    }
+
+    .af-orch-label {
+      font-size: 0.75rem;
+    }
+
+    .af-legend-text {
+      font-size: 0.65rem;
     }
   }
 

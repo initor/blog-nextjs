@@ -127,7 +127,10 @@ Plans:
   1. WorkspaceLayout is replaced with a new concept visual centered on session handoff, persistent state, or distilled memory
   2. AgentSessionFlow has improved hierarchy (one dominant visual idea), better contrast, and clearer labels or flow
   3. The post contains at most 2 visuals total, and both earn their place by directly reinforcing the thesis
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 18-01-PLAN.md — Replace WorkspaceLayout with session-handoff concept visual
+- [ ] 18-02-PLAN.md — Improve AgentSessionFlow hierarchy, contrast, and clarity
 
 ### Phase 19: Closing and New Sections
 **Goal**: The essay ends on human judgment rather than hype, and two new content additions (workflow changes, failure modes) land in the right places
@@ -173,11 +176,11 @@ Plans:
 | 14. Context Management Section | v1.5 | 1/1 | Complete | 2026-02-25 |
 | 15. Closing and Polish | v1.5 | 1/1 | Complete | 2026-03-08 |
 | 16. Outline and Cut Map | 1/1 | Complete    | 2026-03-08 | - |
-| 17. Thesis and Prose Rewrite | 2/2 | Complete   | 2026-03-08 | - |
-| 18. Visual Overhaul | v1.6 | 0/? | Not started | - |
+| 17. Thesis and Prose Rewrite | 2/2 | Complete    | 2026-03-08 | - |
+| 18. Visual Overhaul | v1.6 | 0/2 | Not started | - |
 | 19. Closing and New Sections | v1.6 | 0/? | Not started | - |
 | 20. Final Polish | v1.6 | 0/? | Not started | - |
 
 ---
 *Roadmap created: 2026-02-08*
-*Last updated: 2026-03-08 -- Phase 17 planned (2 plans)*
+*Last updated: 2026-03-08 -- Phase 18 planned (2 plans)*

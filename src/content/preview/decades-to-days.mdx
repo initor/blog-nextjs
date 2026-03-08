@@ -51,7 +51,7 @@ That insight extended beyond code. Design documents, document reviews, prototypi
 
 <WorkspaceLayout />
 
-*Each project directory carries its own context boundary. Planning, state, and instructions are scoped to a single directory, whether the project is a codebase, a design document, or a prototype. The pattern is the same; only the artifacts differ.*
+*Each session is ephemeral, but the planning files are not. One session writes its decisions, progress, and remaining work into the working directory; the next session reads that state and continues without re-briefing. The bridge between sessions is not memory. It is the file system.*
 
 The manual version of this workflow was effective but tedious. I was still the human in the loop, copying templates and initializing file structures by hand for every new project. The insight had become a pattern, but not yet infrastructure.
 
