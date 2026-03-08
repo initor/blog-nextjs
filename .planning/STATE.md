@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.6
 milestone_name: Editorial Sharpening
-status: planning
-stopped_at: Completed 16-01-PLAN.md
-last_updated: "2026-03-08T22:46:42.555Z"
-last_activity: 2026-03-08 -- Phase 16 Plan 01 completed (outline and cut map)
+status: executing
+stopped_at: Completed 17-01-PLAN.md
+last_updated: "2026-03-08T22:58:20Z"
+last_activity: 2026-03-08 -- Phase 17 Plan 01 completed (opening rewrite and hackathon compression)
 progress:
   total_phases: 5
   completed_phases: 1
-  total_plans: 1
-  completed_plans: 1
-  percent: 20
+  total_plans: 3
+  completed_plans: 2
+  percent: 40
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-08)
 
 **Core value:** Blog renders every page identically -- same look, same feel, same URLs.
-**Current focus:** v1.6 Editorial Sharpening -- Phase 16 complete, ready for Phase 17
+**Current focus:** v1.6 Editorial Sharpening -- Phase 17 Plan 01 complete, ready for Plan 02
 
 ## Current Position
 
 Phase: 17 of 20 (Thesis and Prose Rewrite)
-Plan: --
-Status: Ready to plan
-Last activity: 2026-03-08 -- Phase 16 Plan 01 completed (outline and cut map)
+Plan: 01 of 02 complete
+Status: Executing
+Last activity: 2026-03-08 -- Phase 17 Plan 01 completed (opening rewrite and hackathon compression)
 
-Progress: [██░░░░░░░░] 20%
+Progress: [████░░░░░░] 40%
 
 ## Accumulated Context
 
@@ -44,6 +44,9 @@ All decisions logged in PROJECT.md Key Decisions table with outcomes.
 - Phase 16-01: Thesis currently at 41%, must move to opening for THES-01
 - Phase 16-01: WorkspaceLayout visual marked for full replacement with session-handoff concept
 - Phase 16-01: NEW-01 after AgentSessionFlow, NEW-02 before Conclusion
+- Phase 17-01: Thesis stated explicitly in opening paragraph (word 93/1461, before 25% threshold)
+- Phase 17-01: Hackathon compressed to 3 paragraphs (~211 words, down from ~480)
+- Phase 17-01: Domain enumeration removed entirely from hackathon to avoid duplication
 
 ### Pending Todos
 
@@ -55,6 +58,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-08T22:44:06.588Z
-Stopped at: Completed 16-01-PLAN.md
+Last session: 2026-03-08T22:58:20Z
+Stopped at: Completed 17-01-PLAN.md
 Resume file: None

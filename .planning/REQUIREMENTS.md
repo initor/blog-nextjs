@@ -9,16 +9,16 @@ Requirements for the Editorial Sharpening milestone. Each maps to roadmap phases
 
 ### Thesis & Structure
 
-- [ ] **THES-01**: Core thesis (agents execute but cannot sustain execution without externalized state) is unmistakable before 25% of the article
+- [x] **THES-01**: Core thesis (agents execute but cannot sustain execution without externalized state) is unmistakable before 25% of the article
 - [ ] **THES-02**: "An agent with no memory is not a collaborator" is structurally emphasized (not buried in a paragraph)
 - [ ] **THES-03**: "The context boundary was not the conversation window. It was the working directory." is structurally emphasized
 - [ ] **THES-04**: The Session Problem is the spine of the piece, not just one section among peers
 
 ### Prose Compression
 
-- [ ] **COMP-01**: Hackathon section compressed: fewer domain lists, tighter prior-attempts summary
+- [x] **COMP-01**: Hackathon section compressed: fewer domain lists, tighter prior-attempts summary
 - [ ] **COMP-02**: Planning-file explanation converted to compact scannable artifact (protocol box, callout, or framework)
-- [ ] **COMP-03**: Enumeration-heavy paragraphs (file-name lists, domain lists) reduced throughout
+- [x] **COMP-03**: Enumeration-heavy paragraphs (file-name lists, domain lists) reduced throughout
 - [ ] **COMP-04**: Post reads tighter overall with stronger punchlines and transitions
 
 ### Visual
@@ -67,13 +67,13 @@ Requirements for the Editorial Sharpening milestone. Each maps to roadmap phases
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| THES-01 | Phase 17 | Pending |
+| THES-01 | Phase 17 | Complete |
 | THES-02 | Phase 17 | Pending |
 | THES-03 | Phase 17 | Pending |
 | THES-04 | Phase 17 | Pending |
-| COMP-01 | Phase 17 | Pending |
+| COMP-01 | Phase 17 | Complete |
 | COMP-02 | Phase 17 | Pending |
-| COMP-03 | Phase 17 | Pending |
+| COMP-03 | Phase 17 | Complete |
 | COMP-04 | Phase 20 | Pending |
 | VIS-01 | Phase 18 | Pending |
 | VIS-02 | Phase 18 | Pending |

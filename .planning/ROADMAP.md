@@ -173,7 +173,7 @@ Plans:
 | 14. Context Management Section | v1.5 | 1/1 | Complete | 2026-02-25 |
 | 15. Closing and Polish | v1.5 | 1/1 | Complete | 2026-03-08 |
 | 16. Outline and Cut Map | 1/1 | Complete    | 2026-03-08 | - |
-| 17. Thesis and Prose Rewrite | v1.6 | 0/2 | Not started | - |
+| 17. Thesis and Prose Rewrite | 1/2 | In Progress|  | - |
 | 18. Visual Overhaul | v1.6 | 0/? | Not started | - |
 | 19. Closing and New Sections | v1.6 | 0/? | Not started | - |
 | 20. Final Polish | v1.6 | 0/? | Not started | - |
