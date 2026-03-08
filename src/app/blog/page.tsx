@@ -1,14 +1,29 @@
 import { getAllPosts } from '@/lib/mdx/utils';
 import Link from 'next/link';
+import Pagination from '@/components/Pagination';
 
-export default async function BlogIndexPage() {
+const POSTS_PER_PAGE = 5;
+
+export default async function BlogIndexPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   const posts = await getAllPosts();
+  const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+
+  const params = await searchParams;
+  const parsed = parseInt(params.page ?? '1', 10);
+  const currentPage = Math.max(1, Math.min(Number.isNaN(parsed) ? 1 : parsed, totalPages));
+
+  const start = (currentPage - 1) * POSTS_PER_PAGE;
+  const paginatedPosts = posts.slice(start, start + POSTS_PER_PAGE);
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8">Posts</h1>
       <div className="space-y-8">
-        {posts.map((post) => (
+        {paginatedPosts.map((post) => (
           <article key={post.slug} className="border-b border-gray-200 pb-8">
             <Link
               href={`/blog/${post.slug}`}
@@ -32,6 +47,9 @@ export default async function BlogIndexPage() {
           </article>
         ))}
       </div>
+      {totalPages > 1 && (
+        <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/blog" />
+      )}
     </div>
   );
 }
