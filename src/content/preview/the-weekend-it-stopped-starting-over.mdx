@@ -1,0 +1,73 @@
+---
+title: 'The Weekend It Stopped Starting Over'
+date: '2026-02-19'
+tags: ['agents', 'workflow', 'developer-tools']
+category: 'engineering'
+location: 'Palo Alto, CA'
+---
+
+Over three days, four of us shipped ten production-ready agent skills across a workload platform end-to-end. One agent, ten structured specifications, zero hand-written implementation code. The speed was real, but it was not the deepest part of the story.
+
+The real discovery came after the weekend. The agents could build, yet they could not continue. End a session and everything the agent had learned vanished with it. The scarce resource was not intelligence or execution. It was the architecture for persisting state so work could compound instead of restart.
+
+Since January, that insight has started rearranging a workflow I had shaped over the past decade.
+
+## It Worked
+
+If you run a platform for thousands of engineers, you know what operational toil feels like before you put numbers on it. Failed deployments, throttled services, hardware remediation, pool rebalancing. Every incident lands on someone who has to investigate, trace logs, gather context, and act with judgment. At scale, toil is not a tooling accident. It is part of platform ownership.
+
+We had tried to automate this before. Different interfaces, same limitation: the model was never grounded deeply enough in the problem space. Without structured context and a reliable way to use tools iteratively, every attempt collapsed into a thin answer over shallow evidence.
+
+This time was different, but not because humans stopped mattering. The loop was collaborative. The agent enumerated the tools it could use, explored proactively, pulled in context, decided whether the evidence was sufficient, and kept going when it was not. We defined the objective, corrected the framing, judged the output, and tightened the constraints. The breakthrough was not “human writes specs, agent writes code.” It was that exploration, implementation, and verification started happening inside one fast loop.
+
+That weekend proved something important: agent execution was no longer the bottleneck. It also surfaced the next bottleneck immediately.
+
+## Then It Forgot
+
+When you close an agent session and open a new one, everything is gone. The context window is ephemeral. Whatever the previous session learned, decided, or built is invisible to the next. During the hackathon that was manageable because each skill fit inside a single session. Real projects do not. They span days, weeks, and changing priorities. The first session makes progress. The second should not start from scratch.
+
+<Callout>An agent with no memory is not a collaborator. It is a stranger you have to re-brief every morning.</Callout>
+
+That is not a minor inconvenience. It is a structural limitation. The shared understanding of what has been tried, what has been decided, and what comes next disappears the moment you hit “new session.” The hackathon proved agents could execute. The real question was whether they could sustain execution across time.
+
+## Writing Memory
+
+I did not invent the answer on my own. Once I understood the problem, I opened a new ChatGPT project and asked a narrower question: if the context window is ephemeral, what should persist outside it? The answer was not a better paragraph. It was a small set of files written for the next session.
+
+| File | Purpose |
+|---|---|
+| `ROADMAP.md` | Milestones and phases |
+| `STATE.md` | Where the project currently stands |
+| `CONTEXT.md` | Key decisions and why they were made |
+| `PLAN.md` | The concrete tasks for the current phase |
+| `SUMMARY.md` | What this session finished, what remains, and how the next one should start |
+
+## The Real Boundary
+
+<Callout>The context boundary was not the conversation window. It was the working directory.</Callout>
+
+That line changed how I thought about agentic work. The agent was not starting over every time. It was starting ahead, with the accumulated judgment of prior sessions compressed into a few files it could load immediately.
+
+Once that clicked, the pattern escaped coding almost at once. Design docs. Review cycles. Prototyping. Any work that spanned multiple sessions had the same requirement: persistent state, explicit handoff, and a clear next step. The working directory became the universal context boundary.
+
+<SessionBridge />
+
+<FigCaption>Each session is ephemeral. The planning files are not. The bridge between sessions is not memory. It is the file system.</FigCaption>
+
+## The Job Shifted
+
+My role shifted with it. I spend less time spelling out every implementation detail and more time defining intent, constraints, and evaluation. I care more about the standard I want than the exact keystrokes that produce it.
+
+The agent can carry out work. The harder problem is guiding it toward work I would be proud to ship. That means encoding taste: architectural preferences, quality bars, invariants, trade-offs, and what not to do. It also means learning taste faster ourselves, because the leverage has moved up a layer.
+
+That is the deeper paradigm shift for me. Deterministic software asked us to specify exactly what to do, line by line. Agentic software moves more of the leverage into specification at a higher level: what good looks like, what must never happen, how to verify the result, and how to hand the work forward without losing the thread.
+
+The manual version of this workflow was effective but tedious. Later I found [[gsd-build/get-shit-done]](https://github.com/gsd-build/get-shit-done), a Claude Code plugin that matched it almost exactly: it bootstrapped the planning files, tracked phase state, and made session handoffs explicit. What had started as a manual pattern became reusable infrastructure.
+
+## Taste Is the Bottleneck
+
+For most of my career, the bottleneck was knowledge. You learned by reading papers, tracing source code, and accumulating repetitions over years. Then chatbots collapsed the cost of asking. Learning got faster, but execution was still mostly yours.
+
+Now the bottleneck is moving again. Getting an agent to carry out work is becoming table stakes. The harder problems are continuity across sessions and taste inside the specification: the architecture you prefer, the invariants you refuse to break, the quality bar you want to ship.
+
+That is the future I see. Execution will keep getting cheaper. Craftsmanship will not. The advantage will go to teams that can preserve context across sessions and encode taste clearly enough for agents to carry it forward. The payoff is not just faster output. It is faster learning. The future is not prompting harder. It is building systems where context, judgment, and taste compound.

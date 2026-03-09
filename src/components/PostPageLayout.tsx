@@ -44,10 +44,10 @@ export default async function PostPageLayout({
     <>
       <article className="max-w-2xl mx-auto px-4 py-8">
         <header className="mb-6">
-          <div className={badge ? 'flex items-start gap-3 mb-1.5' : 'mb-1.5'}>
-            <h1 className="text-4xl font-bold">{post.frontMatter.title}</h1>
+          <div className="mb-1.5">
+            <h1 className="text-3xl font-bold">{post.frontMatter.title}</h1>
             {badge && (
-              <span className={`${badge.className} mt-2`}>{badge.label}</span>
+              <span className={`${badge.className} mt-2 inline-block`}>{badge.label}</span>
             )}
           </div>
 
@@ -68,6 +68,10 @@ export default async function PostPageLayout({
               </>
             )}
           </div>
+
+          {post.frontMatter.description && (
+            <p className="post-dek">{post.frontMatter.description}</p>
+          )}
         </header>
 
         <div className="prose dark:prose-invert max-w-none">

@@ -31,50 +31,50 @@ interface SessionData {
 const DEFAULT_SESSIONS: SessionData[] = [
   {
     name: 'Session 1',
-    agent: 'Executor: Build API',
+    agent: 'Plan',
     tasks: [
-      { label: 'Read specs', duration: 2 },
-      { label: 'Scaffold routes', duration: 3 },
-      { label: 'Write tests', duration: 2 },
+      { label: 'Read goals', duration: 2 },
+      { label: 'Create roadmap', duration: 3 },
+      { label: 'Define phases', duration: 2 },
     ],
     context: [
-      { label: 'API specs', size: 3, fate: 'pass', color: 'blue' },
-      { label: 'Architecture notes', size: 2, fate: 'summarize', color: 'purple' },
-      { label: 'Test results', size: 2, fate: 'summarize', color: 'green' },
-      { label: 'Debug logs', size: 3, fate: 'prune', color: 'blue' },
+      { label: 'Project goals', size: 3, fate: 'pass', color: 'blue' },
+      { label: 'Research notes', size: 2, fate: 'summarize', color: 'purple' },
+      { label: 'Prior context', size: 2, fate: 'summarize', color: 'green' },
+      { label: 'Exploration logs', size: 3, fate: 'prune', color: 'blue' },
       { label: 'Verbose output', size: 2, fate: 'prune', color: 'green' },
     ],
   },
   {
     name: 'Session 2',
-    agent: 'Executor: Refactor auth',
+    agent: 'Execute',
     tasks: [
-      { label: 'Analyze deps', duration: 2 },
-      { label: 'Extract module', duration: 4 },
-      { label: 'Verify types', duration: 1 },
+      { label: 'Implement feature', duration: 3 },
+      { label: 'Write tests', duration: 3 },
+      { label: 'Commit', duration: 1 },
     ],
     context: [
-      { label: 'API specs', size: 3, fate: 'pass', color: 'blue' },
-      { label: 'Arch summary', size: 1, fate: 'pass', color: 'purple' },
-      { label: 'Test summary', size: 1, fate: 'summarize', color: 'green' },
-      { label: 'Schema changes', size: 2, fate: 'pass', color: 'purple' },
-      { label: 'Migration logs', size: 2, fate: 'prune', color: 'blue' },
+      { label: 'Project goals', size: 3, fate: 'pass', color: 'blue' },
+      { label: 'Research summary', size: 1, fate: 'pass', color: 'purple' },
+      { label: 'Prior summary', size: 1, fate: 'summarize', color: 'green' },
+      { label: 'Phase plan', size: 2, fate: 'pass', color: 'purple' },
+      { label: 'Build logs', size: 2, fate: 'prune', color: 'blue' },
     ],
   },
   {
     name: 'Session 3',
-    agent: 'Researcher: Auth patterns',
+    agent: 'Verify',
     tasks: [
-      { label: 'Search codebase', duration: 3 },
-      { label: 'Summarize findings', duration: 2 },
+      { label: 'Check completion', duration: 3 },
+      { label: 'Summarize context', duration: 2 },
     ],
     context: [
-      { label: 'API specs', size: 3, fate: 'pass', color: 'blue' },
-      { label: 'Arch summary', size: 1, fate: 'pass', color: 'purple' },
-      { label: 'Test digest', size: 1, fate: 'pass', color: 'green' },
-      { label: 'Schema changes', size: 2, fate: 'pass', color: 'purple' },
-      { label: 'Integration tests', size: 2, fate: 'pass', color: 'green' },
-      { label: 'Deploy config', size: 2, fate: 'pass', color: 'blue' },
+      { label: 'Project goals', size: 3, fate: 'pass', color: 'blue' },
+      { label: 'Research summary', size: 1, fate: 'pass', color: 'purple' },
+      { label: 'Prior digest', size: 1, fate: 'pass', color: 'green' },
+      { label: 'Phase plan', size: 2, fate: 'pass', color: 'purple' },
+      { label: 'Test results', size: 2, fate: 'pass', color: 'green' },
+      { label: 'Verification', size: 2, fate: 'pass', color: 'blue' },
     ],
   },
 ];
@@ -129,9 +129,9 @@ const TASK_COLOR: Record<number, { bg: string; border: string; text: string }> =
 const VB_W = 900;
 const VB_H = 480;
 
-/** Sessions are narrow columns; flow area between them gets most of the space. */
-const SESSION_W = 120;
-const FLOW_GAP = 180;
+/** Sessions are wide enough for readable labels; flow gaps between them show context paths. */
+const SESSION_W = 160;
+const FLOW_GAP = 130;
 const SESSION_RX = 6;
 
 const CONTENT_W = SESSION_W * 3 + FLOW_GAP * 2;
@@ -146,7 +146,7 @@ const SESSION_Y = 60;
 const SESSION_H = VB_H - SESSION_Y - 20;
 
 /** Tasks take the top portion of each session column. */
-const TASK_AREA_H = 90;
+const TASK_AREA_H = 110;
 const TASK_PAD = 6;
 
 /** Context bands take the remaining height below tasks. */
@@ -588,8 +588,8 @@ export default function AgentSessionFlow({
 
                 {/* ── Task bars ───────────────────────── */}
                 {session.tasks.map((task, tIdx) => {
-                  const taskH = 14;
-                  const taskGap = 4;
+                  const taskH = 20;
+                  const taskGap = 5;
                   const ty = SESSION_Y + 22 + tIdx * (taskH + taskGap) + TASK_PAD;
                   const barW = SESSION_W - TASK_PAD * 2 - 4;
                   const fill = taskFill(sIdx, tIdx, totalTasks, progress);
@@ -625,7 +625,7 @@ export default function AgentSessionFlow({
                       <text
                         className="af-task-label"
                         x={sx + TASK_PAD + 7}
-                        y={ty + taskH / 2 + 3}
+                        y={ty + taskH / 2 + 4}
                         fill={colors.text}
                       >
                         {task.label}
