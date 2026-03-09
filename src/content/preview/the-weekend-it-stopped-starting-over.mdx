@@ -70,6 +70,4 @@ For most of my career, the bottleneck was knowledge. You learned by reading docs
 
 Now the bottleneck is moving again. Getting an agent to carry out work is becoming table stakes. The harder problems are continuity across sessions and taste inside the specification: the architecture you prefer, the invariants you refuse to break, the quality bar you want to ship.
 
-One version of taste in practice looked like this: I stopped writing specs that ended at “implement the change.” I started writing specs that said: stay within the existing service boundary, reuse the current control path instead of adding a second one, preserve idempotency on retries, and do not call the task done until logs, tests, and failure cases agree. That changed the output. The agent was not just faster; it was operating inside a shape I would actually trust.
-
-That is the future I see. Execution will keep getting cheaper. Craftsmanship will not. The payoff is not just faster output. It is work that compounds across sessions, and learning that compounds with it. The future is not prompting harder. It is building systems where context, taste, and judgment compound.
+That is the future I see. Execution will keep getting cheaper. Craftsmanship will not. The advantage will go to teams that can preserve context across sessions and encode taste clearly enough for agents to carry it forward. The payoff is not just faster output. It is faster learning. The future is not prompting harder. It is building systems where context, judgment, and taste compound.
