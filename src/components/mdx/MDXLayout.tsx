@@ -11,7 +11,7 @@ const MDXLayout = ({ children, frontMatter }: MDXLayoutProps) => {
     <article className="max-w-4xl mx-auto px-4 py-8">
       <header className="mb-6">
         <div className="mb-1.5">
-          <h1 className="text-4xl font-bold">{frontMatter.title}</h1>
+          <h1 className="text-3xl font-bold">{frontMatter.title}</h1>
         </div>
 
         <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-1.5">

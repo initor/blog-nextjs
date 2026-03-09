@@ -8,6 +8,14 @@ import RolloutTimeline from './RolloutTimeline';
 import RollingUpdateVisualizer from './RollingUpdateVisualizer';
 import ReconcilePipeline from './ReconcilePipeline';
 import TimelineCompare from './TimelineCompare';
+import WorkspaceLayout from './WorkspaceLayout';
+import WorkflowOrchestration from './WorkflowOrchestration';
+import SessionContextFlow from './SessionContextFlow';
+import AgentSessionFlow from './AgentSessionFlow';
+import FigCaption from './FigCaption';
+import Callout from './Callout';
+import ContextFlow from './ContextFlow';
+import SessionBridge from './SessionBridge';
 
 const MDXComponents = {
   // Custom link component
@@ -82,6 +90,14 @@ const MDXComponents = {
   RollingUpdateVisualizer,
   ReconcilePipeline,
   TimelineCompare,
+  WorkspaceLayout,
+  WorkflowOrchestration,
+  SessionContextFlow,
+  AgentSessionFlow,
+  FigCaption,
+  Callout,
+  ContextFlow,
+  SessionBridge,
 
   // Custom pre component to handle mermaid code blocks
   pre: ({ children, ...props }: React.HTMLAttributes<HTMLPreElement>) => {

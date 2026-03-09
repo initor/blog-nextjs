@@ -115,23 +115,34 @@ html {
 
   /* Typography Scale */
   h1 {
-    @apply text-4xl font-bold mb-6 tracking-tight;
+    @apply text-3xl font-bold mb-6 tracking-tight;
   }
 
   h2 {
-    @apply text-3xl font-bold mb-4 tracking-tight;
+    @apply text-2xl font-bold mb-4 tracking-tight;
   }
 
   h3 {
-    @apply text-2xl font-bold mb-3 tracking-tight;
+    @apply text-xl font-bold mb-3 tracking-tight;
   }
 
   h4 {
-    @apply text-xl font-bold mb-2 tracking-tight;
+    @apply text-lg font-bold mb-2 tracking-tight;
   }
 
   p {
     @apply mb-4 text-base leading-[1.55];
+  }
+
+  /* Post dek — introductory subheading bridging title and body */
+  .post-dek {
+    font-family: var(--font-title), system-ui, sans-serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--code-comment);
+    margin-top: 0.75rem;
+    margin-bottom: 0;
   }
 
   /* Article/Blog Post Styles */
@@ -217,6 +228,82 @@ html {
     margin-bottom: 0;
   }
 
+  /* ContextFlow + SessionBridge — Apple-style visualization containers */
+  .cf,
+  .sb {
+    margin: 1.5em 0 0;
+    background: #f5f5f7;
+    border: 1px solid #d2d2d7;
+    border-radius: 16px;
+    padding: 1.25em 0.75em 0.75em;
+  }
+
+  .cf-header,
+  .sb-header {
+    text-align: center;
+    margin-bottom: 0.25em;
+  }
+
+  .cf-title,
+  .sb-title {
+    display: block;
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #1d1d1f;
+  }
+
+  .cf-subtitle,
+  .sb-subtitle {
+    display: block;
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: #86868b;
+    margin-top: 0.15em;
+  }
+
+  .cf-svg,
+  .sb-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Callout — pull-quote component */
+  .callout {
+    display: flex;
+    align-items: stretch;
+    gap: 1.25em;
+    margin-top: 1.75em;
+    margin-bottom: 1.75em;
+  }
+
+  .callout-pipe {
+    flex-shrink: 0;
+    width: 3px;
+    background: var(--code-comment);
+    border-radius: 1.5px;
+  }
+
+  .callout-text {
+    font-family: var(--font-title), system-ui, sans-serif;
+    font-size: 1.55rem;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--foreground);
+    margin: 0;
+    padding: 0.15em 0;
+  }
+
+  @media (max-width: 640px) {
+    .callout-text {
+      font-size: 1.25rem;
+    }
+  }
+
   .prose hr {
     margin-top: 2em;
     margin-bottom: 2em;
@@ -225,6 +312,28 @@ html {
   .prose pre {
     margin-top: 1.25em;
     margin-bottom: 1.25em;
+  }
+
+  /* Figure captions — editorial treatment for visualization annotations */
+  .fig-caption {
+    display: block;
+    margin-top: 0.35em;
+    margin-bottom: 1.5em;
+    padding-top: 0;
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 0.88rem;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    color: var(--code-comment);
+    text-align: center;
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  html.dark .fig-caption {
+    color: var(--code-comment);
   }
 
   /* Links */
@@ -262,8 +371,8 @@ html {
     color: inherit;
     font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
       "Liberation Mono", "Courier New", monospace;
-    font-size: 0.82rem;
-    line-height: 1.55;
+    font-size: 0.92rem;
+    line-height: 1.6;
     white-space: pre-wrap;
     word-break: break-word;
   }
@@ -273,7 +382,7 @@ html {
   .prose :not(pre) > code {
     @apply px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800;
     font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.8em;
+    font-size: 0.88em;
     font-weight: 500;
     color: var(--code-inline) !important;
   }
@@ -393,6 +502,12 @@ html {
     fill: var(--mermaid-node-bg) !important;
     stroke: var(--mermaid-node-border) !important;
   }
+}
+
+/* Override Tailwind prose figcaption margin — must be outside @layer base
+   to win specificity over prose's :where(figcaption) rules. */
+.prose figcaption.fig-caption {
+  margin-top: 0.35em;
 }
 
 /* =============================================================================
@@ -1211,6 +1326,847 @@ html {
     .rv-progress {
       width: 100%;
     }
+  }
+
+  /* Session Handoff — SVG diagram showing planning files bridging sessions */
+  .wl {
+    margin: 1.5em 0;
+    padding: 0;
+    border-radius: 0.75rem;
+    border: 1px solid var(--code-border);
+    background: var(--code-bg);
+    overflow: hidden;
+  }
+
+  .wl-header {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--code-border);
+  }
+
+  .wl-title {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--code-fg);
+  }
+
+  .wl-body {
+    padding: 0.5rem;
+  }
+
+  .wl-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .wl-subtitle {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 10px;
+    fill: var(--code-comment);
+    font-weight: 400;
+  }
+
+  .wl-session-box {
+    fill: none;
+    stroke: var(--code-comment);
+    stroke-width: 1.25;
+    stroke-dasharray: 6 4;
+    stroke-opacity: 0.5;
+  }
+
+  .wl-session-label {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    fill: var(--code-fg);
+  }
+
+  .wl-session-sub {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 9px;
+    fill: var(--code-comment);
+  }
+
+  .wl-task-box {
+    fill: var(--mermaid-primary-fill);
+    stroke: var(--mermaid-primary);
+    stroke-width: 0.75;
+    stroke-opacity: 0.4;
+    fill-opacity: 0.35;
+  }
+
+  .wl-task-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 9px;
+    fill: var(--code-fg);
+  }
+
+  .wl-ephemeral-tag {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 8px;
+    fill: var(--code-comment);
+    font-style: italic;
+    opacity: 0.6;
+  }
+
+  .wl-bridge-box {
+    fill: var(--mermaid-primary-fill);
+    stroke: var(--mermaid-primary);
+    stroke-width: 1.5;
+    fill-opacity: 0.5;
+  }
+
+  .wl-bridge-header {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 700;
+    fill: var(--mermaid-primary);
+  }
+
+  .wl-file-box {
+    fill: var(--code-bg);
+    stroke: var(--mermaid-primary);
+    stroke-width: 0.75;
+    stroke-opacity: 0.5;
+  }
+
+  .wl-file-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 9px;
+    fill: var(--code-fg);
+    font-weight: 500;
+  }
+
+  .wl-persistent-tag {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 8px;
+    fill: var(--mermaid-primary);
+    font-weight: 600;
+    font-style: italic;
+    opacity: 0.7;
+  }
+
+  .wl-arrow-line {
+    stroke: var(--mermaid-primary);
+    stroke-width: 1.5;
+    stroke-opacity: 0.6;
+  }
+
+  .wl-arrow-label {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 8px;
+    fill: var(--mermaid-primary);
+    font-weight: 500;
+    opacity: 0.7;
+  }
+
+  .wl-legend-text {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 8px;
+    fill: var(--code-comment);
+  }
+
+  @media (max-width: 640px) {
+    .wl-body {
+      padding: 0.25rem;
+    }
+  }
+
+  /* Session Handoff dark mode */
+  html.dark .wl {
+    background: color-mix(in srgb, var(--code-bg) 100%, transparent);
+    border-color: var(--code-border);
+  }
+
+  html.dark .wl-header {
+    border-bottom-color: var(--code-border);
+  }
+
+  html.dark .wl-session-box {
+    stroke: var(--code-comment);
+    stroke-opacity: 0.4;
+  }
+
+  html.dark .wl-task-box {
+    fill-opacity: 0.2;
+  }
+
+  html.dark .wl-bridge-box {
+    fill-opacity: 0.25;
+  }
+
+  html.dark .wl-file-box {
+    fill: color-mix(in srgb, var(--code-bg) 80%, transparent);
+  }
+
+  /* ── AgentSessionFlow — merged workflow + context flow visualization ── */
+
+  .af {
+    margin: 1.5em 0;
+    padding: 0;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(0,0,0,0.08);
+    background: #fafafa;
+    overflow: hidden;
+  }
+
+  .af-header {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .af-title {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--code-fg);
+  }
+
+  .af-body {
+    padding: 0.75rem 1rem;
+  }
+
+  .af-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Session column label above */
+  .af-session-label {
+    font-family: var(--font-diagram), system-ui, sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    fill: var(--code-fg);
+  }
+
+  /* Session column background */
+  .af-session-bg {
+    fill: rgba(0,0,0,0.02);
+    stroke: rgba(0,0,0,0.08);
+    stroke-width: 1;
+  }
+
+  /* Agent name label inside session column */
+  .af-agent-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    fill: var(--code-comment);
+  }
+
+  /* Task bar labels */
+  .af-task-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+
+  /* Context band labels */
+  .af-band-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.65rem;
+    font-weight: 500;
+    fill: var(--code-fg);
+    opacity: 0.75;
+  }
+
+  /* Orchestrator bar background */
+  .af-orch-bg {
+    fill: rgba(0,0,0,0.04);
+    stroke: rgba(0,0,0,0.06);
+    stroke-width: 0.5;
+  }
+
+  /* Orchestrator bar fill */
+  .af-orch-fill {
+    fill: rgba(0,0,0,0.06);
+  }
+
+  /* Orchestrator phase labels */
+  .af-orch-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    fill: var(--code-comment);
+    opacity: 0.5;
+  }
+
+  .af-orch-label-active {
+    opacity: 1;
+    fill: var(--code-fg);
+    font-weight: 600;
+  }
+
+  .af-orch-label-done {
+    opacity: 0.7;
+    fill: var(--mermaid-success);
+  }
+
+  /* Flow paths between sessions */
+  .af-flow {
+    transition: opacity 0.15s;
+  }
+
+  .af-flow-pruned {
+    stroke-dasharray: 4 3;
+  }
+
+  .af-flow-summarized {
+    /* Narrowing is geometric, not CSS */
+  }
+
+  /* Legend text */
+  .af-legend-text {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6rem;
+    fill: var(--code-comment);
+    opacity: 0.6;
+  }
+
+  /* Footer with replay button */
+  .af-footer {
+    padding: 0.5rem 1.25rem;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    justify-content: center;
+  }
+
+  .af-replay {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: 0.35rem;
+    border: 1px solid rgba(0,0,0,0.08);
+    background: transparent;
+    color: var(--code-fg);
+    font-family: var(--font-diagram), system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .af-replay:hover {
+    background: rgba(0,0,0,0.04);
+    border-color: rgba(0,0,0,0.15);
+  }
+
+  @media (max-width: 640px) {
+    .af-session-label {
+      font-size: 1.2rem;
+    }
+
+    .af-band-label {
+      font-size: 0.7rem;
+    }
+
+    .af-body {
+      padding: 0.5rem 0.5rem;
+    }
+
+    .af-agent-label {
+      font-size: 0.8rem;
+    }
+
+    .af-task-label {
+      font-size: 0.75rem;
+    }
+
+    .af-orch-label {
+      font-size: 0.75rem;
+    }
+
+    .af-legend-text {
+      font-size: 0.65rem;
+    }
+  }
+
+  /* AgentSessionFlow dark mode */
+  html.dark .af {
+    background: color-mix(in srgb, var(--code-bg) 100%, transparent);
+    border-color: var(--code-border);
+  }
+
+  html.dark .af-header {
+    border-bottom-color: var(--code-border);
+  }
+
+  html.dark .af-session-bg {
+    fill: color-mix(in srgb, var(--code-border) 15%, transparent);
+    stroke: var(--code-border);
+  }
+
+  html.dark .af-orch-bg {
+    fill: color-mix(in srgb, var(--code-border) 20%, transparent);
+    stroke: var(--code-border);
+  }
+
+  html.dark .af-orch-fill {
+    fill: color-mix(in srgb, var(--mermaid-node-border) 25%, transparent);
+  }
+
+  html.dark .af-footer {
+    border-top-color: var(--code-border);
+  }
+
+  html.dark .af-replay {
+    border-color: var(--code-border);
+  }
+
+  html.dark .af-replay:hover {
+    background: color-mix(in srgb, var(--code-border) 50%, transparent);
+  }
+
+  /* Workflow Orchestration — parallelized agent session animation */
+  .wo {
+    margin: 1.5em 0;
+    padding: 0;
+    border-radius: 0.75rem;
+    border: 1px solid var(--code-border);
+    background: var(--code-bg);
+    overflow: hidden;
+  }
+
+  .wo-header {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--code-border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .wo-title {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--code-fg);
+  }
+
+  .wo-body {
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* Orchestrator top lane */
+  .wo-orchestrator {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--code-border) 50%, transparent);
+  }
+
+  .wo-orch-bar {
+    flex: 1;
+    position: relative;
+    height: 1.25rem;
+    background: color-mix(in srgb, var(--code-border) 25%, transparent);
+    border-radius: 0.25rem;
+    overflow: hidden;
+  }
+
+  .wo-orch-fill {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--mermaid-node-border) 25%, transparent);
+    border-radius: 0.25rem;
+    transition: width 0.25s ease;
+  }
+
+  .wo-orch-phases {
+    position: relative;
+    display: flex;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .wo-orch-phase {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.58rem;
+    font-weight: 500;
+    color: var(--code-comment);
+    opacity: 0.6;
+    transition: opacity 0.2s, color 0.2s;
+  }
+
+  .wo-orch-phase-active {
+    opacity: 1;
+    color: var(--code-fg);
+    font-weight: 600;
+  }
+
+  .wo-orch-phase-done {
+    opacity: 0.8;
+    color: var(--mermaid-success);
+  }
+
+  /* Agent session lanes container */
+  .wo-lanes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  /* Individual agent lane */
+  .wo-lane {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .wo-lane-info {
+    min-width: 8rem;
+    max-width: 10rem;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .wo-agent {
+    font-family: var(--font-diagram), system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--code-fg);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .wo-dir {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.62rem;
+    color: var(--code-comment);
+  }
+
+  /* Timeline area */
+  .wo-timeline {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 0;
+  }
+
+  .wo-tasks {
+    flex: 1;
+    display: flex;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  /* Individual task block */
+  .wo-task {
+    position: relative;
+    height: 1.6rem;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    border: 1.5px solid;
+    box-sizing: border-box;
+    min-width: 0;
+  }
+
+  .wo-task-fill {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    transition: width 0.25s ease;
+  }
+
+  .wo-task-label {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 0.35rem;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.58rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Task color variants — literal class lookups for CSS scanning */
+  .wo-task-blue {
+    border-color: var(--mermaid-primary);
+  }
+  .wo-task-blue .wo-task-fill {
+    background: var(--mermaid-primary-fill);
+  }
+  .wo-task-blue .wo-task-label {
+    color: var(--mermaid-primary);
+  }
+
+  .wo-task-green {
+    border-color: var(--mermaid-success);
+  }
+  .wo-task-green .wo-task-fill {
+    background: var(--mermaid-success-fill);
+  }
+  .wo-task-green .wo-task-label {
+    color: var(--mermaid-success);
+  }
+
+  .wo-task-purple {
+    border-color: var(--mermaid-secondary);
+  }
+  .wo-task-purple .wo-task-fill {
+    background: var(--mermaid-secondary-fill);
+  }
+  .wo-task-purple .wo-task-label {
+    color: var(--mermaid-secondary);
+  }
+
+  /* Task states */
+  .wo-task-pending {
+    border-style: dashed;
+    opacity: 0.5;
+  }
+
+  .wo-task-active {
+    opacity: 1;
+  }
+
+  .wo-task-done {
+    opacity: 1;
+  }
+
+  .wo-task-done .wo-task-fill {
+    width: 100% !important;
+  }
+
+  /* Completion checkmark per lane */
+  .wo-complete {
+    font-size: 0.8rem;
+    color: var(--mermaid-success);
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  /* Footer with replay button */
+  .wo-footer {
+    padding: 0.5rem 1.25rem;
+    border-top: 1px solid var(--code-border);
+    display: flex;
+    justify-content: center;
+  }
+
+  .wo-replay {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: 0.35rem;
+    border: 1px solid var(--code-border);
+    background: transparent;
+    color: var(--code-fg);
+    font-family: var(--font-diagram), system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .wo-replay:hover {
+    background: var(--mermaid-node-bg);
+    border-color: var(--mermaid-node-border);
+  }
+
+  @media (max-width: 640px) {
+    .wo-lane {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+
+    .wo-lane-info {
+      min-width: auto;
+      max-width: none;
+    }
+
+    .wo-orchestrator {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+
+    .wo-orch-bar {
+      width: 100%;
+    }
+  }
+
+  /* Workflow Orchestration dark mode */
+  html.dark .wo-replay:hover {
+    background: color-mix(in srgb, var(--code-border) 50%, transparent);
+  }
+
+  html.dark .wo-orch-fill {
+    background: color-mix(in srgb, var(--mermaid-node-border) 35%, transparent);
+  }
+
+  html.dark .wo-task-pending {
+    opacity: 0.4;
+  }
+
+  /* ── SessionContextFlow ──────────────────────────────────── */
+
+  .cf {
+    margin: 1.5em 0;
+    padding: 0;
+    border-radius: 0.75rem;
+    border: 1px solid var(--code-border);
+    background: var(--code-bg);
+    overflow: hidden;
+  }
+
+  .cf-header {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--code-border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .cf-title {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--code-fg);
+  }
+
+  .cf-body {
+    padding: 0.75rem 1rem;
+  }
+
+  .cf-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .cf-footer {
+    padding: 0.5rem 1.25rem;
+    border-top: 1px solid var(--code-border);
+    display: flex;
+    justify-content: center;
+  }
+
+  .cf-replay {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: 0.35rem;
+    border: 1px solid var(--code-border);
+    background: transparent;
+    color: var(--code-fg);
+    font-family: var(--font-diagram), system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .cf-replay:hover {
+    background: var(--mermaid-node-bg);
+    border-color: var(--mermaid-node-border);
+  }
+
+  /* Session labels above blocks */
+  .cf-session-label {
+    font-family: var(--font-diagram), system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    fill: var(--code-fg);
+  }
+
+  /* Band labels within session blocks */
+  .cf-band-label {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.52rem;
+    font-weight: 500;
+    fill: var(--code-fg);
+    opacity: 0.85;
+  }
+
+  /* Band color variants — fills and strokes from mermaid palette */
+  .cf-band-blue {
+    fill: var(--mermaid-primary-fill);
+    stroke: var(--mermaid-primary);
+    stroke-width: 0.5;
+  }
+
+  .cf-band-green {
+    fill: var(--mermaid-success-fill);
+    stroke: var(--mermaid-success);
+    stroke-width: 0.5;
+  }
+
+  .cf-band-purple {
+    fill: var(--mermaid-secondary-fill);
+    stroke: var(--mermaid-secondary);
+    stroke-width: 0.5;
+  }
+
+  /* Flow paths between sessions */
+  .cf-flow {
+    transition: opacity 0.15s;
+  }
+
+  .cf-flow-pruned {
+    stroke-dasharray: 4 3;
+  }
+
+  .cf-flow-summarized {
+    /* Summarized flows render normally — narrowing is geometric, not CSS. */
+  }
+
+  /* Session block background */
+  .cf-session {
+    fill: color-mix(in srgb, var(--code-border) 20%, transparent);
+    stroke: var(--code-border);
+    stroke-width: 1;
+  }
+
+  /* Pinch-point dashed lines between sessions */
+  .cf-pinch {
+    stroke: var(--code-comment);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+    opacity: 0.35;
+  }
+
+  @media (max-width: 640px) {
+    .cf-session-label {
+      font-size: 0.62rem;
+    }
+
+    .cf-band-label {
+      font-size: 0.45rem;
+    }
+
+    .cf-body {
+      padding: 0.5rem 0.5rem;
+    }
+  }
+
+  /* SessionContextFlow dark mode */
+  html.dark .cf-replay:hover {
+    background: color-mix(in srgb, var(--code-border) 50%, transparent);
   }
 }
 
