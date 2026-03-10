@@ -39,7 +39,7 @@ const COLS = [
   {
     label: 'Session N',
     sub: 'Execute phase 3',
-    items: ['Read STATE.md', 'Run plan tasks', 'Write SUMMARY.md'],
+    items: ['Read STATE.md', 'Run plan tasks', 'Distill SUMMARY.md'],
   },
   {
     label: 'Session N+1',
@@ -296,7 +296,7 @@ export default function SessionBridge() {
             fontWeight: 500,
           }}
         >
-          write
+          distill
         </text>
 
         {/* Read: Bridge → Session N+1 */}
