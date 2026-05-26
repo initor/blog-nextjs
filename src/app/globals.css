@@ -79,6 +79,30 @@ html {
     /* Link color - Catppuccin Mocha Lavender */
     --link-color: #b4befe;
     --link-color-hover: #cdd6f4;
+
+    /* Mermaid & diagram tokens: Catppuccin Frappé Dark */
+    --mermaid-bg: #1e1e2e;
+    --mermaid-primary: #8caaee;
+    --mermaid-primary-fill: #2a3045;
+    --mermaid-secondary: #ca9ee6;
+    --mermaid-secondary-fill: #3a2e44;
+    --mermaid-tertiary: #f4b8e4;
+    --mermaid-tertiary-fill: #3f2e3b;
+    --mermaid-primary-text: #c6d0f5;
+    --mermaid-secondary-text: #a5adce;
+    --mermaid-line: #737994;
+    --mermaid-node-bg: #232634;
+    --mermaid-node-border: #51576d;
+    --mermaid-note-bg: #2e2b27;
+    --mermaid-note-border: #e5c890;
+    --mermaid-actor-bg: #2a3045;
+    --mermaid-actor-border: #8caaee;
+    --mermaid-error: #e78284;
+    --mermaid-error-fill: #3b2c30;
+    --mermaid-warning: #e5c890;
+    --mermaid-warning-fill: #3b342a;
+    --mermaid-success: #a6d189;
+    --mermaid-success-fill: #2c372a;
   }
 }
 
