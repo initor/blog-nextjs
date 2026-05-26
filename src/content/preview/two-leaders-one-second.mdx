@@ -6,24 +6,63 @@ category: 'engineering'
 location: 'Palo Alto, CA'
 ---
 
-A few weeks ago I noticed something weird in one of my Kubernetes controllers. During a rolling restart, it had created two children for the same parent in the same UTC second. The cluster didn't notice for 29 days. The next reconcile listed children by owner UID, saw two when it expected one, refused to update either. The rollout just stopped.
+Kubernetes leader election is not a write fence. I knew that in theory. I still had a controller that assumed otherwise.
 
-I'd been quietly assuming for years that leader election in Kubernetes means only one writer at a time. It doesn't, and the warning is right there in the source of [client-go/tools/leaderelection](https://github.com/kubernetes/client-go/blob/master/tools/leaderelection/leaderelection.go):
+During a rolling restart, two controller pods both created a child object for the same parent. Same namespace, same owner UID, same UTC second. Because the child used `GenerateName`, the API server accepted both. Twenty-nine days later, a reconcile listed children, found two where the code expected one, and refused to pick a winner. The rollout stopped.
+
+[client-go says this directly](https://github.com/kubernetes/client-go/blob/master/tools/leaderelection/leaderelection.go):
 
 > this implementation does not guarantee that only one client is acting as a leader (a.k.a. fencing).
 
-I'd read that header a dozen times. Never internalized what it meant in practice.
+The bug was the gap between reading that sentence and designing as if it were false.
 
-Here's the sequence. A worker is inside `Reconcile()`, blocked on a slow downstream call. SIGTERM arrives. controller-runtime's graceful drain runs its 30 second clock. The worker doesn't return. `StopAndWait` gives up and the lease releases. The standby pod acquires, runs its first reconcile sweep, sees no children for this parent (the old in-flight write hasn't landed yet), calls `Create`. Then the old worker's call finally lands at the apiserver. Both succeed.
+The sequence was short:
 
-They succeed because we used `GenerateName`. Two writes, two random suffixes, no collision. The apiserver had no idea these were meant to be the same logical resource.
+1. the old pod was inside `Reconcile()`, waiting on a slow downstream call
+2. SIGTERM arrived during the rollout
+3. controller-runtime waited for graceful shutdown
+4. the old worker still had an in-flight `Create`
+5. the leader lease was released
+6. the new pod became leader, listed children, saw none, and called `Create`
+7. the old `Create` reached the API server too
 
-The fix is one line: derive the child's name from the parent. Now two leaders racing produce one persistent child and one `AlreadyExists` error, and the loser treats it as a requeue.
+Both writes were valid. `GenerateName` did exactly what it promises: pick a unique name. It did not know that two different names were supposed to represent one logical child.
 
-If you write controllers, the question worth asking of yours: who is enforcing the "at most one child" rule? If it's the in-memory [expectations](/blog/cloneset-pod-thrashing) cache most controllers carry (the one that says "I just fired a Create, don't fire another until the watch confirms it"), that cache lives in one process. The race I described crosses processes. It can't see the duplicate.
+The fix was not another cache. It was deterministic naming: derive the child name from the parent. Then both leaders race on the same object name. One write wins; the other gets `AlreadyExists` and requeues.
 
-I put together a [150 line reproduction](/repro/two-leaders-one-second/main.go) against a `kind` cluster. Two stock types (`ConfigMap` parent, `Secret` child), no CRDs. Two writers with leader election off, both call `Create` with the same `GenerateName` base, the apiserver accepts both. You end up with two `Secret`s in the same namespace, different random suffixes.
+Controllers built on controller-runtime read from a watch cache that lags the API server. Many of them carry an in-memory [expectations](/blog/cloneset-pod-thrashing) layer for exactly that gap: after firing a `Create`, the controller records the write locally so the next `Reconcile` defers until the watch catches up. The mechanism works perfectly within one process; it cannot see a `Create` in flight from another leader.
 
-One related thing worth flagging. We had recently enabled `LeaderElectionReleaseOnCancel=true` for faster failover (15 seconds down to milliseconds). It works. It also compresses the lease handoff into the same window where the previous worker's in-flight `Create` is still being processed at the apiserver. The bug class was always there. This config moved it from theoretical to every rolling restart.
+I reproduced the class with stock Kubernetes objects: `ConfigMap` as parent, `Secret` as child, no CRDs. The reconciler is short enough to read in one screen:
 
-The lesson, for me: the Lease tells your processes who is the active worker. It doesn't tell the apiserver to reject writes from anyone else. Put your invariants where the apiserver can hold them.
+```go
+func (r *reconciler) Reconcile(ctx context.Context, req reconcile.Request) (reconcile.Result, error) {
+  var children corev1.SecretList
+  if err := r.List(ctx, &children,
+    client.InNamespace(req.Namespace),
+    client.MatchingLabels{"demo-child": req.Name}); err != nil {
+    return reconcile.Result{}, err
+  }
+  if len(children.Items) >= 1 {
+    return reconcile.Result{}, nil
+  }
+  if r.forceRace {
+    time.Sleep(10 * time.Second) // simulate slow downstream
+  }
+  child := &corev1.Secret{
+    ObjectMeta: metav1.ObjectMeta{
+      GenerateName: req.Name + "-child-",
+      Namespace:    req.Namespace,
+      Labels:       map[string]string{"demo-child": req.Name},
+    },
+  }
+  return reconcile.Result{}, r.Create(ctx, child)
+}
+```
+
+Run two of these without leader election. Both reconcilers list children, see none, fire `Create`. The API server accepts both. Two `Secret`s, different suffixes, same logical resource. [Full source.](/repro/two-leaders-one-second/main.go)
+
+`LeaderElectionReleaseOnCancel=true` made this easier to hit. The option is false by default: when the outgoing leader shuts down, the lease expires on its own (about 15 seconds with controller-runtime's defaults) and only then can the standby acquire. With the option set to true, the outgoing leader writes `holderIdentity = ""` to the Lease on shutdown and the standby acquires in milliseconds. We enabled it for faster failover. It does that. It also moves the lease handoff into the same window the old worker's in-flight writes are still being processed by the API server. The race was already possible; the faster handoff just stopped hiding it.
+
+The rule I took away: write controllers as if two leaders can be alive long enough to send requests. Leader election chooses who should be active. It does not make old requests impossible.
+
+If "at most one child" matters, encode it where the API server can enforce it. For us, that was a deterministic name derived from the parent.
