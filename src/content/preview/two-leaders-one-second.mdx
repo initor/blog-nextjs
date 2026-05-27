@@ -6,63 +6,40 @@ category: 'engineering'
 location: 'Palo Alto, CA'
 ---
 
-Kubernetes leader election is not a write fence. I knew that in theory. I still had a controller that assumed otherwise.
+Kubernetes leader election is not a write fence.
 
-During a rolling restart, two controller pods both created a child object for the same parent. Same namespace, same owner UID, same UTC second. Because the child used `GenerateName`, the API server accepted both. Twenty-nine days later, a reconcile listed children, found two where the code expected one, and refused to pick a winner. The rollout stopped.
+During a rolling restart, two controller pods created a child object for the same parent. Same namespace, same owner UID, same UTC second. The child used `GenerateName`, so the API server accepted both. Nothing looked wrong until 29 days later, when a reconcile listed children, found two where the code expected one, and refused to pick. The rollout stopped.
 
-[client-go says this directly](https://github.com/kubernetes/client-go/blob/master/tools/leaderelection/leaderelection.go):
+[client-go](https://github.com/kubernetes/client-go/blob/master/tools/leaderelection/leaderelection.go) says this plainly:
 
 > this implementation does not guarantee that only one client is acting as a leader (a.k.a. fencing).
 
-The bug was the gap between reading that sentence and designing as if it were false.
+The sequence was ordinary: the old pod was inside `Reconcile()`, waiting on a slow downstream call, when SIGTERM arrived. Shutdown started, but the worker still had a `Create` in flight. The lease was released. The standby became leader, listed children, saw none, and created one. Then the old `Create` reached the API server too. Both writes were valid; `GenerateName` did its job and picked unique names. The API server was enforcing uniqueness of object names, not uniqueness of my logical child.
 
-The sequence was short:
+First, use deterministic names for managed resources. In-memory expectations won't help: they're designed for the in-process race on a stale cache, not a lock across distributed processes.
 
-1. the old pod was inside `Reconcile()`, waiting on a slow downstream call
-2. SIGTERM arrived during the rollout
-3. controller-runtime waited for graceful shutdown
-4. the old worker still had an in-flight `Create`
-5. the leader lease was released
-6. the new pod became leader, listed children, saw none, and called `Create`
-7. the old `Create` reached the API server too
-
-Both writes were valid. `GenerateName` did exactly what it promises: pick a unique name. It did not know that two different names were supposed to represent one logical child.
-
-The fix was not another cache. It was deterministic naming: derive the child name from the parent. Then both leaders race on the same object name. One write wins; the other gets `AlreadyExists` and requeues.
-
-Controllers built on controller-runtime read from a watch cache that lags the API server. Many of them carry an in-memory [expectations](/blog/cloneset-pod-thrashing) layer for exactly that gap: after firing a `Create`, the controller records the write locally so the next `Reconcile` defers until the watch catches up. The mechanism works perfectly within one process; it cannot see a `Create` in flight from another leader.
-
-I reproduced the class with stock Kubernetes objects: `ConfigMap` as parent, `Secret` as child, no CRDs. The reconciler is short enough to read in one screen:
+Reproducing this needs nothing exotic: `ConfigMap` as parent, `Secret` as child, no CRDs. The important part is only this:
 
 ```go
-func (r *reconciler) Reconcile(ctx context.Context, req reconcile.Request) (reconcile.Result, error) {
-  var children corev1.SecretList
-  if err := r.List(ctx, &children,
-    client.InNamespace(req.Namespace),
-    client.MatchingLabels{"demo-child": req.Name}); err != nil {
-    return reconcile.Result{}, err
-  }
-  if len(children.Items) >= 1 {
+if len(children.Items) >= 1 {
     return reconcile.Result{}, nil
-  }
-  if r.forceRace {
-    time.Sleep(10 * time.Second) // simulate slow downstream
-  }
-  child := &corev1.Secret{
-    ObjectMeta: metav1.ObjectMeta{
-      GenerateName: req.Name + "-child-",
-      Namespace:    req.Namespace,
-      Labels:       map[string]string{"demo-child": req.Name},
-    },
-  }
-  return reconcile.Result{}, r.Create(ctx, child)
 }
+
+if r.forceRace {
+    time.Sleep(10 * time.Second)
+}
+
+return reconcile.Result{}, r.Create(ctx, &corev1.Secret{
+    ObjectMeta: metav1.ObjectMeta{
+        GenerateName: req.Name + "-child-",
+        Namespace:    req.Namespace,
+        Labels:       map[string]string{"demo-child": req.Name},
+    },
+})
 ```
 
-Run two of these without leader election. Both reconcilers list children, see none, fire `Create`. The API server accepts both. Two `Secret`s, different suffixes, same logical resource. [Full source.](/repro/two-leaders-one-second/main.go)
+Run two reconcilers without leader election. Both list children, see none, and call `Create`. The API server accepts both: two `Secret`s, different suffixes, same logical child. [Full source](https://www.waynewen.com/repro/two-leaders-one-second/main.go).
 
-`LeaderElectionReleaseOnCancel=true` made this easier to hit. The option is false by default: when the outgoing leader shuts down, the lease expires on its own (about 15 seconds with controller-runtime's defaults) and only then can the standby acquire. With the option set to true, the outgoing leader writes `holderIdentity = ""` to the Lease on shutdown and the standby acquires in milliseconds. We enabled it for faster failover. It does that. It also moves the lease handoff into the same window the old worker's in-flight writes are still being processed by the API server. The race was already possible; the faster handoff just stopped hiding it.
+`LeaderElectionReleaseOnCancel=true` made this easier to hit. With the default behavior, the standby cannot acquire until the lease expires naturally, which takes about [15 seconds](https://github.com/kubernetes-sigs/controller-runtime/blob/main/pkg/manager/manager.go) under controller-runtime's defaults. With release-on-cancel, shutdown writes `holderIdentity=""` to the Lease, the standby's watch fires immediately, and acquisition drops to milliseconds. We enabled it for faster failover. It also put the new leader's first reconcile into the same window as the old worker's in-flight write. The race was already possible; the faster handoff stopped hiding it.
 
-The rule I took away: write controllers as if two leaders can be alive long enough to send requests. Leader election chooses who should be active. It does not make old requests impossible.
-
-If "at most one child" matters, encode it where the API server can enforce it. For us, that was a deterministic name derived from the parent.
+The rule I took away: write controllers as if two leaders can be alive long enough to send requests. Leader election chooses who should be active. It does not make old requests impossible. If "at most one child" matters, encode it where the API server can enforce it. For us, that meant a deterministic name derived from the parent.
