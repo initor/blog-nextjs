@@ -71,7 +71,7 @@ It does exactly what it promises, which is less than it looks like.
 
 The fix was to stop needing the guard at all. Give the child a deterministic name derived from the parent, and the second create collides and is rejected, however many leaders are briefly alive. The invariant moves out of one process's memory into the one place that spans all of them, and the expectation map I was so pleased with is gone.
 
-I had solved the duplicate I could see, one process racing its cache, and missed the one I could not, two processes racing each other. A runnable version is [here](https://www.waynewen.com/repro/two-leaders-one-second/main.go). The bug was one second wide. It just took a month to find something standing on it.
+I had solved the duplicate I could see, one process racing its cache, and missed the one I could not, two processes racing each other. A runnable version is [here](https://github.com/initor/blog-nextjs/tree/master/public/repro/two-leaders-one-second). The bug was one second wide. It just took a month to find something standing on it.
 
 [^1]: controller-runtime's default lease duration is 15 seconds. See the manager defaults in [controller-runtime](https://github.com/kubernetes-sigs/controller-runtime/blob/main/pkg/manager/manager.go).
 
