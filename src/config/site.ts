@@ -32,10 +32,15 @@ export const siteConfig = {
         show: true,
         priority: 4,
       },
+      strava: {
+        url: `https://www.strava.com/athletes/${blogConfig.author.strava}`,
+        show: true,
+        priority: 5,
+      },
       discord: {
         url: `https://discord.gg/TCNdj3ahPz`,
         show: false,
-        priority: 5,
+        priority: 6,
       },
     },
 

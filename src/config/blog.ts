@@ -9,6 +9,7 @@ export const blogConfig = {
     github: "initor",
     linkedin: "w3e",
     bluesky: "waynewen.com",
+    strava: "38836222",
   },
   siteUrl: "https://waynewen.com",
   defaultTheme: 'system', // for dark mode settings
