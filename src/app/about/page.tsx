@@ -69,22 +69,6 @@ const AboutPage = () => {
         <br/>
         <figure className="relative">
           <Image
-            src="/images/large/992_gt3_large.jpg"
-            alt="992 GT3"
-            width={1600}
-            height={1068}
-            className="rounded-sm"
-            sizes="(max-width: 768px) calc(100vw - 32px), 640px"
-            quality={100}
-          />
-          <figcaption className="mt-2 text-sm text-zinc-600">
-            992 GT3
-          </figcaption>
-        </figure>
-
-        <br/>
-        <figure className="relative">
-          <Image
             src="/images/large/cervelo_s5_large.jpg"
             alt="Cervélo S5"
             width={1600}
