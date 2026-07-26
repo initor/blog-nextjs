@@ -40,4 +40,9 @@ yarn-error.log*
 next-env.d.ts
 
 # planning
-.planning/
+# The global core.excludesFile ignores ".planning/" as a directory, and git never descends
+# into an excluded directory. So the directory has to be re-included first, or the exception
+# below is a no-op. Contents stay ignored; only post-material is tracked.
+!.planning/
+.planning/*
+!.planning/post-material/
