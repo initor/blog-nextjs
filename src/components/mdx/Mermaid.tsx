@@ -75,6 +75,10 @@ export default function Mermaid({ chart }: MermaidProps) {
           themeVariables,
           securityLevel: 'loose',
           fontFamily: 'inherit',
+          // Keep the SVG at its intrinsic width so the wrapper's overflow-x-auto
+          // can scroll it. Without this, mermaid emits width="100%" and the
+          // diagram silently shrinks to the prose column instead of scrolling.
+          sequence: { useMaxWidth: false },
         });
 
         const id = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
@@ -101,7 +105,7 @@ export default function Mermaid({ chart }: MermaidProps) {
   return (
     <div
       ref={containerRef}
-      className="mermaid-diagram my-6 flex justify-center overflow-x-auto"
+      className="mermaid-diagram my-6 overflow-x-auto"
       dangerouslySetInnerHTML={{ __html: svg }}
     />
   );
