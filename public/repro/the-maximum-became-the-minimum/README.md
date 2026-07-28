@@ -10,7 +10,7 @@ Two Go programs cover the bug at different layers. `main.go` is a dependency-fre
 ## Setup
 
 ```bash
-cd public/repro/ceiling-that-became-a-floor
+cd public/repro/the-maximum-became-the-minimum
 ```
 
 ## Reproduce the arithmetic

@@ -88,7 +88,7 @@ We moved the ceiling out of the marker and into a validating admission webhook. 
 
 That fixed our field, but not the schema path. The smallest upstream fix is to reject integer bounds that change in a float64 round trip. Supporting MaxInt64 there requires carrying the bound as an exact number through generation and validation, then comparing integers without `int64(max)`.
 
-The broader rule: above 2^53, float64 stops representing every consecutive integer, so a schema tool that stores bounds as float64 can enforce a different value from the one in source.[^8] A [runnable repro](https://github.com/initor/blog-nextjs/tree/master/public/repro/ceiling-that-became-a-floor) includes the arithmetic and the pinned validator.
+The broader rule: above 2^53, float64 stops representing every consecutive integer, so a schema tool that stores bounds as float64 can enforce a different value from the one in source.[^8] A [runnable repro](https://github.com/initor/blog-nextjs/tree/master/public/repro/the-maximum-became-the-minimum) includes the arithmetic and the pinned validator.
 
 The compiler knew. It just never got to see the number.
 
