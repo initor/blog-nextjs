@@ -1,0 +1,109 @@
+---
+title: 'The Maximum Became the Minimum'
+date: '2026-07-26'
+tags: ['kubernetes', 'openapi', 'floating-point']
+category: 'engineering'
+location: 'Palo Alto, CA'
+---
+
+We set a CRD field's maximum to MaxInt64, `9223372036854775807`. It worked on ARM. On x86, the same maximum became MinInt64, `-9223372036854775808`, so the apiserver rejected even the value `1`.
+
+## The first suspect
+
+Every local run passed on an ARM-based M4 MacBook, while the same commit failed on x86. I blamed the infrastructure. Then I opened the failing job:
+
+```text
+Invalid value: 1: someField in body should be
+less than or equal to -9223372036854775808
+```
+
+It was not an infrastructure failure. The largest int64 had become the smallest. I had assumed that the number written in the Go source was the number the apiserver would enforce.
+
+## The number on disk
+
+The marker was straightforward:
+
+```go
+// +kubebuilder:validation:Maximum=9223372036854775807
+SomeField int64 `json:"someField"`
+```
+
+Controller-tools parsed the maximum into a float64, and Kubernetes stored it as one.[^1] MaxInt64 needs 63 bits of precision; float64 keeps 53.[^2] The value therefore rounded before the YAML was generated:
+
+```yaml
+someField:
+  format: int64
+  maximum: 9223372036854776000
+```
+
+The stored float was exactly 2^63. The decimal in the YAML was the shortest representation that parsed back to that float.[^3] Controller-tools and the apiserver both parsed their inputs correctly, but they did not receive the same input. By the time the schema reached the apiserver, its maximum was already outside the int64 range it was meant to constrain.
+
+## Where the architectures disagree
+
+Kube-openapi narrows the float64 bound in one expression:[^4]
+
+```go
+return MaximumInt(path, in, value, int64(max), exclusive)
+```
+
+`int64(max)` converts 2^63, which does not fit. If `max` were a constant, this would not compile. At runtime, Go allows it:[^5]
+
+<Callout>The conversion succeeds but the result value is implementation-dependent.</Callout>
+
+The compiler lowers this conversion to the target CPU's native instruction. On ARM, `FCVTZS` clamps positive overflow to MaxInt64.[^6] On x86, `CVTTSD2SI` returns the invalid-result sentinel `0x8000000000000000`, which as a signed int64 is MinInt64. The validator therefore accepts only MinInt64 on x86 and rejects every greater value.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant M as Go marker
+    participant G as controller-tools
+    participant Y as YAML on disk
+    participant V as kube-openapi
+    M->>G: Maximum = 9223372036854775807
+    Note over G: Parse as float64, exact value 2^63
+    G->>Y: maximum: 9223372036854776000
+    Y->>V: Parse as float64, exact value 2^63
+    Note over V: Execute int64(max)
+    alt ARM64 · FCVTZS
+        V->>V: Clamp to MaxInt64
+    else x86-64 · CVTTSD2SI
+        V->>V: Return 0x8000000000000000
+        Note over V: Signed int64 interpretation is MinInt64
+    end
+```
+
+<FigCaption>The architecture matters only when kube-openapi narrows the out-of-range float64 back to int64.</FigCaption>
+
+The toolchain does guard this path. It rejects a non-integral bound on an integer field.[^7] But 2^63 as a float64 is perfectly integral. Someone checked. They checked the wrong invariant.
+
+## Why "almost nobody" hits this
+
+Only the highest 512 int64 values round outside the int64 range. Below that window, an inexact bound remains inside int64, so the ceiling is wrong but still holds. MaxInt64 sits inside that window. It is exactly what a careful engineer reaches for when a rule demands a Maximum but the field has no real ceiling.
+
+The failure is loud on x86 and invisible on ARM. ARM was never a control. It was a blindfold.
+
+## The fix
+
+We moved the ceiling out of the marker and into a validating admission webhook. The check stays in compiled Go, with an int64 on both sides, so the number never crosses the float64 schema path. The cost is a service and certificates.
+
+That fixed our field, but not the schema path. The smallest upstream fix is to reject integer bounds that change in a float64 round trip. Supporting MaxInt64 there requires carrying the bound as an exact number through generation and validation, then comparing integers without `int64(max)`.
+
+The broader rule: above 2^53, float64 stops representing every consecutive integer, so a schema tool that stores bounds as float64 can enforce a different value from the one in source.[^8] A [runnable repro](https://github.com/initor/blog-nextjs/tree/master/public/repro/ceiling-that-became-a-floor) includes the arithmetic and the pinned validator.
+
+The compiler knew. It just never got to see the number.
+
+[^1]: Kubernetes stores `maximum` as [`Maximum *float64`](https://github.com/kubernetes/apiextensions-apiserver/blob/ecdf037a687464c62ac46bfefa3e56648d4bda0d/pkg/apis/apiextensions/v1/types_jsonschema.go#L80).
+
+[^2]: Go's `float64` is an [IEEE-754 64-bit float](https://go.dev/ref/spec#Numeric_types); its significand holds 53 bits.
+
+[^3]: Go's JSON encoder uses fixed notation and the shortest round-trip representation in [`encode.go`](https://github.com/golang/go/blob/a9ce111d580581fb925ae88f125c69b7d93504ea/src/encoding/json/encode.go#L584-L592).
+
+[^4]: Kube-openapi notes the precision loss, then narrows with `int64(max)` in [`MaximumNativeType`](https://github.com/kubernetes/kube-openapi/blob/c8a335a9a2ff/pkg/validation/validate/values.go#L248-L257).
+
+[^5]: The Go [conversion specification](https://go.dev/ref/spec#Conversions) makes an unrepresentable runtime result implementation-dependent and rejects overflowing constants.
+
+[^6]: Arm's [`FPToFixed`](https://developer.arm.com/documentation/ddi0602/latest/Shared-Pseudocode/AArch64-Functions/Shared-Floating-point-functions?lang=en#func_FPToFixed_7) generates a saturated result; x86 [`CVTTSD2SI`](https://www.felixcloutier.com/x86/cvttsd2si) returns the integer indefinite value when the invalid exception is masked.
+
+[^7]: Controller-tools declares [`Maximum` as float64](https://github.com/kubernetes-sigs/controller-tools/blob/41fba8525412a0a09a6df3014b9a7f88650584b3/pkg/crd/markers/validation.go#L192) and checks only [integrality](https://github.com/kubernetes-sigs/controller-tools/blob/41fba8525412a0a09a6df3014b9a7f88650584b3/pkg/crd/markers/validation.go#L703-L704).
+
+[^8]: RFC 8259 defines the [interoperable integer range](https://www.rfc-editor.org/rfc/rfc8259.html#section-6). OpenAI issue [#464](https://github.com/openai/openai-openapi/issues/464) records the same rounded bound.
