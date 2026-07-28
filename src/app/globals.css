@@ -2296,3 +2296,18 @@ sup {
 .prose sup:has(a[href^="#user-content-fn"]) {
   top: -0.6em;
 }
+
+/* Footnotes section sizing
+   Outside @layer for the same reason as the override above. The unlayered
+   .prose :where(p) rule sets font-size, line-height and 1.25em margins, and GFM wraps
+   each footnote in a <p>, so the section's text-sm never reaches the note text. */
+.prose .footnotes p {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.prose .footnotes li {
+  margin-bottom: 0.6rem;
+}
