@@ -2311,3 +2311,26 @@ sup {
 .prose .footnotes li {
   margin-bottom: 0.6rem;
 }
+
+/* Mermaid diagram sizing
+   Mermaid is initialized with sequence.useMaxWidth:false so the SVG keeps its
+   intrinsic width. Without that it emits width="100%" and silently shrinks the
+   diagram to the prose column (measured: 3.6px message text at 375px), which the
+   wrapper's overflow-x-auto cannot rescue because there is nothing to overflow.
+
+   Sequence diagrams are wider than the 640px prose column, so the wrapper breaks
+   out symmetrically around the column, capped at 1200px and at the viewport. The
+   clamp means no media query is needed: wide screens fit the whole diagram at
+   source size, narrow screens fall back to real horizontal scrolling.
+
+   margin-inline: auto on the SVG centers it when it fits and resolves to 0 when
+   it overflows, so the scroll always starts at the diagram's left edge. */
+.mermaid-diagram {
+  width: min(1200px, calc(100vw - 4rem));
+  margin-left: calc((100% - min(1200px, calc(100vw - 4rem))) / 2);
+}
+
+.mermaid-diagram svg {
+  display: block;
+  margin-inline: auto;
+}
