@@ -137,10 +137,10 @@ Underscores
 ```mermaid
 sequenceDiagram
     autonumber
-    participant LB as Load Balancer (Probe)
-    participant A1 as App (Instance 1)
-    participant KERN as Host Kernel
-    participant A2 as App (Instance 2)
+    participant LB as Load Balancer
+    participant A1 as App 1
+    participant KERN as Kernel
+    participant A2 as App 2
 
     Note over A1: Phase 1: The Race
     A1->>KERN: Bind TCP :4190
@@ -154,13 +154,13 @@ sequenceDiagram
 
     Note over KERN: Phase 2: The Phantom Lock
     KERN->>KERN: Socket -> TIME_WAIT / FIN-WAIT-2
-    Note right of KERN: Kernel holds port 4190<br/>to protect data integrity
+    Note right of KERN: Kernel holds port 4190<br/>to protect<br/>data integrity
 
     Note over A2: Phase 3: The Restart
     LB->>A2: Kubelet restarts Pod
     A2->>KERN: Bind TCP :4190
     KERN-->>A2: ❌ FAIL: Address in use
-    Note left of KERN: Blocked by Instance 1's<br/>ghost in Kernel memory
+    Note left of KERN: Blocked by App 1's<br/>ghost in<br/>kernel memory
 ```
 
 ## (Sub,Super)script
