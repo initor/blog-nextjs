@@ -252,9 +252,8 @@ html {
     margin-bottom: 0;
   }
 
-  /* ContextFlow + SessionBridge — Apple-style visualization containers */
-  .cf,
-  .sb {
+  /* ContextFlow — Apple-style visualization container */
+  .cf {
     margin: 1.5em 0 0;
     background: #f5f5f7;
     border: 1px solid #d2d2d7;
@@ -262,14 +261,12 @@ html {
     padding: 1.25em 0.75em 0.75em;
   }
 
-  .cf-header,
-  .sb-header {
+  .cf-header {
     text-align: center;
     margin-bottom: 0.25em;
   }
 
-  .cf-title,
-  .sb-title {
+  .cf-title {
     display: block;
     font-family: var(--font-heading), system-ui, sans-serif;
     font-size: 0.95rem;
@@ -278,8 +275,7 @@ html {
     color: #1d1d1f;
   }
 
-  .cf-subtitle,
-  .sb-subtitle {
+  .cf-subtitle {
     display: block;
     font-family: var(--font-heading), system-ui, sans-serif;
     font-size: 0.78rem;
@@ -288,11 +284,216 @@ html {
     margin-top: 0.15em;
   }
 
-  .cf-svg,
-  .sb-svg {
+  .cf-svg {
     display: block;
     width: 100%;
     height: auto;
+  }
+
+  /* SessionBridge
+     HTML and CSS rather than a fixed viewBox, for the reason in the component
+     header: viewBox units scale with the container, so the old SVG rendered its
+     labels at 4px on a phone. Every size below is in rem and never scales.
+
+     Colours come from the shared tokens rather than the Apple palette the SVG
+     hardcoded, so this follows the site into dark mode instead of staying a
+     light island, and the ephemeral cards are actually dashed, which the old
+     component's own header claimed but its code did not do. */
+  .sb {
+    margin: 1.5em 0;
+    padding: 0;
+    border-radius: 0.75rem;
+    border: 1px solid var(--code-border);
+    background: var(--code-bg);
+    overflow: hidden;
+  }
+
+  .sb-header {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--code-border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .sb-title {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--code-fg);
+  }
+
+  .sb-subtitle {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.7rem;
+    color: var(--code-comment);
+  }
+
+  /* Roughly the old 160 / 120 / 160 proportions, but as fractions so the cards
+     share whatever width the column has instead of a fixed coordinate space. */
+  .sb-body {
+    display: grid;
+    grid-template-columns: 1fr auto 0.85fr auto 1fr;
+    align-items: stretch;
+    gap: 0.4rem;
+    padding: 1rem 0.9rem;
+  }
+
+  .sb-session,
+  .sb-bridge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.6rem 0.5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+  }
+
+  .sb-session {
+    border: 1px dashed color-mix(in srgb, var(--code-comment) 60%, transparent);
+    background: color-mix(in srgb, var(--code-border) 22%, transparent);
+  }
+
+  .sb-bridge {
+    border: 1.5px solid var(--code-title);
+    background: color-mix(in srgb, var(--code-title) 12%, var(--code-bg));
+  }
+
+  .sb-session-name {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--code-fg);
+  }
+
+  .sb-session-sub {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    color: var(--code-comment);
+  }
+
+  .sb-tasks,
+  .sb-files {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    width: 100%;
+  }
+
+  .sb-task {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--code-title);
+    background: color-mix(in srgb, var(--code-title) 12%, var(--code-bg));
+    border: 1px solid color-mix(in srgb, var(--code-title) 35%, transparent);
+    border-radius: 0.35rem;
+    padding: 0.3rem 0.35rem;
+  }
+
+  .sb-bridge-head {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--code-title);
+    width: 100%;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--code-title) 25%, transparent);
+  }
+
+  .sb-file {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--code-title);
+    background: var(--code-bg);
+    border: 1px solid color-mix(in srgb, var(--code-title) 30%, transparent);
+    border-radius: 0.35rem;
+    padding: 0.25rem 0.3rem;
+  }
+
+  .sb-tag {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 0.75rem;
+    color: var(--code-comment);
+    margin-top: auto;
+  }
+
+  .sb-tag-persistent {
+    color: var(--code-title);
+    font-weight: 500;
+  }
+
+  /* Drawn in CSS so it inherits currentColor and has no coordinate system. */
+  .sb-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    min-width: 2.75rem;
+    color: var(--code-title);
+  }
+
+  .sb-arrow-label {
+    font-family: var(--font-heading), system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .sb-arrow-line {
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 2rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.6;
+  }
+
+  .sb-arrow-line::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    border-top: 1.5px solid currentColor;
+    border-right: 1.5px solid currentColor;
+    transform: translate(1px, -50%) rotate(45deg);
+  }
+
+  /* Stack below the prose breakpoint. Nothing shrinks; the cards just get the
+     full column each, which is what keeps the type at source size. */
+  @media (max-width: 640px) {
+    .sb-body {
+      grid-template-columns: 1fr;
+      gap: 0;
+      padding: 0.75rem 0.6rem;
+    }
+
+    .sb-arrow {
+      padding: 0.5rem 0;
+      min-width: 0;
+    }
+
+    .sb-arrow-line {
+      width: 1px;
+      max-width: none;
+      height: 1.4rem;
+    }
+
+    .sb-arrow-line::after {
+      right: 50%;
+      top: auto;
+      bottom: 0;
+      transform: translate(50%, 1px) rotate(135deg);
+    }
   }
 
   /* Callout — pull-quote component */
@@ -2313,24 +2514,30 @@ sup {
 }
 
 /* Mermaid diagram sizing
-   Mermaid is initialized with sequence.useMaxWidth:false so the SVG keeps its
-   intrinsic width. Without that it emits width="100%" and silently shrinks the
-   diagram to the prose column (measured: 3.6px message text at 375px), which the
-   wrapper's overflow-x-auto cannot rescue because there is nothing to overflow.
+   Diagrams sit in the prose column, at the same width as paragraphs, code blocks
+   and every hand-authored diagram component. Mermaid used to break out to
+   1200px against a 640px column, which made it the only element on the page that
+   did not line up.
 
-   Sequence diagrams are wider than the 640px prose column, so the wrapper breaks
-   out symmetrically around the column, capped at 1200px and at the viewport. The
-   clamp means no media query is needed: wide screens fit the whole diagram at
-   source size, narrow screens fall back to real horizontal scrolling.
+   The SVG scales into that column rather than overflowing it: mermaid emits
+   width="100%" with a max-width of the diagram's source width, and height:auto
+   keeps the aspect ratio instead of letterboxing it. What keeps the scaled-down
+   text readable is Mermaid.tsx, which picks the widest layout preset that fits
+   the column. Sizing alone cannot do it, because the widest diagram is 1191px at
+   source and lands at 5.5px text when squeezed into a phone column.
 
-   margin-inline: auto on the SVG centers it when it fits and resolves to 0 when
-   it overflows, so the scroll always starts at the diagram's left edge. */
+   max-width caps upscaling, so a diagram narrower than the column stays at
+   source size and centres rather than being blown up past the body text size.
+
+   overflow-x is a backstop only. Every diagram is measured at 320px and up and
+   none of them reach for it. */
 .mermaid-diagram {
-  width: min(1200px, calc(100vw - 4rem));
-  margin-left: calc((100% - min(1200px, calc(100vw - 4rem))) / 2);
+  overflow-x: auto;
 }
 
 .mermaid-diagram svg {
   display: block;
+  width: 100%;
+  height: auto;
   margin-inline: auto;
 }
