@@ -1,0 +1,103 @@
+---
+title: 'Declared Per Container, Enforced Per Pod'
+date: '2026-08-14'
+description: 'A 6 GiB limit on one sidecar became the whole pod eviction budget. Kubelet source shows where each ephemeral-storage limit is actually enforced.'
+tags: ['kubernetes', 'ephemeral-storage', 'debugging']
+category: 'engineering'
+location: 'Palo Alto, CA'
+---
+
+A pod with two containers kept getting evicted. The application container requested about 14 GiB of ephemeral storage and declared no limit. The sidecar beside it declared a 6 GiB limit. Every new pod died once their combined usage passed 6 GiB.
+
+The 6 GiB was written under the sidecar. Kubelet applied it to the whole pod.
+
+A storage limit has two scopes that are easy to conflate: the scope it is declared on, and the scope kubelet enforces it against. For ephemeral storage they are not the same.
+
+## Why a per-container limit became the pod's budget
+
+```yaml
+containers:
+  - name: app
+    resources:
+      requests:
+        ephemeral-storage: 14Gi
+      # no limits.ephemeral-storage
+
+  - name: sidecar
+    resources:
+      limits:
+        ephemeral-storage: 6Gi
+```
+
+Kubelet runs its local storage checks in [`localStorageEviction`](https://github.com/kubernetes/kubernetes/blob/v1.35.0/pkg/kubelet/eviction/eviction_manager.go#L508-L532), gated by [`localStorageCapacityIsolation`](https://github.com/kubernetes/kubernetes/blob/v1.35.0/pkg/kubelet/eviction/eviction_manager.go#L362-L368). The [pod-level check](https://github.com/kubernetes/kubernetes/blob/v1.35.0/pkg/kubelet/eviction/eviction_manager.go#L558-L581) compares two quantities:
+
+```text
+usage  = app + sidecar + kubelet-accounted local ephemeral storage
+budget = effective PodLimits aggregate = 6 GiB
+```
+
+Usage is the pod's total, measured whether or not a container declared anything. The budget comes from [`PodLimits`](https://github.com/kubernetes/kubernetes/blob/v1.35.0/staging/src/k8s.io/component-helpers/resource/helpers.go#L341-L376), which for regular containers is [`AggregateContainerLimits`](https://github.com/kubernetes/kubernetes/blob/v1.35.0/staging/src/k8s.io/component-helpers/resource/helpers.go#L382-L459), folding each container's limit map into a running total with [`addResourceList`](https://github.com/kubernetes/kubernetes/blob/v1.35.0/staging/src/k8s.io/component-helpers/resource/helpers.go#L461-L471). That loop visits only the keys present in each map. The sidecar has an `ephemeral-storage` key, so its 6 GiB lands in the total. The application has no such key, so the loop never visits it and it adds nothing.
+
+The budget was built from one container and applied to usage produced by both. When this fires, the event says so directly: ["Pod ephemeral local storage usage exceeds the total limit of containers"](https://github.com/kubernetes/kubernetes/blob/v1.35.0/pkg/kubelet/eviction/helpers.go#L55-L56).
+
+## When only some containers declare a limit
+
+If no container declares one, the key never appears and the [check returns early](https://github.com/kubernetes/kubernetes/blob/v1.35.0/pkg/kubelet/eviction/eviction_manager.go#L558-L563) without comparing anything. If every container declares one, the budget covers everything that can produce usage.
+
+The partial case is the trap, because the budget reflects part of the pod while the usage reflects all of it. Adding a limit to a single sidecar is enough to put a pod there.
+
+## emptyDir.sizeLimit is enforced per volume
+
+A disk-backed `emptyDir` never joins that aggregate. [`emptyDirLimitEviction`](https://github.com/kubernetes/kubernetes/blob/v1.35.0/pkg/kubelet/eviction/eviction_manager.go#L534-L556) compares each volume against its own `sizeLimit`, and only when that limit is present and positive. Nothing is summed, so one volume's usage is never measured against another volume's limit.
+
+Use it when the boundary you want is one dedicated volume. Give each container its own:
+
+```yaml
+containers:
+  - name: app
+    volumeMounts:
+      - name: app-data
+        mountPath: /var/data
+
+  - name: sidecar
+    volumeMounts:
+      - name: sidecar-data
+        mountPath: /var/data
+
+volumes:
+  # no medium field, so both volumes are disk-backed
+  - name: app-data
+    emptyDir:
+      sizeLimit: 14Gi
+
+  - name: sidecar-data
+    emptyDir:
+      sizeLimit: 6Gi
+```
+
+Neither volume draws down the other's allowance. The threshold is per volume, but the consequence is not: crossing it evicts the whole pod.
+
+## What these limits do not cover
+
+Neither field is a filesystem quota. What happens when you cross one shows why.
+
+| Field | Crossing it causes | Checked by |
+|---|---|---|
+| `limits.ephemeral-storage` | pod eviction | kubelet, on its sync interval |
+| `emptyDir.sizeLimit` | pod eviction on disk, a failed write on tmpfs | kubelet on disk, the kernel on tmpfs |
+
+Source links throughout point to Kubernetes [v1.35.0](https://github.com/kubernetes/kubernetes/releases/tag/v1.35.0).
+
+Only the tmpfs case refuses the write.[^1] Everywhere else the bytes land and the pod dies afterward, on kubelet's next pass. `requests.ephemeral-storage` is not an option either, since a request only affects placement.[^2]
+
+Coverage is partial too. An `emptyDir` threshold sees only what is written under that mount. The container's writable layer sits outside it, and so do its standard output and error logs. A volume with no `sizeLimit` can still fill the node through a separate eviction path.
+
+Pod-level resources do not close the gap, since they cover `cpu`, `memory`, and `hugepages` but not `ephemeral-storage`.[^3]
+
+Before adding an `ephemeral-storage` limit to any container, read what the other containers in that pod declare. If they declare nothing, the limit you are adding is not that container's ceiling. It is the pod's.
+
+[^1]: A memory-backed `emptyDir` is mounted as tmpfs. Kubelet passes a [`size=` mount option](https://github.com/kubernetes/kubernetes/blob/v1.35.0/pkg/volume/emptydir/empty_dir.go#L573-L577) built from the [smaller of the volume's `sizeLimit` and the pod's memory allocation](https://github.com/kubernetes/kubernetes/blob/v1.35.0/pkg/volume/emptydir/empty_dir.go#L114-L140). The kernel enforces that ceiling directly.
+
+[^2]: Kubernetes documents how [container resource requests affect scheduling](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#how-pods-with-resource-requests-are-scheduled).
+
+[^3]: The current [pod-level resource specification](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#pod-level-resource-specification) lists only `cpu`, `memory`, and `hugepages`. The v1.35.0 resource helper enforces the same set in [`supportedPodLevelResources`](https://github.com/kubernetes/kubernetes/blob/v1.35.0/staging/src/k8s.io/component-helpers/resource/helpers.go#L65-L69).
