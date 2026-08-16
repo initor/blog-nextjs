@@ -561,6 +561,76 @@ html {
     color: var(--code-comment);
   }
 
+  /* Formula: a displayed definition pair, not code. Marked with a left rule
+     rather than a full box, matching the Callout treatment, so it reads as
+     set-apart without becoming a container. Serif with italic variables is
+     the convention scientific typesetting uses, so it reads as an equation
+     rather than as a sentence that happens to contain an equals sign. */
+  .formula {
+    margin: 1.75rem 0;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0.15rem 0 0.15rem 1.25rem;
+    border-left: 3px solid var(--foreground);
+    background: transparent;
+    font-family: var(--font-title), Georgia, "Times New Roman", serif;
+  }
+
+  .formula-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 0.6rem;
+    row-gap: 0.4rem;
+    margin: 0;
+  }
+
+  .formula-row {
+    display: contents;
+  }
+
+  .formula-term {
+    grid-column: 1;
+    margin: 0;
+    font-style: italic;
+    font-weight: 500;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .formula-value {
+    grid-column: 2;
+    margin: 0;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .formula-eq {
+    flex: none;
+  }
+
+  /* Stack on narrow screens so the right column never forces a scrollbar. */
+  @media (max-width: 30rem) {
+    .formula-grid {
+      display: block;
+    }
+
+    .formula-row {
+      display: block;
+    }
+
+    .formula-row + .formula-row {
+      margin-top: 0.6rem;
+    }
+
+    .formula-term {
+      text-align: left;
+    }
+
+    .formula-value {
+      padding-left: 1rem;
+    }
+  }
+
   /* Links */
   a {
     @apply transition-colors duration-200;
@@ -605,7 +675,11 @@ html {
   /* Inline code - Catppuccin Frappé pink highlight with mono font */
   :not(pre) > code,
   .prose :not(pre) > code {
-    @apply px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800;
+    @apply px-1 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800;
+    /* Pull the chip back toward its own glyphs. Without this, the horizontal
+       padding reads as a word space, so a following period or comma looks
+       detached: `addResourceList` . instead of `addResourceList`. */
+    margin-inline: -0.1em;
     font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-size: 0.88em;
     font-weight: 500;
@@ -733,6 +807,12 @@ html {
    to win specificity over prose's :where(figcaption) rules. */
 .prose figcaption.fig-caption {
   margin-top: 0.35em;
+}
+
+/* A caption belongs to the thing above it, so close the 2em gap prose puts
+   under a table when a caption follows it. */
+.prose table:has(+ figcaption.fig-caption) {
+  margin-bottom: 0.5rem;
 }
 
 /* =============================================================================
