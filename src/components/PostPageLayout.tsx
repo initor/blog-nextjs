@@ -68,10 +68,6 @@ export default async function PostPageLayout({
               </>
             )}
           </div>
-
-          {post.frontMatter.description && (
-            <p className="post-dek">{post.frontMatter.description}</p>
-          )}
         </header>
 
         <div className="prose dark:prose-invert max-w-none">

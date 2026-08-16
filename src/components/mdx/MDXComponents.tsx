@@ -14,6 +14,7 @@ import SessionContextFlow from './SessionContextFlow';
 import AgentSessionFlow from './AgentSessionFlow';
 import FigCaption from './FigCaption';
 import Callout from './Callout';
+import Formula, { FormulaLine } from './Formula';
 import ContextFlow from './ContextFlow';
 import SessionBridge from './SessionBridge';
 
@@ -96,6 +97,8 @@ const MDXComponents = {
   AgentSessionFlow,
   FigCaption,
   Callout,
+  Formula,
+  FormulaLine,
   ContextFlow,
   SessionBridge,
 
