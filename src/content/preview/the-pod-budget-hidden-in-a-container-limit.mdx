@@ -1,0 +1,121 @@
+---
+title: 'The Pod Budget Hidden in a Container Limit'
+date: '2026-08-14'
+description: 'One container declared a 6 GiB ephemeral-storage limit. That lone value became the entire pod aggregate budget, and kubelet evicted every pod that crossed it.'
+tags: ['kubernetes', 'ephemeral-storage', 'debugging']
+category: 'engineering'
+location: 'Palo Alto, CA'
+---
+
+A pod with two containers kept getting evicted. `foo` requested about 14 GiB of ephemeral storage but declared no limit. `bar` declared a 6 GiB limit. Every new pod was evicted once its total local ephemeral-storage usage crossed 6 GiB.
+
+The surprising part was not `bar`'s limit. It was that this lone value also became the pod's aggregate budget, which `foo` then consumed without contributing to it.
+
+For local ephemeral storage, `limits.ephemeral-storage` feeds two kubelet checks: one against the declaring container's writable layer and logs, another against the pod's total usage. The second is easy to miss in YAML.
+
+## Why one container's limit became the pod's budget
+
+The relevant fields looked like this:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: potato
+spec:
+  containers:
+    - name: foo
+      resources:
+        requests:
+          ephemeral-storage: 14Gi
+        # No limits.ephemeral-storage:
+        # foo contributes usage but no aggregate budget.
+      volumeMounts:
+        - name: foo-data
+          mountPath: /var/data
+
+    - name: bar
+      resources:
+        limits:
+          # bar's writable-layer-and-log threshold,
+          # and the pod aggregate's only contribution
+          ephemeral-storage: 6Gi
+      volumeMounts:
+        - name: bar-data
+          mountPath: /var/data
+
+  volumes:
+    # No medium field, so both volumes are disk-backed.
+    - name: foo-data
+      emptyDir:
+        sizeLimit: 14Gi  # per-volume threshold; adds no pod budget
+    - name: bar-data
+      emptyDir:
+        sizeLimit: 6Gi   # per-volume threshold; adds no pod budget
+```
+
+For regular containers, the pod-level comparison is:
+
+<Formula>
+  <FormulaLine term="pod usage">writable layers + container logs + disk-backed emptyDir volumes + other kubelet-accounted pod-local files</FormulaLine>
+  <FormulaLine term="pod budget">sum of declared container ephemeral-storage limits = 6 GiB</FormulaLine>
+</Formula>
+
+Kubelet gets that budget from `PodLimits`, which aggregates the limit maps the containers declare. The aggregation visits only keys that exist, so `foo` contributes zero while its usage still lands in the pod total.
+
+That is why kubelet can emit:
+
+> Pod ephemeral local storage usage exceeds the total limit of containers
+
+The same 6 GiB also remains `bar`'s own limit, compared separately against `bar`'s writable layer and logs. One declaration serves both checks.[^source]
+
+## Partial limits create an asymmetric budget
+
+If no regular container declares an ephemeral-storage limit, the aggregate has no such key and the pod-level check returns without making a comparison.
+
+If every regular container declares one, every container contributes to the aggregate. The resulting sum is still shared by all kubelet-accounted pod usage, including disk-backed `emptyDir` volumes.
+
+The partial case is the trap. Usage reflects the whole pod, while the budget reflects only the containers that declared a limit. Adding a limit to one container does not isolate it. It sets the pod's budget.
+
+## emptyDir.sizeLimit is per volume
+
+An `emptyDir.sizeLimit` does not contribute to the aggregate budget, but the volume's disk usage still contributes to pod-wide usage.
+
+Separately, `emptyDirLimitEviction` compares each disk-backed `emptyDir` with its own positive `sizeLimit`. Nothing is summed there, so one volume's usage never meets another volume's limit.
+
+In the example, `foo-data` has a 14 GiB per-volume threshold. That does not protect the pod from the 6 GiB aggregate. The pod-level check can fire first, even when neither volume has crossed its own `sizeLimit`.
+
+Use `emptyDir.sizeLimit` when the boundary you care about is a dedicated mount. The threshold is per volume, but the consequence is still pod-wide: kubelet evicts the pod.
+
+## Disk-backed limits evict after the fact
+
+The checks are easier to reason about when separated:
+
+| Declaration and check | Usage compared | Crossing it causes |
+|---|---|---|
+| `limits.ephemeral-storage`, container check | That container's writable layer and logs | Pod eviction |
+| `limits.ephemeral-storage`, pod check | Total kubelet-accounted pod usage versus the sum of container limits | Pod eviction |
+| Disk-backed `emptyDir.sizeLimit` | That volume's usage | Pod eviction |
+| Memory-backed `emptyDir.sizeLimit` | The effective tmpfs size | A failed write at the kernel-enforced boundary |
+
+The disk-backed checks are reactive rather than synchronous. The bytes land, then kubelet observes the overage and evicts on a later pass. A memory-backed `emptyDir` is different, because the kernel enforces its tmpfs bound at the write.[^tmpfs]
+
+An ephemeral-storage request is not a cap. It affects scheduling and disk-pressure eviction ranking, but it does not reject writes or define a local usage ceiling.[^request]
+
+Coverage is partial too. An `emptyDir.sizeLimit` sees only what is written under that mount, and a container's writable layer and logs are accounted separately. An unbounded local volume can still exhaust the node and trigger node-pressure eviction.
+
+All of this assumes kubelet can measure the node's local-storage layout. On an unsupported layout, resource-limit eviction may not work, leaving node-pressure eviction as the only protection.[^measurement]
+
+Current pod-level resource declarations do not close the gap: they support CPU, memory, and huge pages, but not ephemeral storage.[^pod-resources]
+
+Before adding an ephemeral-storage limit to one container, inspect every container and every disk-backed `emptyDir` in the pod. **A lone 6 GiB limit is both that container's writable-layer-and-log threshold and the entire pod's aggregate budget.**
+
+[^source]: Source behavior is pinned to Kubernetes v1.35.0: [localStorageEviction, emptyDirLimitEviction, podEphemeralStorageLimitEviction, and containerEphemeralStorageLimitEviction](https://github.com/kubernetes/kubernetes/blob/v1.35.0/pkg/kubelet/eviction/eviction_manager.go), plus [PodLimits and AggregateContainerLimits](https://github.com/kubernetes/kubernetes/blob/v1.35.0/staging/src/k8s.io/component-helpers/resource/helpers.go). The official [local ephemeral storage documentation](https://kubernetes.io/docs/concepts/storage/ephemeral-storage/) describes the same container-level and pod-level checks.
+
+[^request]: Unless admission supplies another value, Kubernetes also copies `bar`'s 6 GiB limit into its request because no request is declared. That affects scheduling, not the aggregate-limit mechanism described here. Under disk pressure, kubelet also uses ephemeral-storage requests while ranking pods for eviction. See [resource requests and limits](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) and [rankDiskPressureFunc](https://github.com/kubernetes/kubernetes/blob/v1.35.0/pkg/kubelet/eviction/helpers.go).
+
+[^tmpfs]: See Kubernetes v1.35.0's [calculateEmptyDirMemorySize](https://github.com/kubernetes/kubernetes/blob/v1.35.0/pkg/volume/emptydir/empty_dir.go), which starts from node allocatable memory and applies tighter pod-memory and volume-size bounds when present.
+
+[^measurement]: See Kubernetes' notes on [supported local ephemeral-storage filesystem layouts](https://kubernetes.io/docs/concepts/storage/ephemeral-storage/).
+
+[^pod-resources]: The [pod-level resource specification](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#pod-level-resource-specification) supports CPU, memory, and huge pages, but not ephemeral storage.

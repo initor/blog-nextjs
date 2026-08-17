@@ -602,6 +602,9 @@ html {
     margin: 0;
     display: flex;
     gap: 0.5rem;
+    /* The value can now run long enough to wrap, so pin the '=' to the
+       first line instead of letting it stretch alongside the whole block. */
+    align-items: baseline;
   }
 
   .formula-eq {
