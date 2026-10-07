@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getPostBySlug, getAllPosts, ContentType } from '@/lib/mdx/utils';
 import { blogConfig } from '@/config/blog';
+import { OG_HEIGHT, OG_WIDTH, ogImagePath } from '@/lib/og';
 
 /**
  * Labels appended to page titles per content type.
@@ -30,8 +31,7 @@ export function createGenerateMetadata(contentType: ContentType) {
     }
 
     const ogImage =
-      post.frontMatter.ogImage ||
-      `${blogConfig.siteUrl}/api/og?title=${post.frontMatter.title}`;
+      post.frontMatter.ogImage || `${blogConfig.siteUrl}${ogImagePath(contentType, post.slug)}`;
 
     const title = [
       post.frontMatter.title,
@@ -60,8 +60,8 @@ export function createGenerateMetadata(contentType: ContentType) {
         images: [
           {
             url: ogImage,
-            width: 1200,
-            height: 630,
+            width: OG_WIDTH,
+            height: OG_HEIGHT,
             alt: post.frontMatter.title,
           },
         ],
