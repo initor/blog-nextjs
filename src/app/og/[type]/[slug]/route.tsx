@@ -3,7 +3,7 @@ import path from 'path';
 import { ImageResponse } from 'next/og';
 import { blogConfig } from '@/config/blog';
 import { getAllPosts, getPostBySlug, type ContentType } from '@/lib/mdx/utils';
-import { OG_HEIGHT, OG_WIDTH, ogTitleSize } from '@/lib/og';
+import { OG_HEIGHT, OG_WIDTH, ogHostLabel, ogTitleSize } from '@/lib/og';
 
 const CONTENT_TYPES: ContentType[] = ['blog', 'preview', 'archive'];
 
@@ -66,7 +66,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ typ
         <div style={{ display: 'flex', alignItems: 'center', fontFamily: 'Atkinson Hyperlegible', fontSize: 30, color: '#6b7280' }}>
           <span style={{ fontWeight: 700, color: '#171717' }}>{blogConfig.author.name}</span>
           <span style={{ margin: '0 16px' }}>·</span>
-          <span>{new URL(blogConfig.siteUrl).host}</span>
+          <span>{ogHostLabel(blogConfig.siteUrl)}</span>
         </div>
       </div>
     ),
