@@ -1,4 +1,4 @@
-import { OG_HEIGHT, OG_WIDTH, ogImagePath, ogTitleSize } from '@/lib/og';
+import { OG_HEIGHT, OG_WIDTH, ogHostLabel, ogImagePath, ogTitleSize } from '@/lib/og';
 
 describe('ogImagePath', () => {
   it('serves each post its own card, by content type and slug', () => {
@@ -15,6 +15,13 @@ describe('ogTitleSize', () => {
   it('steps down for longer titles so they stay within three lines', () => {
     expect(ogTitleSize('The Pod Budget Hidden in a Container Limit')).toBe(64);
     expect(ogTitleSize('A'.repeat(90))).toBe(52);
+  });
+});
+
+describe('ogHostLabel', () => {
+  it('prints the bare domain, even when the site is served from www', () => {
+    expect(ogHostLabel('https://www.waynewen.com')).toBe('waynewen.com');
+    expect(ogHostLabel('https://waynewen.com')).toBe('waynewen.com');
   });
 });
 

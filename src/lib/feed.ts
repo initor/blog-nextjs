@@ -3,6 +3,8 @@ import type { Post } from '@/lib/mdx/utils';
 /** Configuration for Atom feed generation (kept as parameter for testability). */
 export interface FeedConfig {
   siteUrl: string;
+  /** Base of the Atom ids. Kept apart from siteUrl because ids must never change (RFC 4287). */
+  feedIdBase: string;
   title: string;
   description: string;
   author: { name: string };
@@ -26,7 +28,7 @@ export function escapeXml(str: string): string {
  * Pure function -- no side effects, no imports of runtime config.
  */
 export function generateAtomFeed(posts: Post[], config: FeedConfig): string {
-  const { siteUrl, title, description, author } = config;
+  const { siteUrl, feedIdBase, title, description, author } = config;
 
   const updatedDate =
     posts.length > 0
@@ -44,7 +46,7 @@ export function generateAtomFeed(posts: Post[], config: FeedConfig): string {
           : '';
 
       return `  <entry>
-    <id>${siteUrl}/blog/${post.slug}</id>
+    <id>${feedIdBase}/blog/${post.slug}</id>
     <title>${escapeXml(post.frontMatter.title)}</title>
     <link rel="alternate" href="${siteUrl}/blog/${post.slug}"/>
     <updated>${postDate}</updated>
@@ -55,7 +57,7 @@ export function generateAtomFeed(posts: Post[], config: FeedConfig): string {
 
   return `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <id>${siteUrl}/</id>
+  <id>${feedIdBase}/</id>
   <title>${escapeXml(title)}</title>
   <subtitle>${escapeXml(description)}</subtitle>
   <updated>${updatedDate}</updated>

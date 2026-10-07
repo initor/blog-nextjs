@@ -54,6 +54,7 @@ describe('escapeXml', () => {
 describe('generateAtomFeed', () => {
   const config = {
     siteUrl: 'https://example.com',
+    feedIdBase: 'https://example.com',
     title: 'Test Blog',
     description: 'A test blog',
     author: { name: 'Test Author' },
@@ -133,6 +134,13 @@ describe('generateAtomFeed', () => {
   it('entry has alternate link', () => {
     const result = generateAtomFeed([makePost()], config);
     expect(result).toContain('<link rel="alternate" href="https://example.com/blog/my-test-post"/>');
+  });
+
+  it('keeps ids on feedIdBase when siteUrl moves, so readers do not show old posts as new', () => {
+    const result = generateAtomFeed([makePost()], { ...config, siteUrl: 'https://www.example.com' });
+    expect(result).toContain('<id>https://example.com/</id>');
+    expect(result).toContain('<id>https://example.com/blog/my-test-post</id>');
+    expect(result).toContain('<link rel="alternate" href="https://www.example.com/blog/my-test-post"/>');
   });
 
   it('includes summary when description exists', () => {

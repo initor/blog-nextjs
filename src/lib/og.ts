@@ -9,6 +9,11 @@ export function ogImagePath(contentType: ContentType, slug: string): string {
   return `/og/${contentType}/${slug}`;
 }
 
+/** The domain printed on the card, without the www the site is served from. */
+export function ogHostLabel(siteUrl: string): string {
+  return new URL(siteUrl).host.replace(/^www\./, '');
+}
+
 /** Long titles get a smaller size, so they stay within three lines of the card. */
 export function ogTitleSize(title: string): number {
   if (title.length <= 32) return 76;
