@@ -132,12 +132,6 @@ export default function RootLayout({
                 >
                   blog
                 </Link>
-                <Link
-                  href="/design"
-                  className="hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
-                >
-                  design
-                </Link>
               </div>
             </div>
           </nav>

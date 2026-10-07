@@ -21,6 +21,12 @@ describe('sitemap', () => {
     expect(urls.some((url) => url.endsWith('.html'))).toBe(false);
   });
 
+  it('leaves out the design index while there are no pieces', async () => {
+    mockGetAllPieces.mockResolvedValue([]);
+    const urls = (await sitemap()).map((entry) => entry.url);
+    expect(urls).not.toContain('https://waynewen.com/design');
+  });
+
   it('dates each piece page by its note', async () => {
     const entry = (await sitemap()).find((e) => e.url === 'https://waynewen.com/design/rolling-update');
     expect(entry?.lastModified).toEqual(new Date('2026-10-05'));
