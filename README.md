@@ -40,6 +40,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 | `npm run build` | Build for production |
 | `npm run start` | Start production server |
 | `npm run lint` | Run ESLint |
+| `npm run design:check` | Check design pieces in Chrome and write their thumbnails |
 
 ## Project Structure
 
@@ -91,6 +92,34 @@ Posts you want to hide from the blog list but keep accessible via direct URL. Us
 1. Move the `.mdx` file from `src/content/blog/` to `src/content/archive/`
 2. The post disappears from `/blog` but remains accessible at `/archive/[slug]`
 3. View all archived posts at `/archive`
+
+### Design Pieces (`/design`)
+
+Self-contained HTML pieces, each shown unchanged in a frame on its own page. A piece is a folder plus a note:
+
+- `public/design/<slug>/index.html`: the piece, copied byte for byte. Never edit it here.
+- `public/design/<slug>/thumb-light.png` and `thumb-dark.png`: written by `npm run design:check`.
+- `src/content/design/<slug>.mdx`: the note.
+
+```mdx
+---
+title: "Rolling Update"
+date: "2026-10-05"
+description: "Optional. Used for link previews only."
+layout: document
+---
+
+Optional note, shown under the piece.
+```
+
+`layout` is `document` (the frame grows to fit and the page scrolls) or `screen` (the frame fills the rest of the first screen and the piece scrolls inside it).
+
+**To add a piece:**
+
+1. Copy the HTML file to `public/design/<slug>/index.html`.
+2. Write the note.
+3. Run `npm run design:check`. It writes the thumbnails, builds the site, checks every piece in Chrome at desktop and phone widths, and says when `layout` should change. It needs Google Chrome installed.
+4. Commit the folder and the note together. A note without its files, or a folder without a note, fails the build.
 
 ## Deployment
 

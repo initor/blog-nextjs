@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { blogConfig } from '@/config/blog'
+import { getAllPieces } from '@/lib/design/pieces'
 import { getAllPosts } from '@/lib/mdx/utils'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -7,12 +8,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const blogPosts = await getAllPosts('blog')
   const archivePosts = await getAllPosts('archive')
+  const pieces = await getAllPieces()
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: siteUrl, lastModified: new Date() },
     { url: `${siteUrl}/about`, lastModified: new Date() },
     { url: `${siteUrl}/blog`, lastModified: new Date() },
     { url: `${siteUrl}/archive`, lastModified: new Date() },
+    { url: `${siteUrl}/design`, lastModified: new Date() },
   ]
 
   const blogEntries: MetadataRoute.Sitemap = blogPosts.map((post) => ({
@@ -25,5 +28,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(post.frontMatter.date),
   }))
 
-  return [...staticPages, ...blogEntries, ...archiveEntries]
+  const pieceEntries: MetadataRoute.Sitemap = pieces.map((piece) => ({
+    url: `${siteUrl}/design/${piece.slug}`,
+    lastModified: new Date(piece.frontMatter.date),
+  }))
+
+  return [...staticPages, ...blogEntries, ...archiveEntries, ...pieceEntries]
 }
